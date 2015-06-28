@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller;
+namespace Home\Controller;
 use Du\Controller;
 
 class HomeController extends Controller

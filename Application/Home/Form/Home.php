@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Form;
+namespace Home\Form;
 
 use Du\Form;
 
