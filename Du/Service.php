@@ -7,7 +7,7 @@ class Service
 	{
 			$this->{"router"}  = new Router();
 			$this->{"response"}=new Response();
-			$this->{"form"}=new Form();
+			$this->{"form"}=new Middleware();
 			$this->{"request"}=new Request();
 			$this->{"view"}=new View();
 			$this->{"dispatcher"}=new Dispatcher();

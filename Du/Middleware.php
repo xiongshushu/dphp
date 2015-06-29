@@ -1,7 +1,7 @@
 <?php
 namespace Du;
 
-class Form
+class Middleware
 {
 	private  $_di ;
 
@@ -31,10 +31,10 @@ class Form
 
 	public function input()
 	{
-	       $form = __MODULE__."\\Form\\".__CONTROLLER__;
+	       $form = __MODULE__."\\Middleware\\".__CONTROLLER__;
 		if(!class_exists($form))
 		{
-			throw new DUException("Couldn't find form rule: ".$form);
+			throw new DUException("Couldn't find form middleware: ".$form);
 		}
 		if(!method_exists($form,__ACTION__))
 		{
