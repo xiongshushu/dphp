@@ -16,12 +16,14 @@ $di->registe("view", function(){
 });
 ```
 内置模板的语法：
+```
 {:} = <?php ?>
 {:=} = <?php echo ?>
 {if:false==true} = <?php if (false==true)}
 {fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value)}
 {end} = <?php } ?>
 {import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?>
+```
 内置模板支持简单的布局模式，若要使用，在入口文件中添加
 ```
 $di->registe("view", function(){
