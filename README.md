@@ -8,13 +8,13 @@ Du模型其实没做其他重要的事情，说白了就是数据库操作类的
 数据库操作类的方法，纯属数据库的操作。
 
 视图，Du的视图可以直接使用原生的语法。如果你要是用内置模板，你必须在入口文件中注册一个视图服务
-··
+```
 $di->registe("view", function(){
    $view = new View();
    $view->registerEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
    return $view;
 });
-··
+```
 内置模板的语法：
 {:} = <?php ?>
 {:=} = <?php echo ?>
@@ -23,7 +23,7 @@ $di->registe("view", function(){
 {end} = <?php } ?>
 {import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?>
 内置模板支持简单的布局模式，若要使用，在入口文件中添加
-··
+```
 $di->registe("view", function(){
    $view = new View();
    $view->registerEngine( new Smart(array(
@@ -31,5 +31,5 @@ $di->registe("view", function(){
    ))); 
    return $view;
 });
-··
-使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
+```
+使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$   this->view->disableLayout();跳过本次的布局渲染。
