@@ -5,6 +5,7 @@ use Du\View\Adapter\Smart;
 use Du\Session;
 use Du\Log;
 use Du\Loader;
+
 define("ROOT_PATH",__DIR__);
 require 'Du/Loader.php';
 //设置时间区
@@ -31,10 +32,9 @@ $di->registe("session", function(){
     $session->start();
     return $session;
 });
-
 $app = new Application();
-try {
 
+try {
     $app->handle($di);
 
 }catch (\Exception $e){

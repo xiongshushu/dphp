@@ -82,6 +82,6 @@ class SmartParse
      */
     private function parseRang()
     {
-        $this->data = preg_replace('/{rang:([\\a-zA-Z0-9\$_.]+)}/', "<?php foreach(\\1){?>", $this->data);
+        $this->data = preg_replace('/{fetch:([\\a-zA-Z0-9\$_.]+)}/', "<?php foreach(\\1){?>", $this->data);
     }
 }
