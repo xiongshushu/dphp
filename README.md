@@ -1,5 +1,25 @@
 ## DuPHP ##
 DuPHP是一款轻量级的PHP框架，不到50k的压缩大小，麻雀虽小，五脏俱全，MVC结构，轻量级的内置模板引擎Smart，验证码，上传，加密，静态路由（以后会考虑增加动态路由），运行在PHP≥5.4的系统中，精简的封装了PDO MySql操作，操作数据库目前只能通过PDO操作。不过DuPHP是个低耦合的框架，你完全可以使用自己的数据库操作类，不仅如此，你还能在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
+## Apache,Nginx 配置伪静态##
+Du目前只能使用伪静态
+
+	Nginx
+    if (!-e $request_filename) {
+   		 rewrite  ^(.*)$ /index.php?_s=$1 last;
+  		  break;
+    	}
+    }
+
+----------
+
+	Apache
+	<IfModule mod_rewrite.c>
+		RewriteEngine on
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule ^(.*)$ index.php/?_s=$1 [QSA,L]
+	</IfModule>
+
 ## MVC，模型（Model），视图（View），控制器（Controller）##
 DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为调度模型和视图两者的控制层，包含了业务逻辑。除了MVC结构以外还引入了“中间件”，其实就是表单验证层， 又不单单是表单验证，还可以控制在控制器之前的一些动作，执行一些必要的逻辑，安全过滤等等，但是中间件不是每个控制器都是必须的，除非控制器中含有$this->input()的时候，你必须要需要中间件的支持，我们建议在含有数据传递的时候，能够使用“中间件”，避免一些不必要要安全问题。
 
