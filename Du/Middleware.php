@@ -34,7 +34,7 @@ class Middleware
 	       $form = __MODULE__."\\Middleware\\".__CONTROLLER__;
 		if(!class_exists($form))
 		{
-			throw new DUException("Couldn't find form middleware: ".$form);
+			throw new DUException("Couldn't find middleware: ".$form);
 		}
 		if(!method_exists($form,__ACTION__))
 		{
@@ -75,8 +75,9 @@ class Middleware
 	          if (is_array($v))
 	          {
 	              $this->removeXSS($v);
+	          }else{
+	              $val[$k] = htmlspecialchars(str_replace(["\n","\t","\r"], "", trim($v)));
 	          }
-	          $val[$k] = htmlspecialchars(str_replace(["\n","\t","\r"], "", trim($v)));
 	      }
 	       return $val;
 	}
