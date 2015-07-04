@@ -61,3 +61,5 @@ $di->registe("view", function(){
 });
 ```
 使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
+## 调试 ##
+Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误
