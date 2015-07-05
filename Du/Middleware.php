@@ -101,4 +101,9 @@ class Middleware
 	    }
 	    exit($error);
 	}
+
+	public function __get($name)
+	{
+        return $this->_di->$name;
+	}
 }
