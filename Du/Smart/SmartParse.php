@@ -33,7 +33,7 @@ class SmartParse
      */
     private function parseImport($tplPath,$suffix)
     {
-        if (preg_match_all('/{import:([\\a-zA-Z0-9]+?);(:[,a-zA-Z0-9_]+:.*)*}/', $this->data, $matchImport)) {
+        if (preg_match_all('/{import:([\\a-zA-Z0-9]+?);([,a-zA-Z0-9_]+:.*)*}/', $this->data, $matchImport)) {
             foreach ($matchImport[1] as $file) {
                 $filePath = trim($tplPath . DS . $file, ":") .$suffix;
                 if (is_file($filePath)) {
