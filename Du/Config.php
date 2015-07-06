@@ -11,7 +11,7 @@ class Config
 		{
 			self::$config[$name] = require(CONF_PATH.DS.$name.".php");
 		}
-        return self::get($name);
+        return self::get($name,$item);
 	}
 
 	static  function get($name,$item="")
