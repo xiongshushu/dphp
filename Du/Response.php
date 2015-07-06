@@ -36,7 +36,7 @@ class Response
 
 	public function redirect($action)
 	{
-	    if(__MODULE__!=$this->_di->moduls["defaultModule"])
+	    if(__MODULE__!=$this->_di->module["defaultModule"])
 	    {
 	        $action = strtolower(__MODULE__)."\\".$action;
 	    }

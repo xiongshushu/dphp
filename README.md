@@ -42,9 +42,9 @@ $di->registe("view", function(){
 
 {:=} = <?php echo ?>
 
-{if:false==true} = <?php if (false==true)}
+{if:false==true} = <?php if (false==true)?>
 
-{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value)}
+{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value)?>
 
 {end} = <?php } ?>
 
@@ -61,5 +61,8 @@ $di->registe("view", function(){
 });
 ```
 使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
+## 读取配置 ##
+配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
+Config::php("config");则是读取目录下的config.php文件Config::php("config"，"menu");读取config.php二维数组的menu项配置。
 ## 调试 ##
 Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误
