@@ -15,7 +15,7 @@ class Upload
      *
      * @var string
      */
-    public $file_name;
+    public $auto_name = TRUE;
 
     /**
      * 上传的文件名前缀
@@ -68,16 +68,18 @@ class Upload
     {
         if ($this->checkExt() || $this->checkSize()) {
             $save_dir = $this->file_save_dir;
-            $storageDir = date("/Y/m/d", $_SERVER['REQUEST_TIME']);
+            $storageDir = date("/Ymd", $_SERVER['REQUEST_TIME']);
             if (!is_dir($save_dir.$storageDir)){
                 mkdir($save_dir.$storageDir,0777,true);
             }
-            if (! isset($this->file_name)) {
-                $this->file_name = $this->file_prefix . uniqid() . "." . $this->getExt();
+            if ($this->auto_name) {
+                $upfile = $this->file_prefix . uniqid() . "." . $this->getExt();
+            }else {
+                $upfile = $_FILES[$this->input_name]['name'];
             }
-            $file = $save_dir . DS . $storageDir . DS . $this->file_name;
+            $file = $save_dir . DS . $storageDir . DS . $upfile;
             if (move_uploaded_file($_FILES[$this->input_name]['tmp_name'], $file)) {
-                $this->result['file'] = $storageDir . DS . $this->file_name;
+                $this->result['file'] = $storageDir . DS . $upfile;
                 $this->result['status'] = true;
             }
             return $this->result;
