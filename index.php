@@ -35,6 +35,7 @@ $di->registe("session", function(){
 $app = new Application();
 
 try {
+	
     $app->handle($di);
 
 }catch (\Exception $e){

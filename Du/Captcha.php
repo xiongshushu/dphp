@@ -1,26 +1,62 @@
 <?php
 namespace Du;
-// 验证码类
+
 class Captcha
 {
 
-    private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789'; // 随机因子
+	/**
+	 * 随机因子
+	 *@var string
+	 */
+    private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
 
-    private $code; // 验证码
+    /**
+         * 验证码
+     * @var unknown
+       */
+    private $code; 
 
-    public $codelen = 4; // 验证码长度
+    /**
+          * 验证码长度
+     * @var int
+         */
+    public $codelen = 4; 
 
-    public $width = 80; // 宽度
+    /**
+          *  宽度
+     * @var int
+         */
+    public $width = 80;
 
-    public $height = 30; // 高度
+    /**
+          * 高度
+     * @var int
+         */
+    public $height = 30;
 
-    private $img; // 图形资源句柄
+    /**
+          * 图形资源句柄
+     * @var Resoure
+          */
+    private $img;
 
-    public $font="Fonts/Elephant.ttf"; // 指定的字体
+    /**
+          * 指定的字体路径
+     * @var string
+         */
+    public $font="Fonts/Elephant.ttf";
 
-    public $fontsize = 15; // 指定字体大小
+    /**
+          * 指定字体大小
+     * @var int
+          */
+    public $fontsize = 15;
 
-    private $fontcolor; // 指定字体颜色
+    /**
+         * 指定字体颜色
+     * @var unknown
+         */
+    private $fontcolor;
 
     // 生成随机码
     private function createCode()
@@ -62,27 +98,21 @@ class Captcha
         }
     }
 
-    // 输出
-    private function outPut()
+    /**
+     	  * 输出验证码
+     * @param string $sKey 验证存储在session的键名
+          */
+    public function build($sKey="cpt")
     {
+    	 putenv('GDFONTPATH='.__DIR__);
+    	 $this->createBg();
+    	 $this->createCode();
+    	 $this->createLine();
+    	 $this->createFont();
+    	 //加入验证码到session中
+    	 $_SESSION[$sKey] = md5(strtolower($this->code));
         header('Content-type:image/png');
         imagepng($this->img);
         imagedestroy($this->img);
-    }
-
-    // 对外生成
-    public function doimg()
-    {
-        $this->createBg();
-        $this->createCode();
-        $this->createLine();
-        $this->createFont();
-        $this->outPut();
-    }
-
-    // 获取验证码
-    public function getCode()
-    {
-        return strtolower($this->code);
     }
 }
