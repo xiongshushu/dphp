@@ -20,12 +20,6 @@ class Response
 	{
 	    header("Content-type: text/html; charset=utf-8");
 	    echo $msg;
-	    if (!empty($url))
-	    {
-
-	    }else{
-
-	    }
 	}
 
 	public function json(array $data)
