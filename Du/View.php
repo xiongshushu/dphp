@@ -30,7 +30,7 @@ class View {
 
 	public function setVars(array $val)
 	{
-		$this->_vars = array_merge($this->_vars,val);
+		$this->_vars = array_merge($this->_vars,$val);
 	}
 
 	public function registerEngine($engine)

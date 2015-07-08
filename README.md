@@ -1,5 +1,5 @@
 ## DuPHP ##
-DuPHP是一款轻量级的PHP框架，不到50k的压缩大小，麻雀虽小，五脏俱全，MVC结构，轻量级的内置模板引擎Smart，验证码，上传，加密，静态路由（以后会考虑增加动态路由），运行在PHP≥5.4的系统中，精简的封装了PDO MySql操作，操作数据库目前只能通过PDO操作。不过DuPHP是个低耦合的框架，你完全可以使用自己的数据库操作类，不仅如此，你还能在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
+DuPHP是一款轻量级的开源PHP框架，不到50k的压缩大小，麻雀虽小，五脏俱全，MVC结构，轻量级的内置模板引擎Smart，验证码，上传，加密，静态路由（以后会考虑增加动态路由），多模块，运行在PHP≥5.4的系统中，精简的封装了PDO MySql操作，操作数据库目前只能通过PDO操作。DuPHP是个低耦合的框架，你完全可以使用自己的数据库操作类，不仅如此，你还能在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
 ## Apache,Nginx 配置伪静态##
 Du目前只能使用伪静态
 
@@ -61,6 +61,15 @@ $di->registe("view", function(){
 });
 ```
 使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
+##加载器Loader##
+Loader负责框架的初始化操作，自动加载，创建服务，定义常量，多模块设置等。
+##多模块设置##
+    $loader = new Loader();
+    $loader->registeModule("Admin");//注册一个Admin模块，首字母大写
+支持同时注册多个模块
+
+ 	$loader->registeModule(array("Admin","Mobile"));
+默认包含了一个“Home”模块。
 ## 读取配置 ##
 配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
 Config::php("config");则是读取目录下的config.php文件Config::php("config"，"menu");读取config.php二维数组的menu项配置。配置加载默认已经防止多次加载配置的情况。

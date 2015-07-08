@@ -35,11 +35,14 @@ class Loader {
 
     public function registeModule($module)
     {
-        $this->_di->module["modules"][] = $module;
-    }
-
-    public function setConfigDir($dir)
-    {
-        $this->_di->setConfigDir($dir);
+    	if (is_array($module))
+    	{
+       		foreach ($module as $m)
+       		{
+       			$this->_di->module["modules"][] = $m;
+       		}
+    	}else{
+    		$this->_di->module["modules"][] = $module;
+    	}
     }
 }
