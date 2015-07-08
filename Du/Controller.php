@@ -10,10 +10,11 @@ class Controller
 		$this->_di = $di;
 	}
 
-	public function input()
+	public function input($key="")
 	{
-		$this->_di->form->setDI($this->_di);
-		return $this->_di->form->input();
+		$this->_di->middleware->setDI($this->_di);
+		$input = $this->_di->middleware->input();
+		return empty($key)?$input:$input[$key];
 	}
 
 	public function redirect($action)
