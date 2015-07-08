@@ -56,7 +56,7 @@ class Upload
      * 错误消息
      * @var string
      */
-    public $errorMsg;
+    public $errorMsg ='';
 
     /**
      * 上传结果
@@ -86,11 +86,6 @@ class Upload
         }
         $this->errorMsg = "文件校验失败！";
         return false;
-    }
-
-    public function getErr()
-    {
-        return $this->errorMsg;
     }
 
     private function checkExt()
