@@ -48,12 +48,12 @@ class Middleware
 
 	public function parseInput($data)
 	{
-		if(empty($data))
+		if(empty($data) && $data != 0)
 		{
 			return [];
 		}
 		$data = $this->removeXSS($data);
-		if (is_string($data)){
+		if (!is_array($data)){
             return $data;
 		}
 		foreach ($data as  $rKey=>$rValue){
@@ -67,7 +67,7 @@ class Middleware
 	}
 
        public function removeXSS($val) {
-          if (is_string($val)) {
+          if (!is_array($val)) {
                return htmlspecialchars(str_replace(["\n","\t","\r"], "", trim($val)));
           }
 	      foreach ($val as $k=>$v)
