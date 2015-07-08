@@ -64,5 +64,33 @@ $di->registe("view", function(){
 ## 读取配置 ##
 配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
 Config::php("config");则是读取目录下的config.php文件Config::php("config"，"menu");读取config.php二维数组的menu项配置。配置加载默认已经防止多次加载配置的情况。
+##Cookie和Session##
+要使用Session服务，可先在入口文件中注册一个session服务
+
+    $di->registe("session", function(){
+    	$session =  new Session();
+        $session->start();
+        return $session;
+    });
+这样就可以通过$this->session->set()等方法。
+
+    $this->session->start() 启动session，如果注册服务的时候已经启动就不要再次启动。 
+    $this->session->set() 设置Session；
+    $this->session->get() 获取Session值；
+    $this->session->destory() 销毁Session；
+要使用cookie服务，可先在入口文件中注册一个cookie服务
+
+    $di->registe("cookie", function(){
+    	$cookie =  new cookie();
+    return $cookie;
+    })；
+
+---
+调用方法
+
+    $this->cookie->set() 设置cookie；
+    $this->cookie->get() 获取cookie值；
+    $this->cookie->destory() 销毁cookie;
+
 ## 调试 ##
 Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误

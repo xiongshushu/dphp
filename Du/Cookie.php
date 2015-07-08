@@ -13,4 +13,9 @@ class Cookie
     {
         return isset($_COOKIE[$name])?$_COOKIE[$name]:null;
     }
+    
+    public function destroy()
+    {
+    	unset($_COOKIE);
+    }
 }
