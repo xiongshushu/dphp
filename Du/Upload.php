@@ -68,7 +68,7 @@ class Upload
     {
         if ($this->checkExt() || $this->checkSize()) {
             $save_dir = $this->file_save_dir;
-            $storageDir = date("/Ymd", $_SERVER['REQUEST_TIME']);
+            $storageDir = date("/Ymd/", $_SERVER['REQUEST_TIME']);
             if (!is_dir($save_dir.$storageDir)){
                 mkdir($save_dir.$storageDir,0777,true);
             }
@@ -77,9 +77,9 @@ class Upload
             }else {
                 $upfile = $_FILES[$this->input_name]['name'];
             }
-            $file = $save_dir . DS . $storageDir . DS . $upfile;
+            $file = $save_dir . $storageDir .  $upfile;
             if (move_uploaded_file($_FILES[$this->input_name]['tmp_name'], $file)) {
-                $this->result['file'] = $storageDir . DS . $upfile;
+                $this->result['file'] = $storageDir . $upfile;
                 $this->result['status'] = true;
             }
             return $this->result;
