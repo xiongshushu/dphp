@@ -19,7 +19,12 @@ class Response
 	public function error($msg,$time=5,$url="")
 	{
 	    header("Content-type: text/html; charset=utf-8");
-	    echo $msg;
+	    if (!empty($url))
+	    {
+		    echo $msg."<p>页面自动 <a id=\"href\" href=\"$url\">跳转</a> 等待时间： <b id=\"wait\">$time</b></p></div><script type=\"text/javascript\">(function(){var wait = document.getElementById('wait'),href = document.getElementById('href').href;var interval = setInterval(function(){var time = --wait.innerHTML;if(time <= 0) {location.href = href;clearInterval(interval);};}, 1000);})();</script>";
+	    }else {
+	    	echo $msg;
+	    }
 	}
 
 	public function json(array $data)
