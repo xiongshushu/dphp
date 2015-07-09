@@ -32,14 +32,4 @@ class Response
 		header("Content-Type:application/json;charset:utf-8");
 		exit(json_encode($data,true));
 	}
-
-	public function redirect($action)
-	{
-	    if(__MODULE__!=$this->_di->module["defaultModule"])
-	    {
-	        $action = strtolower(__MODULE__)."\\".$action;
-	    }
-	    header("location:http://".$_SERVER['HTTP_HOST'].$_SERVER['CONTEXT_PREFIX']."/".$action);
-	    exit();
-	}
 }

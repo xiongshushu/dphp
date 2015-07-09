@@ -22,7 +22,7 @@ class Upload
      *
      * @var string
      */
-    public $file_prefix = "upload_";
+    public $file_prefix = "";
 
     /**
      * 相对站点的路径

@@ -17,10 +17,10 @@ class Controller
 		return empty($key)?$input:$input[$key];
 	}
 
-	public function redirect($action)
+	public function redirect($action="")
 	{
-	    $this->_di->response->setDI($this->_di);
-	    return $this->_di->response->redirect($action);
+	    $this->_di->request->setDI($this->_di);
+	    return $this->_di->request->redirect($action);
 	}
 
 	public function __get($name)
