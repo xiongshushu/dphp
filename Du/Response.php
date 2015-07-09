@@ -11,12 +11,12 @@ class Response
     }
 
     /**
-     * 错误内容输出
+          * 文本内容输出到浏览器
      * @param string $msg
-     * @param number $type 1：只提示错误文本（默认）；2：带调转的信息提示
-     * @param string $url 跳转的地址；默认返回上一页；只有$type为2的时候，才有效；
-     */
-	public function error($msg,$time=5,$url="")
+     * @param number $time 跳转时间.跳转地址不为空时有效
+     * @param string $url 跳转的地址；补位空的时候有效；
+       */
+	public function push($msg,$time=5,$url="")
 	{
 	    header("Content-type: text/html; charset=utf-8");
 	    if (!empty($url))
