@@ -35,10 +35,10 @@ $di->registe("session", function(){
 $app = new Application();
 
 try {
-	
+
     $app->handle($di);
 
 }catch (\Exception $e){
 
-    $di->response->error($e->getMessage());
+    $di->response->prompt($e->getMessage());
 }

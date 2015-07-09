@@ -14,7 +14,7 @@ class Application
 	             $di->dispatcher->exec();
 	             $di->view->display(__MODULE__.DS.__CONTROLLER__.DS.__ACTION__);
 	       }catch (DUException $e){
-	       	      $di->response->error($e->getMessage());
+	       	      $di->response->prompt($e->getMessage());
 	       }
 	 }
 }
