@@ -10,11 +10,11 @@ class Model {
 		$this->_di = $di;
 	}
 
-	public function __call($name,$arg)
+	public function __call($name,$args)
 	{
 		if (!isset($this->_di->db)) {
 			throw new DUException("You must registe db driver first!");
 		}
-		return $this->_di->db->$name($arg[0],$arg[1]);
+		return call_user_func_array(array($this->_di->db,$name),$args);
 	}
 }
