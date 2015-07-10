@@ -1,7 +1,8 @@
 <?php
 namespace Du\View\Adapter;
 
-class Smart{
+use Du\View\ViewInterface;
+class Smart implements ViewInterface{
 
     private $tpl;
 
