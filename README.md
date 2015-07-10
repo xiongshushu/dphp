@@ -100,6 +100,13 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     $this->cookie->set() 设置cookie；
     $this->cookie->get() 获取cookie值；
     $this->cookie->destory() 销毁cookie;
-
+##内置常量##
+    DP_VER //Du框架的版本号
+    ROOT_PATH //站点根目录 默认在Du核心目录的上一层目录
+    APP_PATH //应用目录 默认在ROOT_PATH下的Aplication,可自定义
+    CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
+    DEBUG //配置是否是调试模式，默认true；
+    DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
+有默认值得的常量均可自由定义。
 ## 调试 ##
 Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误
