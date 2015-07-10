@@ -9,10 +9,10 @@ class Loader {
     {
         define("DP_VER", "2.0.1 Beta",false);
         define("DS", DIRECTORY_SEPARATOR,false) ;
-        if(!defined("DEBUG")) {define("DEBUG",TRUE,false);}
-        if(!defined("ROOT_PATH")) {define("ROOT_PATH",dirname(__DIR__),false);}
-        if(!defined("APP_PATH")){define("APP_PATH",ROOT_PATH.DS."Application",false);}
-        if(!defined("CONF_PATH")){define("CONF_PATH",APP_PATH.DS."Config",false);}
+        defined("DEBUG") OR define("DEBUG",TRUE);
+        defined("ROOT_PATH") OR define("ROOT_PATH",dirname(__DIR__));
+        defined("APP_PATH") OR define("APP_PATH",ROOT_PATH.DS."Application");
+        defined("CONF_PATH") OR define("CONF_PATH",APP_PATH.DS."Config");
         //自动加载
         spl_autoload_register(function($cName){
             $cPath = str_replace("\\",DS,$cName).".php";

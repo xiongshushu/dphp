@@ -58,7 +58,9 @@ class Captcha
          */
     private $fontcolor;
 
-    // 生成随机码
+    /**
+    	 * 生成随机码
+     	 */
     private function createCode()
     {
         $_len = strlen($this->charset) - 1;
@@ -67,7 +69,9 @@ class Captcha
         }
     }
 
-    // 生成背景
+    /*
+     	 * 生成背景
+        */ 
     private function createBg()
     {
         $this->img = imagecreatetruecolor($this->width, $this->height);
@@ -75,7 +79,9 @@ class Captcha
         imagefilledrectangle($this->img, 0, $this->height, $this->width, 0, $color);
     }
 
-    // 生成文字
+    /**
+  	  * 生成文字
+         */ 
     private function createFont()
     {
         $_x = $this->width / $this->codelen;
@@ -85,7 +91,9 @@ class Captcha
         }
     }
 
-    // 生成线条、雪花
+    /**
+         * 生成线条、雪花
+         */
     private function createLine()
     {
         for ($i = 0; $i < 6; $i ++) {
