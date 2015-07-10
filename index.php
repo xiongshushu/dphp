@@ -6,7 +6,6 @@ use Du\Session;
 use Du\Log;
 use Du\Loader;
 
-define("ROOT_PATH",__DIR__);
 require 'Du/Loader.php';
 //设置时间区
 date_default_timezone_set("PRC");
