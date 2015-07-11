@@ -10,24 +10,47 @@ class Middleware
 		$this->_di = $di;
 	}
 
-    public function scope($val,$max,$min=0)
-    {
-        $len = mb_strlen($val);
-        if (!$len>$min && $len<=$max)
-        {
-            return TRUE;
-        }
-        return false;
-    }
+	public function isEmpty($data,$msg)
+	{
+	    if (empty($data))
+	    {
+	        throw new FormException($msg);
+	    }
+	}
+
+	public function scope($val,$max,$min=0,$msg)
+	{
+	    $len = mb_strlen($val);
+	    if ($len<$min ||$len>$max)
+	    {
+	        throw new FormException($msg);
+	    }
+	}
+
+	public function compare($val1,$val2,$msg)
+	{
+	    if ($val1 !=$val2)
+	    {
+	        throw new FormException($msg);
+	    }
+	}
 
 	public function post($key="")
 	{
-        return isset($_POST[$key])?$_POST[$key]:null;
+	    if (empty($key))
+	    {
+	       return $_POST;
+	    }
+        return isset($_POST[$key])?$_POST[$key]:'';
 	}
 
 	public function get($key="")
 	{
-	    return isset($_GET[$key])?$_GET[$key]:null;
+	    if (empty($key))
+	    {
+	        return $_GET;
+	    }
+	    return isset($_GET[$key])?$_GET[$key]:'';
 	}
 
 	public function input($key="")
