@@ -35,6 +35,11 @@ class Middleware
 	    }
 	}
 
+	public function replace($val,$replace)
+	{
+        return empty($val)?$replace:$val;
+	}
+
 	public function post($key="")
 	{
 	    if (empty($key))

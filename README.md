@@ -38,13 +38,13 @@ $di->registe("view", function(){
 ```
 内置模板的语法：
 
-{:} = <?php ?>
+{:$name;} = <?php $name ?>
 
-{:=} = <?php echo ?>
+{:=$name;} = <?php echo $name ?>
 
-{if:false==true} = <?php if (false==true)?>
+{if:false==true} = <?php if (false==true){?>
 
-{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value)?>
+{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value){?>
 
 {end} = <?php } ?>
 
