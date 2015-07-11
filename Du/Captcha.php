@@ -14,13 +14,13 @@ class Captcha
          * 验证码
      * @var unknown
        */
-    private $code; 
+    private $code;
 
     /**
           * 验证码长度
      * @var int
          */
-    public $codelen = 4; 
+    public $codelen = 4;
 
     /**
           *  宽度
@@ -44,7 +44,7 @@ class Captcha
           * 指定的字体路径
      * @var string
          */
-    public $font="Fonts/Elephant.ttf";
+    public $font= "Fonts/Elephant.ttf";
 
     /**
           * 指定字体大小
@@ -71,7 +71,7 @@ class Captcha
 
     /*
      	 * 生成背景
-        */ 
+        */
     private function createBg()
     {
         $this->img = imagecreatetruecolor($this->width, $this->height);
@@ -81,7 +81,7 @@ class Captcha
 
     /**
   	  * 生成文字
-         */ 
+         */
     private function createFont()
     {
         $_x = $this->width / $this->codelen;
@@ -112,7 +112,7 @@ class Captcha
           */
     public function build($sKey="cpt")
     {
-    	 putenv('GDFONTPATH='.__DIR__);
+         $this->font = __DIR__.DS.$this->font;
     	 $this->createBg();
     	 $this->createCode();
     	 $this->createLine();

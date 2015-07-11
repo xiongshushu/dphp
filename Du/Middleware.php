@@ -20,18 +20,19 @@ class Middleware
         return false;
     }
 
-	public function cep($needle,$replace="")
+	public function post($key="")
 	{
-		if(empty($needle))
-		{
-		   $needle = $replace;
-	       }
-		return $needle;
+        return isset($_POST[$key])?$_POST[$key]:null;
 	}
 
-	public function input()
+	public function get($key="")
 	{
-	       $form = __MODULE__."\\Middleware\\".__CONTROLLER__;
+	    return isset($_GET[$key])?$_GET[$key]:null;
+	}
+
+	public function input($key="")
+	{
+	    $form = __MODULE__."\\Middleware\\".__CONTROLLER__;
 		if(!class_exists($form))
 		{
 			throw new DUException("Couldn't find middleware: ".$form);
@@ -43,7 +44,8 @@ class Middleware
 		$call = new $form;
 		$method = __ACTION__;
 		$call->setDI($this->_di);
-	       return $this->parseInput($call->$method());
+	    $input  =  $this->parseInput($call->$method());
+	    return empty($key)?$input:$input[$key];
 	}
 
 	public function parseInput($data)
@@ -80,26 +82,6 @@ class Middleware
 	          }
 	      }
 	       return $val;
-	}
-
-	public function get()
-	{
-		return $this->removeXSS($_GET);
-	}
-
-	public function post()
-	{
-		return $this->removeXSS($_POST);
-	}
-
-	public function error($error,$json=true,$jumpUrl='',$waitSecond=5)
-	{
-	    if ($json)
-	    {
-	        header("Content-Type:application/json;charset:utf-8");
-	        exit(json_encode($error));
-	    }
-	    exit($error);
 	}
 
 	public function __get($name)

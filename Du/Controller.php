@@ -13,8 +13,7 @@ class Controller
 	public function input($key="")
 	{
 		$this->_di->middleware->setDI($this->_di);
-		$input = $this->_di->middleware->input();
-		return empty($key)?$input:$input[$key];
+		return $this->_di->middleware->input($key);
 	}
 
 	public function redirect($action="")
