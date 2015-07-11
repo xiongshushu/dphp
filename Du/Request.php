@@ -33,6 +33,11 @@ class Request
 		return $_SERVER["HTTP_HOST"];
 	}
 
+	public function ip()
+	{
+	    return $_SERVER['REMOTE_ADDR'];
+	}
+
 	public function redirect($action="")
 	{
 	    if(__MODULE__!=$this->_di->module["defaultModule"])
