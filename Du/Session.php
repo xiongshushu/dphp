@@ -17,6 +17,11 @@ class Session
         }
     }
 
+    public function clear($key)
+    {
+        unset($_SESSION[$key]);
+    }
+
     public function get($name)
     {
         return isset($_SESSION[$name])?$_SESSION[$name]:null;
