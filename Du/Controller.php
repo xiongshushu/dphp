@@ -10,6 +10,11 @@ class Controller
 		$this->_di = $di;
 	}
 
+	public function getDI()
+	{
+	    return $this->_di;
+	}
+
 	public function input($key="")
 	{
 		$this->_di->middleware->setDI($this->_di);
