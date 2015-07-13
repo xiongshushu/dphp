@@ -35,6 +35,14 @@ class Middleware
 	    }
 	}
 
+	public function match($subject,$pattern,$msg)
+	{
+	   if (preg_match($pattern, $subject))
+	    {
+	        throw new FormException($msg);
+	    }
+	}
+
 	public function replace($val,$replace)
 	{
         return empty($val)?$replace:$val;
