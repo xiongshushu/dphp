@@ -107,6 +107,9 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
     DEBUG //配置是否是调试模式，默认true；
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
+    __MOUDLE__ //当前访问的模块
+    __CONTROLLER__//当前访问的控制器
+    __ACTION__ //当前执行的Action
 有默认值得的常量均可自由定义。
 ## 调试 ##
 Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误
