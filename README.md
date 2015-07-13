@@ -84,8 +84,9 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 这样就可以通过$this->session->set()等方法。
 
     $this->session->start() 启动session，如果注册服务的时候已经启动就不要再次启动。 
-    $this->session->set() 设置Session；
-    $this->session->get() 获取Session值；
+    $this->session->set("name","DuPHP") 设置name的值为DuPHP；
+    $this->session->get("name") 获取Session中"name"值；
+    $this->session->clear("name") 清除Session中name的值；
     $this->session->destory() 销毁Session；
 要使用cookie服务，可先在入口文件中注册一个cookie服务
 
@@ -97,8 +98,9 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 ---
 调用方法
 
-    $this->cookie->set() 设置cookie；
-    $this->cookie->get() 获取cookie值；
+    $this->cookie->set() 设置cookie,通setookies()；
+    $this->cookie->get("name") 获取cookie中name的值；
+    $this->cookie->clear("name") 清除Cookie中name的值；
     $this->cookie->destory() 销毁cookie;
 ##内置常量##
     DP_VER //Du框架的版本号
