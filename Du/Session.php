@@ -4,9 +4,9 @@ namespace Du;
 class Session
 {
 
-    public function set($name, $value=null)
+    public function set($key, $value=null)
     {
-        $_SESSION[$name]=$value;
+        $_SESSION[$key]=$value;
     }
 
     public function start()
@@ -22,9 +22,9 @@ class Session
         unset($_SESSION[$key]);
     }
 
-    public function get($name)
+    public function get($key)
     {
-        return isset($_SESSION[$name])?$_SESSION[$name]:null;
+        return isset($_SESSION[$key])?$_SESSION[$key]:null;
     }
 
     public function destroy()
