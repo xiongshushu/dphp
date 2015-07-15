@@ -39,23 +39,32 @@ class Page
 
     /**
      * 默认输出html的分页
-     *
-     * @param bool $html
+     * #param string $pagelink 需要追加到链接后的get参数
+     * @param int $type 输出形式1：html代码，2：分页参数数据
      * @return mixed
      */
-    public function build($pagelink = '')
+    public function build($pagelink = '',$type=1)
     {
         $page = "";
         $pagelink = empty($pagelink)?'':"&".$pagelink;
         // 上一页
         if ($this->current_page > 1) {
             $this->up_page = $this->current_page - 1;
-            $page .= "<li><a id=\"pre\" href=\"?p=" . $this->up_page . $pagelink. "\">上一页</a></li> ";
         }
         // 中间页码
         if ($this->total_page > 1) {
             $begin = $this->page>=10?$this->page-4:1;
             $end = $this->total_page>=10?$begin+9:$this->total_page;
+        }
+        // 下一页
+        if ($this->current_page < $this->total_page) {
+            $this->next_page = $this->current_page + 1;
+        }
+        if ($type==1)
+        {
+            // 上一页
+            $page .= "<li><a id=\"pre\" href=\"?p=" . $this->up_page . $pagelink. "\">上一页</a></li> ";
+            // 中间页码
             for ($i = $begin; $i <= $end; $i ++) {
                 if ($i == $this->current_page) {
                     $page .= "<li class=\"active\"><a href=\"?p=" . $this->current_page .  "\">$i</a></li> ";
@@ -63,11 +72,9 @@ class Page
                     $page .= "<li><a href=\"?p=" . $i . $pagelink . "\">$i</a></li> ";
                 }
             }
-        }
-        // 下一页
-        if ($this->current_page < $this->total_page) {
-            $this->next_page = $this->current_page + 1;
+            // 下一页
             $page .= "<li><a id=\"next\" href=\"?p=" . $this->next_page . $pagelink . "\">下一页</a></li> ";
+            return $page;
         }
         return array(
             "page" => $this->page,
@@ -77,7 +84,6 @@ class Page
             "current_page" => $this->current_page,
             "next_page" => $this->next_page,
             "up_page" => $this->up_page,
-            "pagehtml"=>$page,
         );
     }
 }
