@@ -14,7 +14,7 @@ class Cookie
         return isset($_COOKIE[$key])?$_COOKIE[$key]:null;
     }
     
-    public function clear($key)
+    public function remove($key)
     {
         unset($_COOKIE[$key]);
     }

@@ -17,7 +17,7 @@ class Session
         }
     }
 
-    public function clear($key)
+    public function remove($key)
     {
         unset($_SESSION[$key]);
     }
