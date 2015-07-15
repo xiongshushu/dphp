@@ -86,7 +86,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     $this->session->start() 启动session，如果注册服务的时候已经启动就不要再次启动。 
     $this->session->set("name","DuPHP") 设置name的值为DuPHP；
     $this->session->get("name") 获取Session中"name"值；
-    $this->session->clear("name") 清除Session中name的值；
+    $this->session->remove("name") 清除Session中name的值；
     $this->session->destory() 销毁Session；
 要使用cookie服务，可先在入口文件中注册一个cookie服务
 
@@ -100,7 +100,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 
     $this->cookie->set() 设置cookie,通setookies()；
     $this->cookie->get("name") 获取cookie中name的值；
-    $this->cookie->clear("name") 清除Cookie中name的值；
+    $this->cookie->remove("name") 清除Cookie中name的值；
     $this->cookie->destory() 销毁cookie;
 ##内置常量##
     DP_VER //Du框架的版本号
@@ -113,5 +113,34 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     __CONTROLLER__//当前访问的控制器
     __ACTION__ //当前执行的Action
 有默认值得的常量均可自由定义。
+## 验证码生成 ##
+验证码默认使用核心目录下Fonts/Elephant.ttf字体文件
+
+    $captcha = new \Du\Captcha();
+    $captcha->buid(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，
+	只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
+
+## 分页 ##
+	$page = new \Du\Page();
+	$page->calc("总条数"，"第几页(默认是第一页)");
+	$rst = $page->buid();//生成分页信息，数组返回，若要使用Du的分页html；直接取结果集中的pagehtml键值
+
+## 上传文件##
+一个上传的例子
+
+	 	if (isset($_FILES) && !empty($_FILES))
+	        {
+	            $upload = new Upload();
+	            $upload->input_name = "file";
+	            $upload->file_Ext = "jpg,png"; //允许上传的文件
+	            $upload->auto_name=false;//是否使用自动重命名，false采用原文件名
+	            $upload->file_save_dir = ROOT_PATH.DS."/Upload/task"; //上传目录
+	            $file = $upload->save(); //保存
+	            if ($file['status']){ //是否上传成功
+	                return "/Upload/task".$file['file'];
+	            }else {
+	               $this->response->json(["info"=>$upload->errorMsg]); //上传失败json输出错误信息
+	            }
+	       }
 ## 调试 ##
 Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误
