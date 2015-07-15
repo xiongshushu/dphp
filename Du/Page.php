@@ -50,21 +50,12 @@ class Page
         // 上一页
         if ($this->current_page > 1) {
             $this->up_page = $this->current_page - 1;
+            $page .= "<li><a id=\"pre\" href=\"?p=" . $this->up_page . $pagelink. "\">上一页</a></li> ";
         }
         // 中间页码
         if ($this->total_page > 1) {
             $begin = $this->page>=10?$this->page-4:1;
             $end = $this->total_page>=10?$begin+9:$this->total_page;
-        }
-        // 下一页
-        if ($this->current_page < $this->total_page) {
-            $this->next_page = $this->current_page + 1;
-        }
-        if ($type==1)
-        {
-            // 上一页
-            $page .= "<li><a id=\"pre\" href=\"?p=" . $this->up_page . $pagelink. "\">上一页</a></li> ";
-            // 中间页码
             for ($i = $begin; $i <= $end; $i ++) {
                 if ($i == $this->current_page) {
                     $page .= "<li class=\"active\"><a href=\"?p=" . $this->current_page .  "\">$i</a></li> ";
@@ -72,8 +63,13 @@ class Page
                     $page .= "<li><a href=\"?p=" . $i . $pagelink . "\">$i</a></li> ";
                 }
             }
-            // 下一页
+        }
+        // 下一页
+        if ($this->current_page < $this->total_page) {
+            $this->next_page = $this->current_page + 1;
             $page .= "<li><a id=\"next\" href=\"?p=" . $this->next_page . $pagelink . "\">下一页</a></li> ";
+        }
+        if ($type==1){
             return $page;
         }
         return array(
