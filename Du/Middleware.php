@@ -37,7 +37,7 @@ class Middleware
 
 	public function match($subject,$pattern,$msg)
 	{
-	   if (preg_match($pattern, $subject))
+	   if (!preg_match($pattern, $subject))
 	    {
 	        throw new FormException($msg);
 	    }

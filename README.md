@@ -117,13 +117,15 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 验证码默认使用核心目录下Fonts/Elephant.ttf字体文件
 
     $captcha = new \Du\Captcha();
-    $captcha->buid(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，
+    $captcha->build(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，
 	只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
 
 ## 分页 ##
 	$page = new \Du\Page();
 	$page->calc("总条数"，"第几页(默认是第一页)");
-	$rst = $page->buid();//生成分页信息，数组返回，若要使用Du的分页html；直接取结果集中的pagehtml键值
+	$rst = $page->build();//生成分页信息，默认返回html分页代码。
+	或：
+	$rst = $page->build("",2);//生成分页信息，返回分页的相关数据的数组
 
 ## 上传文件##
 一个上传的例子
