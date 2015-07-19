@@ -13,10 +13,10 @@ class Response
     /**
      * 文本内容输出到浏览器
      * @param string $msg
-     * @param number $time 跳转时间.跳转地址不为空时有效
      * @param string $url 跳转的地址；补位空的时候有效；
+     * @param number $time 跳转时间.跳转地址不为空时有效
        */
-	public function prompt($msg,$time=5,$url="")
+	public function prompt($msg,$url="",$time=5)
 	{
 	    header("Content-type: text/html; charset=utf-8");
 	    if (!empty($url))
@@ -25,6 +25,7 @@ class Response
 	    }else {
 	    	echo $msg;
 	    }
+	   exit();
 	}
 
 	public function json(array $data)

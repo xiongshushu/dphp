@@ -38,13 +38,17 @@ class Request
 	    return $_SERVER['REMOTE_ADDR'];
 	}
 
-	public function redirect($action="")
+	public function redirect($action="",$base=false)
 	{
-	    if(__MODULE__!=$this->_di->module["defaultModule"])
+	    if ($base)
+	    {
+	        header("location:".$action);
+	        return;
+	    }
+	    if(__MODULE__!=$this->_di->module["defaultModule"]&&!$base)
 	    {
 	        $action = strtolower(__MODULE__)."\\".$action;
 	    }
 	    header("location:http://".$_SERVER['HTTP_HOST'].$_SERVER['CONTEXT_PREFIX']."/".$action);
-	    exit();
 	}
 }

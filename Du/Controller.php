@@ -21,10 +21,10 @@ class Controller
 		return $this->_di->middleware->input($key);
 	}
 
-	public function redirect($action="")
+	public function redirect($action="",$base=FALSE)
 	{
 	    $this->_di->request->setDI($this->_di);
-	    return $this->_di->request->redirect($action);
+	    return $this->_di->request->redirect($action,$base);
 	}
 
 	public function __get($name)

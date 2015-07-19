@@ -10,6 +10,7 @@ class Service
 			$this->{"middleware"}=new Middleware();
 			$this->{"request"}=new Request();
 			$this->{"view"}=new View();
+			$this->{"cookie"}=new Cookie();
 			$this->{"dispatcher"}=new Dispatcher();
 			$this->{"module"} = [
 		                "modules"=> ["Home","Admin"],
