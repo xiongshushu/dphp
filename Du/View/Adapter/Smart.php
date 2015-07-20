@@ -27,7 +27,7 @@ class Smart implements ViewInterface{
         $engine->setVar($val);
         $engine ->output();
         $this->tpl = $engine;
-        exit();
+        return;
     }
 
     public function getResult()
