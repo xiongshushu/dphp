@@ -9,8 +9,13 @@ class Router
     {
         if (isset($_GET["_s"])) {
             $uri = str_replace(".html", "", trim($_GET["_s"], "/"));
+            //静态路由
             if (in_array($uri,array_keys($this->rule))) {
                 $uri = $this->rule[$uri];
+            }
+            foreach ($this->rule as $pattern=>$uri)
+            {
+            	$uri = preg_replace($pattern,$uri,$_GET["_s"]);
             }
             $uri = explode("/",$uri);
             if ($config["modules"] && in_array(ucfirst($uri[0]), $config["modules"])) {
@@ -45,7 +50,7 @@ class Router
         return [$config["defaultController"],$config["defaultAcion"],"module"=>$config["defaultModule"]];
     }
 
-    public function set($rule)
+    public function set(array $rule)
     {
         $this->rule = $rule;
     }
