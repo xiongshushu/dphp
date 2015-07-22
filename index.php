@@ -13,11 +13,11 @@ $loader = new Loader();
 
 $di = $loader->registeService();
 
-$di->registe("view", function(){
-   $view = new View();
+$di->registe("view", function() use ($di){
+   $view = new View($di);
    $view->registerEngine(new Smart());
    return $view;
-});
+}); 
 
 $di->registe("log", function(){
      $log = new Log();
@@ -31,6 +31,7 @@ $di->registe("session", function(){
     $session->start();
     return $session;
 });
+
 $app = new Application();
 
 try {

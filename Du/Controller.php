@@ -17,13 +17,11 @@ class Controller
 
 	public function input($key="")
 	{
-		$this->_di->middleware->setDI($this->_di);
 		return $this->_di->middleware->input($key);
 	}
 
 	public function redirect($action="",$base=FALSE)
 	{
-	    $this->_di->request->setDI($this->_di);
 	    return $this->_di->request->redirect($action,$base);
 	}
 

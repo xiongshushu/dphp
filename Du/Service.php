@@ -6,12 +6,12 @@ class Service
 	public function __construct()
 	{
 			$this->{"router"}  = new Router();
-			$this->{"response"}=new Response();
-			$this->{"middleware"}=new Middleware();
-			$this->{"request"}=new Request();
-			$this->{"view"}=new View();
+			$this->{"response"}=new Response($this);
+			$this->{"middleware"}=new Middleware($this);
+			$this->{"request"}=new Request($this);
+			$this->{"view"}=new View($this);
 			$this->{"cookie"}=new Cookie();
-			$this->{"dispatcher"}=new Dispatcher();
+			$this->{"dispatcher"}=new Dispatcher($this);
 			$this->{"module"} = [
 		                "modules"=> ["Home","Admin"],
 		                "defaultModule" => "Home",

@@ -13,7 +13,7 @@ class View {
 
 	private  $_di;
 
-	public function setDI(Service $di)
+	public function __construct(Service $di)
 	{
 		$this->_di = $di;
 	}
