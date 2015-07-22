@@ -77,11 +77,10 @@ class Middleware
 		{
 			throw new DUException("Couldn't find  method : ".__ACTION__ ." of ".$form);
 		}
-		$call = new $form;
+		$call = new $form($this->_di);
 		$method = __ACTION__;
-		$call->setDI($this->_di);
 	    $input  =  $this->parseInput($call->$method());
-	    return empty($key)?$input:$input[$key];
+	    return empty($key)?$input:(empty($input[$key])?"":$input[$key]);
 	}
 
 	public function parseInput($data)
