@@ -5,14 +5,6 @@ class Controller
 {
 	private  $_di;
 
-	public function __construct()
-	{
-		if (method_exists($this,"main"))
-		{
-			$this->main();
-		}
-	}
-	
 	public function setDI(Service $di)
 	{
 		$this->_di = $di;
