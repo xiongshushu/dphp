@@ -24,10 +24,6 @@ class Dispatcher
 		}
 		$call = new $ctr;
 		$call->setDI($this->_di);
-		if(method_exists($ctr,"main"))
-		{
-		    $call->main();
-		}
-	    $call->$action();
+	   $call->$action();
 	}
 }
