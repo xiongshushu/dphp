@@ -1,33 +1,35 @@
 ## DuPHP (目前是测试版本，不断更新)##
 DuPHP是一款轻量级的开源PHP框架，不到50k的压缩大小，MVC结构，轻量级的内置模板引擎Smart，验证码，上传，加密，静态路由（以后会考虑增加动态路由），多模块，运行在PHP≥5.4的系统中，精简的封装了PDO MySql操作，操作数据库目前只能通过PDO操作。DuPHP是个低耦合的框架，你完全可以使用自己的数据库操作类，不仅如此，你还能在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
 ##DuPHP与ThinkPHP的性能测试##
-以下测试均在相同环境下，因硬件配置不同会有所差异
+以下测试均在相同环境下（单纯的输出“hello world” 的测试），您若自行测试，因硬件配置不同会有所差异
 ###AB测试###
 DuPHP
 
 	Concurrency Level:      1
-	Time taken for tests:   7.433 seconds
+	Time taken for tests:   3.692 seconds
 	Complete requests:      1000
 	Failed requests:        0
-	Total transferred:      488000 bytes
-	HTML transferred:       146000 bytes
-	Requests per second:    134.54 [#/sec] (mean)
-	Time per request:       7.433 [ms] (mean)
-	Time per request:       7.433 [ms] (mean, across all concurrent requests)
-	Transfer rate:          64.12 [Kbytes/sec] received
+	Total transferred:      353000 bytes
+	HTML transferred:       11000 bytes
+	Requests per second:    270.87 [#/sec] (mean)
+	Time per request:       3.692 [ms] (mean)
+	Time per request:       3.692 [ms] (mean, across all concurrent requests)
+	Transfer rate:          93.37 [Kbytes/sec] received
+
 
 ThinkPHP（DEBUG为false时）
 
 	Concurrency Level:      1
-	Time taken for tests:   14.675 seconds
+	Time taken for tests:   10.960 seconds
 	Complete requests:      1000
 	Failed requests:        0
-	Total transferred:      938000 bytes
-	HTML transferred:       638000 bytes
-	Requests per second:    68.14 [#/sec] (mean)
-	Time per request:       14.675 [ms] (mean)
-	Time per request:       14.675 [ms] (mean, across all concurrent requests)
-	Transfer rate:          62.42 [Kbytes/sec] received
+	Total transferred:      353000 bytes
+	HTML transferred:       11000 bytes
+	Requests per second:    91.24 [#/sec] (mean)
+	Time per request:       10.960 [ms] (mean)
+	Time per request:       10.960 [ms] (mean, across all concurrent requests)
+	Transfer rate:          31.45 [Kbytes/sec] received
+
 
 ###Xhprof测试###
 DuPHP
