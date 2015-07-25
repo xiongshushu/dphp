@@ -15,6 +15,10 @@ class Model {
 		if (!isset($this->_di->db)) {
 			throw new DUException("You must registe db driver first!");
 		}
-		return call_user_func_array(array($this->_di->db,$name),$args);
+		if (method_exists($this->_di->db,$name))
+		{
+		  return call_user_func_array(array($this->_di->db,$name),$args);
+		}
+		return FALSE;
 	}
 }

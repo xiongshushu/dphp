@@ -18,10 +18,18 @@ class Middleware
 	    }
 	}
 
-	public function scope($val,$max,$min=0,$msg)
+	public function length($val,$max,$min=0,$msg)
 	{
 	    $len = mb_strlen($val);
 	    if ($len<$min ||$len>$max)
+	    {
+	        throw new FormException($msg);
+	    }
+	}
+
+	public function size($val,$max,$min=0,$msg)
+	{
+	    if ($val<$min ||$val>$max)
 	    {
 	        throw new FormException($msg);
 	    }
