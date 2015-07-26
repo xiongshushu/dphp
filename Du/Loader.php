@@ -12,7 +12,9 @@ class Loader {
         defined("DEBUG") OR define("DEBUG",TRUE);
         defined("ROOT_PATH") OR define("ROOT_PATH",dirname(__DIR__));
         defined("APP_PATH") OR define("APP_PATH",ROOT_PATH.DS."Application");
+        defined("VIEW_PATH") OR define("VIEW_PATH",APP_PATH.DS."Views");
         defined("CONF_PATH") OR define("CONF_PATH",APP_PATH.DS."Config");
+        defined("CACHE_PATH") OR define("CACHE_PATH",APP_PATH.DS."Cache");
         //自动加载
         spl_autoload_register(function($cName){
             $cPath = str_replace("\\",DS,$cName).".php";

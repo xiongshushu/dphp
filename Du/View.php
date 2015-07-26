@@ -7,17 +7,17 @@ class View {
 
 	private $tplDir;
 
+	private $cache;
+	
 	private $suffix = ".php";
 
 	protected $_vars = [];
 
-	private  $_di;
-
-	public function __construct(Service $di)
+	public function __construct()
 	{
-		$this->_di = $di;
+	   $this->tplDir = VIEW_PATH;
 	}
-
+	
 	public function setVar($key,$value)
 	{
 		$this->_vars[$key] = $value;
@@ -37,6 +37,11 @@ class View {
 	{
 		$this->engine = $engine;
 	}
+	
+	public function setCacheEngine($engine)
+	{
+	    $this->cache = $engine;
+	}
 
 	public function disableLayout()
 	{
@@ -50,22 +55,19 @@ class View {
 
 	public function display($path)
 	{
+	    $path = $this->parsePath($path);
 		if (!$this->engine) {
-		    $path = $this->parsePath($path);
 			if (is_file($path)){
 			  extract($this->_vars);
 			  require ($path);
 			}
 		}else{
-			$this->engine->display($this->parsePath($path),$this->_vars);
+			$this->engine->display($path,$this->_vars);
 		}
 	}
 
 	public function parsePath($path)
 	{
-		if (!$this->tplDir) {
-			return APP_PATH.DS."Views".DS.$path.$this->suffix;
-		}
 		return $this->tplDir.DS.$path.$this->suffix;
 	}
 }
