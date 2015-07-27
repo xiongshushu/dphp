@@ -9,6 +9,8 @@ class Model {
 
 	public $expire = 600; //缓存过期时间
 	
+	public $ignore=array("Admin"); //指定忽略缓存的模块
+	
 	public function setDI(Service $di)
 	{
 		$this->_di = $di;
@@ -16,7 +18,7 @@ class Model {
 
 	public function __call($name,$args)
 	{
-	   if ($this->cache)
+	   if ($this->cache && !in_array(__MODULE__, $this->ignore))
 	    {
 	        $this->_di->cache->connect(array(
 	            "temp"=>session_id().".php",
