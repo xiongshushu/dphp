@@ -13,8 +13,8 @@ $loader = new Loader();
 
 $di = $loader->registeService();
 
-$di->registe("view", function() use ($di){
-   $view = new View($di);
+$di->registe("view", function(){
+   $view = new View();
    $view->registerEngine(new Smart());
    return $view;
 }); 
