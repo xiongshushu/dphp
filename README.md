@@ -70,34 +70,38 @@ Du目前只能使用伪静态
 	</IfModule>
 
 ## MVC，模型（Model），视图（View），控制器（Controller）##
-DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为调度模型和视图两者的控制层，包含了业务逻辑。除了MVC结构以外还引入了“中间件”，其实就是表单验证层， 又不单单是表单验证，还可以控制在控制器之前的一些动作，执行一些必要的逻辑，安全过滤等等，但是中间件不是每个控制器都是必须的，除非控制器中含有$this->input()的时候，你必须要需要中间件的支持，我们建议在含有数据传递的时候，能够使用“中间件”，避免一些不必要要安全问题。
+DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为调度模型和视图两者的控制层，包含了业务逻辑。除了MVC结构以外还引入了“中间件”，其实就是表单验证层， 又不单单是表单验证，还可以在控制器执行之前，执行一些必要的逻辑，安全过滤等等，但是中间件不是每个控制器都是必须的，除非控制器中含有$this->input()的时候，你必须要需要中间件的支持，我们建议在含有数据传递的时候，能够使用“中间件”，避免一些不必要要安全问题。
 
 控制器负责调度模型，视图会在控制器中自动渲染，只有当存在视图文件时，才进行渲染。设置模板变量，请使用$this->view->setVar()方法。调用模型只需$this->*Model 调用即可，例如$this->UserModel,调用了User模型，必须包含Model关键词，框架自动识别。
 
-Du模型其实没做其他重要的事情，说白了就是数据库操作类的中间人,在模型中，可以直接调用
-数据库操作类的方法，纯属数据库的操作。
+Du模型就是数据库操作类的中间人,在模型中，可以直接调用
+数据库操作类的方法.可以开启数据库缓存,默认使用基于文件的缓存,目的是对重复查询的结果缓存,减少数据库多次查询。
 
 视图，Du的视图可以直接使用原生的语法。如果你要是用内置模板，你必须在入口文件中注册一个视图服务
 ```
-$di->registe("view", function(){
-   $view = new View();
-   $view->registerEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
-   return $view;
-});
+
+	$di->registe("view", function(){
+	   $view = new View();
+	   $view->registerEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
+	   return $view;
+	});
+
 ```
 内置模板的语法：
 
-{:$name;} = <?php $name ?>
-
-{:=$name;} = <?php echo $name ?>
-
-{if:false==true} = <?php if (false==true){?>
-
-{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value){?>
-
-{end} = <?php } ?>
-
-{import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?>
+	{:$name;} = <?php $name ?> //表示在"{:" 和";}"之间可以写入任何php代码.
+	
+	{:=$name;} = <?php echo $name ?> //表示在"{:=" 和";}"输出一个模板变量值,依然支持php语法.
+	
+	{if:false==true} = <?php if (false==true){?> //没啥好说了,简洁的一个写法
+	
+	{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value){?> //一样的
+	
+	{else} = <?php }else{ ?> //简洁的使用方式
+	
+	{end} = <?php } ?> //和控制结构语句一些使用.
+	
+	{import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?> //导入局部模板,支持对局部模板中的模板变量赋值
 
 内置模板支持简单的布局模式，若要使用，在入口文件中添加
 ```
@@ -158,6 +162,8 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
     DEBUG //配置是否是调试模式，默认true；
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
+    VIEW_PATH //视图目录,默认在APP_PATH下Views目录
+    CACHE_PATH //缓存目录,默认在APP_PATH下Cache目录
     __MOUDLE__ //当前访问的模块
     __CONTROLLER__//当前访问的控制器
     __ACTION__ //当前执行的Action
