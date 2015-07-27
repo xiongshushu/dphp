@@ -78,41 +78,41 @@ Du模型就是数据库操作类的中间人,在模型中，可以直接调用
 数据库操作类的方法.可以开启数据库缓存,默认使用基于文件的缓存,目的是对重复查询的结果缓存,减少数据库多次查询。
 
 视图，Du的视图可以直接使用原生的语法。如果你要是用内置模板，你必须在入口文件中注册一个视图服务
-```
+
+
+	$di->registe("view", function(){
+		  $view = new View();
+		  $view->registerEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
+		  return $view;
+	});
+
+
+内置模板的语法：
+
+{:$name;} = <?php $name ?> //表示在"{:" 和";}"之间可以写入任何php代码.
+
+{:=$name;} = <?php echo $name ?> //表示在"{:=" 和";}"输出一个模板变量值,依然支持php语法.
+	
+{if:false==true} = <?php if (false==true){?> //没啥好说了,简洁的一个写法
+	
+{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value){?> //一样的
+	
+{else} = <?php }else{ ?> //简洁的使用方式
+	
+{end} = <?php } ?> //和控制结构语句一些使用.
+	
+{import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?> //导入局部模板,支持对局部模板中的模板变量赋值
+
+内置模板支持简单的布局模式，若要使用，在入口文件中添加
 
 	$di->registe("view", function(){
 	   $view = new View();
-	   $view->registerEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
+	   $view->registerEngine( new Smart(array(
+			"layout"=>"layout.php"
+	   ))); 
 	   return $view;
 	});
 
-```
-内置模板的语法：
-
-	{:$name;} = <?php $name ?> //表示在"{:" 和";}"之间可以写入任何php代码.
-	
-	{:=$name;} = <?php echo $name ?> //表示在"{:=" 和";}"输出一个模板变量值,依然支持php语法.
-	
-	{if:false==true} = <?php if (false==true){?> //没啥好说了,简洁的一个写法
-	
-	{fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value){?> //一样的
-	
-	{else} = <?php }else{ ?> //简洁的使用方式
-	
-	{end} = <?php } ?> //和控制结构语句一些使用.
-	
-	{import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?> //导入局部模板,支持对局部模板中的模板变量赋值
-
-内置模板支持简单的布局模式，若要使用，在入口文件中添加
-```
-$di->registe("view", function(){
-   $view = new View();
-   $view->registerEngine( new Smart(array(
-		"layout"=>"layout.php"
-   ))); 
-   return $view;
-});
-```
 使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
 ##加载器Loader##
 Loader负责框架的初始化操作，自动加载，创建服务，定义常量，多模块设置等。
