@@ -21,7 +21,7 @@ class Model {
 	   if ($this->cache && !in_array(__MODULE__, $this->ignore))
 	    {
 	        $this->_di->cache->connect(array(
-	            "temp"=>session_id().".php",
+	            "temp"=>session_id(),
 	        ));
 	        $data =  $this->getcache($args);
 	        if (!$data)

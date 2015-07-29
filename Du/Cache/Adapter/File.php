@@ -1,8 +1,8 @@
 <?php
 namespace Du\Cache\Adapter;
-use Du\Cache\CacheInterFace;
+use Du\Cache\CacheInterface;
 
-class File implements CacheInterFace
+class File implements CacheInterface
 {
     public $data=array();
     
@@ -11,7 +11,7 @@ class File implements CacheInterFace
     public function connect($option)
     {
         $cacheDir = CACHE_PATH.DS."File";
-        $this->cacheFile = $cacheDir.DS.$option["temp"];
+        $this->cacheFile = $cacheDir.DS.$option["temp"].".php";
         if (!is_dir($cacheDir))
         {
             mkdir($cacheDir,0777,true);

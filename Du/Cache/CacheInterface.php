@@ -1,7 +1,7 @@
 <?php
 namespace Du\Cache;
 
-interface CacheInterFace
+interface CacheInterface
 {
     public function connect($option);
     
