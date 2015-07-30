@@ -94,6 +94,8 @@ Du模型就是数据库操作类的中间人,在模型中，可以直接调用
 {:=$name;} = <?php echo $name ?> //表示在"{:=" 和";}"输出一个模板变量值,依然支持php语法.
 	
 {if:false==true} = <?php if (false==true){?> //没啥好说了,简洁的一个写法
+
+{elseif:false==true} = <?php }elseif(false==true){?> //简洁的替代写法
 	
 {fetch:$var as $key=>$value} = <?php foreach ($var as $key => $value){?> //一样的
 	
