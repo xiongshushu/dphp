@@ -13,7 +13,7 @@ class SmartParse
         $this->data = $tpldata;
         $this->parseImport($tplPath,$suffix);
         $this->parseIf();
-        $this->parseRang();
+        $this->parseFetch();
         $this->parseElse();
         $this->parseTag();
         $this->parseEnd();
@@ -34,19 +34,20 @@ class SmartParse
     private function parseImport($tplPath,$suffix)
     {
         if (preg_match_all('/{import:([\\a-zA-Z0-9]+?);([,a-zA-Z0-9_]+:.*)*}/', $this->data, $matchImport)) {
-            foreach ($matchImport[1] as $file) {
+        	$tplVar = "<?php ";
+        	foreach ($matchImport[2] as $value) {
+        		if (preg_match_all('/(.*?):(.*?);/',$value, $vars,2)) {
+        			foreach ($vars as $varName) {
+        				$tplVar.="\$".$varName[1]."=\"".$varName[2]."\";";
+        			}
+        		}
+        	}
+        	$tplVar.="?>\n";
+        	foreach ($matchImport[1] as $file) {
                 $filePath = trim($tplPath . DS . $file, ":") .$suffix;
                 if (is_file($filePath)) {
                     $importData = file_get_contents($filePath);
-                    $this->data = preg_replace('/{import:.*}/', $importData, $this->data,1);
-                }
-            }
-            foreach ($matchImport[2] as $var => $value) {
-                if (preg_match('/(.*?):(.*?);/', trim($value, ":"), $var)) {
-                    $vars = explode(",", $var[1]);
-                    foreach ($vars as $k => $varName) {
-                        $this->tplVar[$varName] = $var[2];
-                    }
+                    $this->data = preg_replace('/{import:.*}/', $tplVar.$importData, $this->data,1);
                 }
             }
         }
@@ -80,7 +81,7 @@ class SmartParse
     /**
      * 解析rang
      */
-    private function parseRang()
+    private function parseFetch()
     {
         $this->data = preg_replace('/{fetch:([\\a-zA-Z0-9\$_.]+)}/', "<?php foreach(\\1){?>", $this->data);
     }
