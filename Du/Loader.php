@@ -37,11 +37,11 @@ class Loader {
     {
     	if (is_array($module))
     	{
-       		foreach ($module as $m)
-       		{
-       			$this->_di->module["modules"][] = $m;
-       		}
-    	}else{
+       		$this->_di->module["modules"] = array_unique(array_merge($this->_di->module["modules"],$module));
+       		return true;
+    	}	
+    	if (!in_array($module, $this->_di->module["modules"]))
+    	{
     		$this->_di->module["modules"][] = $module;
     	}
     }

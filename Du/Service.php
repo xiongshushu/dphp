@@ -13,7 +13,7 @@ class Service
 			$this->{"cookie"}=new Cookie();
 			$this->{"dispatcher"}=new Dispatcher($this);
 			$this->{"module"} = [
-		                "modules"=> ["Home","Admin"],
+		                "modules"=> ["Home"],
 		                "defaultModule" => "Home",
 		                "defaultController"=>"Home",
 		                "defaultAcion"=>"index"
