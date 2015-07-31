@@ -94,7 +94,18 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 控制器的Action回自动调用模板文件模块/控制器/动作(Home/Home/index.php),若要指定其他模板文件,使用view的display方法如$this->view->display("home/index");调用视图VIEW_PATH目录下的home目录下的index.php模板
 
 ####模型(Model)####
-Du模型就是数据库操作类的中间人,控制器中调用模型只需$this->*Model 调用即可，例如$this->UserModel,调用了User模型，必须包含Model关键词，框架自动识别
+Du模型就是数据库操作类的中间人.
+在使用模型之前入口文件中先要注册一个db服务,以下使用内置的pdo数据库操作类,也可以一使用其他注册为其他数据库操作类库.
+
+	$di->registe("db", function(){
+	    return new Pdo([
+	        'dsn' => "mysql:dbname=test;host=127.0.0.1;charset=utf8",
+	        'db_user' => 'root',
+	        'db_pwd' => '',
+	        'db_encode'=>'utf8']);
+	});
+
+控制器中调用模型只需$this->*Model 调用即可，例如$this->UserModel,调用了User模型，必须包含Model关键词，框架自动识别
 在模型中，可以直接调用数据库操作类的方法.可以开启数据库缓存,默认使用基于文件的缓存,目的是对重复查询的结果缓存,减少数据库多次查询。
 默认是基于文件缓存,有一定的缺陷.要使用缓存,需要在入口文件中指定那类缓存驱动.
 
