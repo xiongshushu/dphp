@@ -87,8 +87,8 @@ class Middleware
 		}
 		$call = new $form($this->_di);
 		$method = __ACTION__;
-	    $input  =  $this->parseInput($call->$method());
-	    return empty($key)?$input:(empty($input[$key])?"":$input[$key]);
+		$input  =  $this->parseInput($call->$method());
+		return empty($key)?$input:(empty($input[$key])?"":$input[$key]);
 	}
 
 	public function parseInput($data)
@@ -101,19 +101,13 @@ class Middleware
 		if (!is_array($data)){
             return $data;
 		}
-		foreach ($data as  $rKey=>$rValue){
-			if(strrpos($rKey,"i_")!==false)
-			{
-				$data[$rKey] = (int) $rValue;
-			}
-		}
 		return $data;
 
 	}
 
-       public function removeXSS($val) {
-          if (!is_array($val)) {
-               return htmlspecialchars(str_replace(["\n","\t","\r"], "", trim($val)));
+   public function removeXSS($val) {
+         if (!is_array($val)) {
+               return htmlspecialchars(trim($val));
           }
 	      foreach ($val as $k=>$v)
 	      {
@@ -121,10 +115,10 @@ class Middleware
 	          {
 	              $this->removeXSS($v);
 	          }else{
-	              $val[$k] = htmlspecialchars(str_replace(["\n","\t","\r"], "", trim($v)));
+	              $val[$k] = htmlspecialchars(trim($v));
 	          }
 	      }
-	       return $val;
+	     return $val;
 	}
 
 	public function __get($name)
