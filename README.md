@@ -84,7 +84,8 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 		{
 		    function indexAction() //必须是公共方法且Action为后缀,不接受参数,我们不建议在控制器直接进行Action调用
 		    {
-		    	 #一些业务逻辑.......
+		    	 $formData = $this->input(); //获取请求的数据.数据已经经过安全处理,具体查看"中间件"的说明
+		    	 #一些业务逻辑......
 		    	 $this->UserModel->getUserOne();//调用模型的方法,模型不需要手动实例化.具体可查看模型部分.
 		        $this->view->setVar("name","DuPHP"); //使用view服务为模板分配一个变量
 		    }
@@ -156,6 +157,66 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	});
 
 使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
+##中间件##
+中间件,放置在模块目录下的Middleware文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的中间件,通常是这样的
+
+```php
+	<?php
+	namespace Home\Middleware;
+	
+	use Du\Middleware;
+	
+	class Home extends Middleware
+	{
+	    public function index()
+	    {
+	    	#这里可以调用中间件的,表单验证的方法.
+	        return array(
+	            "name"=>md5($this->get('name')), //直接处理数据为MD5加密后的密文;
+	        );
+	    }
+	}
+```
+
+中间对数据的安全过滤,除了Du本身的数据过滤之外,您本身可自由处理自己需要的数据.下面是一个用户注册时数据验证的例子
+
+	```php
+		namespace Home\Middleware;
+
+		use Du\Middleware;
+		use Du\FormException;
+		
+		class User extends Middleware
+		{
+			public function reg() //对应UserController的regAction()
+		    {
+		        try {
+		            $this->isEmpty($this->post("id"), "请输入用户名！");
+		            $this->isEmpty($this->post("email"), "请输入邮箱！");
+		            $this->match($this->post("email"), "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ", "请输入正确的邮箱!");
+		            $this->isEmpty($this->post("pwd"), "请输入密码！");
+		            $this->length($this->post("pwd"),16,6, "密码强度在6~16位之间！");
+		            $this->isEmpty($this->post("pwd2"), "请输入第二次密码！");
+		            $this->compare($this->post("pwd2"),$this->post("pwd"), "两次输入的密码不一致！");
+		            $this->isEmpty($this->post("code"), "请输入验证码！");
+		            $this->compare($this->post("agree"), 1, "请同意注册协议");
+		            $this->compare(md5(strtolower($this->post("code"))),$this->session->get("cpt"), "验证码错误！");
+		             //返回的数据还会进行一次html转义.
+		            return array(
+		                "UserName"=>$this->post("id"),
+		                "Password"=>md5($this->post("pwd")),
+		                "RegTime"=>$_SERVER['REQUEST_TIME'],
+		                "RegIp"=>$_SERVER['REMOTE_ADDR'],
+		                "Email"=>$this->post("email"),
+		                "LastLogin"=>$_SERVER['REQUEST_TIME'],
+		            );
+		        }catch(FormException $e){
+		            $this->response->json(array("info"=>$e->getMessage()));
+		        }
+		    }
+		}
+	```
+
 ##加载器Loader##
 Loader负责框架的初始化操作，自动加载，创建服务，定义常量，多模块设置等。
 ##多模块设置##
