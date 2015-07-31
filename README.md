@@ -181,6 +181,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 中间对数据的安全过滤,除了Du本身的数据过滤之外,您本身可自由处理自己需要的数据.下面是一个用户注册时数据验证的例子
 
 	```php
+		<?php
 		namespace Home\Middleware;
 
 		use Du\Middleware;
