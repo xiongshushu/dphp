@@ -7,7 +7,7 @@ class Log
 
     public $log_path;
 
-    public $log_file_size = 20480;
+    public $log_file_size = 2048000;
 
     public function write($log,$destination='') {
         $now = date($this->log_time_format);
