@@ -20,9 +20,9 @@ class Smart implements ViewInterface{
         $engine->tplCacheDir = CACHE_PATH.DS."Compile".DS.__MODULE__.DS.__CONTROLLER__;
         $engine->tplPath = str_replace(strrchr($templateFile,DS), "", $templateFile);
         if (isset($this->config["layout"]))
-        {
+         {
            $engine->layoutData = file_get_contents($engine->tplPath.DS.$this->config["layout"]);
-        }
+         }
         $engine->init();
         $engine->setVar($val);
         $engine ->output();

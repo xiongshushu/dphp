@@ -27,11 +27,15 @@ class Controller
 
 	public function __get($name)
 	{
+		static $m;
 		if (strrchr($name,"Model")) {
 			$model = "\\Models\\".$name;
-			$model = new $model;
-			$model->setDI($this->_di);
-			return $model;
+			if (!isset($m[$model]))
+			{
+				$m[$model] = new $model;
+				$m[$model]->setDI($this->_di);
+			}
+			return $m[$model];
 		}
 		return $this->_di->$name;
 	}
