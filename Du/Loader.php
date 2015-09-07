@@ -15,7 +15,7 @@ class Loader {
         defined("VIEW_PATH") OR define("VIEW_PATH",APP_PATH.DS."Views");
         defined("CONF_PATH") OR define("CONF_PATH",APP_PATH.DS."Config");
         defined("CACHE_PATH") OR define("CACHE_PATH",APP_PATH.DS."Cache");
-        defined("_PUBLIC_") OR define("_PUBLIC_",ROOT_PATH.DS."Public");
+        defined("_PUBLIC_") OR define("_PUBLIC_","/Public");
         //自动加载
         spl_autoload_register(function($cName){
             $cPath = str_replace("\\",DS,$cName).".php";
