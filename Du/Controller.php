@@ -27,8 +27,8 @@ class Controller
 
 	public function __get($name)
 	{
-		static $m;
 		if (strrchr($name,"Model")) {
+			static $m;
 			$model = "\\Models\\".$name;
 			if (!isset($m[$model]))
 			{
