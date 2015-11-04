@@ -23,6 +23,11 @@ class Log
         if(is_file($destination) && floor($this->log_file_size) <= filesize($destination) ){
             rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
         }
-        error_log("[{$now}] ".$_SERVER['REMOTE_ADDR'].' '.$_SERVER['REQUEST_URI']."\r\n{$log}\r\n", 3,$destination);
+        $addr = "localhost:cli";
+        if (php_sapi_name()!="cli")
+        {
+            $addr = $_SERVER['REMOTE_ADDR'].$_SERVER['REQUEST_URI'];
+        }
+        error_log("[{$now}] ".$addr."\r\n{$log}\r\n", 3,$destination);
     }
 }

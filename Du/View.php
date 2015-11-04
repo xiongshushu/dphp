@@ -1,73 +1,76 @@
 <?php
 namespace Du;
 
-class View {
+class View
+{
 
-	private $engine;
+    private $engine;
 
-	private $tplDir;
+    private $dir;
 
-	private $cache;
-	
-	private $suffix = ".php";
+    private $cache;
 
-	protected $_vars = [];
+    private $suffix = ".php";
 
-	public function __construct()
-	{
-	   $this->tplDir = VIEW_PATH;
-	}
-	
-	public function setVar($key,$value)
-	{
-		$this->_vars[$key] = $value;
-	}
+    private $_vars = array();
 
-	public function setSuffix($suffix)
-	{
-		$this->suffix = $suffix;
-	}
+    public function __construct()
+    {
+        $this->dir = VIEW_PATH;
+    }
 
-	public function setVars(array $val)
-	{
-		$this->_vars = array_merge($this->_vars,$val);
-	}
+    public function setVar($key, $value)
+    {
+        $this->_vars[$key] = $value;
+    }
 
-	public function registerEngine($engine)
-	{
-		$this->engine = $engine;
-	}
-	
-	public function setCacheEngine($engine)
-	{
-	    $this->cache = $engine;
-	}
+    public function setSuffix($suffix)
+    {
+        $this->suffix = $suffix;
+    }
 
-	public function disableLayout()
-	{
-	    $this->engine->disableLayout();
-	}
+    public function setVars(array $val)
+    {
+        $this->_vars = array_merge($this->_vars, $val);
+    }
 
-	public function setViewsDir($tpldir)
-	{
-		$this->tplDir = $tpldir;
-	}
+    public function useEngine($engine)
+    {
+        $this->engine = $engine;
+    }
 
-	public function display($path)
-	{
-	    $path = $this->parsePath($path);
-		if (!$this->engine) {
-			if (is_file($path)){
-			  extract($this->_vars);
-			  require ($path);
-			}
-		}else{
-			$this->engine->display($path,$this->_vars);
-		}
-	}
+    public function disableLayout()
+    {
+        $this->engine->disableLayout();
+    }
 
-	public function parsePath($path)
-	{
-		return $this->tplDir.DS.$path.$this->suffix;
-	}
+    public function setViewsDir($tpldir)
+    {
+        $this->dir = $tpldir;
+    }
+
+    public function display($path="")
+    {
+        $mvc = $this->parsePath($path);
+        $this->engine->display($this->dir,$mvc,$this->_vars,$this->suffix);
+        exit();
+    }
+
+    private function parsePath($path)
+    {
+        $pathinfo = explode(".", $path);
+        $count = empty($path)?0:count($pathinfo);
+        switch ($count) {
+            case 3:
+                return $pathinfo;
+            case 2:
+                $pathinfo = array(array(__MODULE__) ,$pathinfo);
+                return $pathinfo;
+            case 1:
+                $pathinfo = array_merge(array( __MODULE__, __CONTROLLER__) , $pathinfo);
+                return $pathinfo;
+            default:
+                return array(__MODULE__, __CONTROLLER__,__ACTION__);
+        }
+    }
 }

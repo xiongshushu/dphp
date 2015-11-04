@@ -3,17 +3,17 @@ namespace Du;
 
 class Application
 {
-	public function handle($di)
+	public function handle(Service $di)
 	{
 		   $query = $di->router->parseUrl($di->module);
-	       define("__MODULE__", ucfirst($query["module"]),false);
-	       define("__CONTROLLER__", ucfirst($query[0]),false);
-	       define("__ACTION__",$query[1],false);
+	       define("__MODULE__", ucfirst($query->defautModule),false);
+	       define("__CONTROLLER__", ucfirst($query->defaultController),false);
+	       define("__ACTION__",$query->defaultAcion,false);
 	       try{
 	             $di->dispatcher->exec();
-	             $di->view->display(__MODULE__.DS.__CONTROLLER__.DS.__ACTION__);
+	             $di->view->display();
 	       }catch (DUException $e){
-	       	      $di->response->prompt($e->getMessage());
+	       	      $di->response->show($e->getMessage());
 	       }
 	 }
 }

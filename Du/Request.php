@@ -44,10 +44,8 @@ class Request
 	    {
 	        header("location:".$action);
 	        return;
-	    }
-	    if(__MODULE__!=$this->_di->module["defaultModule"]&&!$base)
-	    {
-	        $action = strtolower(__MODULE__)."\\".$action;
+	    }else{
+	        $action = strtolower(__MODULE__)."/".$action;
 	    }
 	    header("location:http://".$_SERVER['HTTP_HOST'].$_SERVER['CONTEXT_PREFIX']."/".$action);
 	}

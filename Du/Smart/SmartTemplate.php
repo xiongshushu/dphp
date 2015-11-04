@@ -3,66 +3,46 @@ namespace Du\Smart;
 
 class SmartTemplate
 {
-    public $tagLeft = "}";
+    public $vars = array();
 
-    public $tagRight = "}";
-
-    public $tplVar = array();
-
-    public $tplCacheDir = "tpl_cache/";
-
-    public $tplTheme = NULL;
-
-    public $tplFile;
+    public $filePath;
+ 
+    public $theme = "";
 
     public $cacheFile;
 
-    public $tplFileSuffix = ".php";
+    public $suffix = ".php";
 
-    public $tplPath = "template/";
+    public $expireTime = -1;
 
-    public $cacheLifeTime = -1;
+    public $data;
 
-    public $tplData;
-
-    public $layoutData='{MAIN}';
-
-    private $tplFileName;
-
-     public function init ()
-    {
-        $pathinfo = pathinfo($this->tplFile);
-        $this->tplFileSuffix = ".".$pathinfo['extension'];
-        $this->tplFileName =$pathinfo['basename'];
-        $this->cacheFile =$this->tplCacheDir . $this->tplTheme . substr($this->tplFile, strlen($this->tplPath . $this->tplTheme));
-        if (is_file($this->tplFile)) {
-                $this->tplData = str_replace("{MAIN}", file_get_contents($this->tplFile), $this->layoutData);
-        }
-    }
+    public $fileName;
 
     public function setVar ($key, $value = "")
     {
         if (is_array($key)) {
             foreach ($key as $k => $v) {
-                $this->tplVar[$k] = $v;
+                $this->vars[$k] = $v;
             }
         } else {
-            $this->tplVar[$key] = $value;
+            $this->vars[$key] = $value;
         }
     }
 
     public function getResult ()
     {
-        return $this->tplData;
+        return $this->data;
     }
 
     public function output ()
     {
-        $cplFile = substr($this->tplFile, strlen($this->tplPath));
-        $this->buidCacheFile($cplFile);
+        $this->buidCacheFile();
         // 载入文件
-        extract($this->tplVar);
-        include $this->cacheFile;
+        extract($this->vars);
+        if (is_file($this->cacheFile)){
+            include $this->cacheFile;
+        }
     }
 
     /**
@@ -82,19 +62,18 @@ class SmartTemplate
      *
      * @param string $cplFile
      */
-    private function buidCacheFile ($cplFile)
+    private function buidCacheFile ()
     {
-        if (($_SERVER['REQUEST_TIME'] - $this->getFiletime($this->cacheFile)) <= $this->cacheLifeTime) {
+        if (($_SERVER['REQUEST_TIME'] - $this->getFiletime($this->cacheFile)) <= $this->expireTime) {
             return true;
         }
-        $path = str_replace($this->tplFileName, "", $cplFile);
-        if (! is_dir($this->tplCacheDir . $path)) {
-            mkdir($this->tplCacheDir . $path,0777,true);
+        $path = str_replace($this->fileName, "", $this->cacheFile);
+        if (!is_dir($path)) {
+            mkdir($path,0777,true);
         }
         $fh = @fopen($this->cacheFile, "w");
         $parser = new SmartParse();
-        $parser->compile($this->tplData,$this->tplPath,$this->tplFileSuffix);
-        $this->tplVar = array_merge($this->tplVar, $parser->tplVar);
+        $parser->compile($this->data,$this->filePath,$this->suffix);
         $parser->data  = "<?php defined('DP_VER') or exit();?>\n".$parser->data;
         @fwrite($fh, $parser->data);
         @fclose($fh);

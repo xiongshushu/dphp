@@ -1,5 +1,5 @@
 ﻿## DuPHP (目前是测试版本，不断更新)##
-DuPHP是一款轻量级的开源PHP框架，不到50k的压缩大小，MVC结构，轻量级的内置模板引擎Smart，验证码；上传；加密；静态路由，正则路由；多模块；运行在PHP≥5.4的系统中，精简封装了PDO MySql操作，操作数据库目前只通过PDO操作。DuPHP是个低耦合的框架，你完全可以使用自己的数据库操作类，不仅如此，你还能在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
+DuPHP是一款轻量级的开源PHP框架，不到50k的压缩大小，MVC结构，轻量级内置模板引擎Smart，验证码；上传；加密；静态路由，正则路由；多模块统统都有，运行在PHP≥5.4的系统中，精简封装PDO MySql操作，操作数据库目前只通过PDO操作，完全可以使用第三方数据库操作类。DuPHP低耦合框架，可以在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
 ##DuPHP与ThinkPHP的性能测试##
 以下测试均在相同环境下（单纯的输出“hello world” 的测试），您若自行测试，因硬件配置不同会有所差异
 ###AB测试###
@@ -48,7 +48,7 @@ ThinkPHP（DEBUG为false时）
 	Total Incl. MemUse (bytes):	1,363,904 bytes
 	Total Incl. PeakMemUse (bytes):	1,445,408 bytes
 	Number of Function Calls:	657
-从中可以看出，DuPHP比ThinkPHP更快，更轻量，性能消耗更低！
+从中可以看出，DuPHP比ThinkPHP性能提升至少3倍！
 ## Apache,Nginx 配置伪静态##
 Du目前只能使用伪静态
 
@@ -77,10 +77,10 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 
 ```php
 	<?php
-		namespace Home\Controller; //命名空间不能搞错;
+		namespace Home\Controllers; //命名空间不能搞错;
 		use Du\Controller; 
 		
-		class HomeController extends Controller //控制器名称必须大写
+		class Home extends Controller //控制器名称必须大写
 		{
 		    function indexAction() //必须是公共方法且Action为后缀,不接受参数,我们不建议在控制器直接进行Action调用
 		    {
@@ -123,7 +123,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 	$di->registe("view", function(){
 		  $view = new View();
-		  $view->registerEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
+		  $view->useEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
 		  return $view;
 	});
 
@@ -146,17 +146,6 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	
 {import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?> //导入局部模板,支持对局部模板中的模板变量赋值
 
-内置模板支持简单的布局模式，若要使用，在入口文件中添加
-
-	$di->registe("view", function(){
-	   $view = new View();
-	   $view->registerEngine( new Smart(array(
-			"layout"=>"layout.php"
-	   ))); 
-	   return $view;
-	});
-
-使用layout.php布局文件，内容包含需要替换内容位置的关键字"{MAIN}"，视图先渲染layout,替换"{MAIN}"，再渲染控制器视图，在控制器可以使用$this->view->disableLayout();跳过本次的布局渲染。
 ##中间件##
 中间件,放置在模块目录下的Middleware文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的中间件,通常是这样的
 
@@ -219,10 +208,10 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 ```
 
 ##加载器Loader##
-Loader负责框架的初始化操作，自动加载，创建服务，定义常量，多模块设置等。
+Loader负责框架的初始化操作，自动加载，创建服务，定义常量等。
 ##多模块设置##
-    $loader = new Loader();
-    $loader->registeModule("Admin");//注册一个Admin模块，首字母大写.
+    $di = new Loader();
+    $di->module->registeModule("Admin");//注册一个Admin模块，首字母大写.
 支持同时注册多个模块
 
  	$loader->registeModule(array("Admin","Mobile"));
@@ -295,10 +284,10 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 	            $upload->input_name = "file";
 	            $upload->file_Ext = "jpg,png"; //允许上传的文件
 	            $upload->auto_name=false;//是否使用自动重命名，false采用原文件名
-	            $upload->file_save_dir = ROOT_PATH.DS."/Upload/task"; //上传目录
+	            $upload->file_save_dir = ROOT_PATH.DS."/Upload"; //上传目录
 	            $file = $upload->save(); //保存
 	            if ($file['status']){ //是否上传成功
-	                return "/Upload/task".$file['file'];
+	                return "/Upload".$file['file'];
 	            }else {
 	               $this->response->json(["info"=>$upload->errorMsg]); //上传失败json输出错误信息
 	            }

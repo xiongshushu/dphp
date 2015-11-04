@@ -4,63 +4,72 @@ namespace Du;
 class Captcha
 {
 
-	/**
-	 * 随机因子
-	 *@var string
-	 */
+    /**
+     * 随机因子
+     * 
+     * @var string
+     */
     private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
 
     /**
-         * 验证码
+     * 验证码
+     * 
      * @var unknown
-       */
+     */
     private $code;
 
     /**
-          * 验证码长度
+     * 验证码长度
+     * 
      * @var int
-         */
+     */
     public $codelen = 4;
 
     /**
-          *  宽度
+     * 宽度
+     * 
      * @var int
-         */
+     */
     public $width = 80;
 
     /**
-          * 高度
+     * 高度
+     * 
      * @var int
-         */
+     */
     public $height = 30;
 
     /**
-          * 图形资源句柄
+     * 图形资源句柄
+     * 
      * @var Resoure
-          */
+     */
     private $img;
 
     /**
-          * 指定的字体路径
+     * 指定的字体路径
+     * 
      * @var string
-         */
-    public $font= "Fonts/Elephant.ttf";
+     */
+    public $font = "Fonts/Elephant.ttf";
 
     /**
-          * 指定字体大小
+     * 指定字体大小
+     * 
      * @var int
-          */
+     */
     public $fontsize = 15;
 
     /**
-         * 指定字体颜色
+     * 指定字体颜色
+     * 
      * @var unknown
-         */
+     */
     private $fontcolor;
 
     /**
-    	 * 生成随机码
-     	 */
+     * 生成随机码
+     */
     private function createCode()
     {
         $_len = strlen($this->charset) - 1;
@@ -70,8 +79,8 @@ class Captcha
     }
 
     /*
-     	 * 生成背景
-        */
+     * 生成背景
+     */
     private function createBg()
     {
         $this->img = imagecreatetruecolor($this->width, $this->height);
@@ -80,8 +89,8 @@ class Captcha
     }
 
     /**
-  	  * 生成文字
-         */
+     * 生成文字
+     */
     private function createFont()
     {
         $_x = $this->width / $this->codelen;
@@ -92,8 +101,8 @@ class Captcha
     }
 
     /**
-         * 生成线条、雪花
-         */
+     * 生成线条、雪花
+     */
     private function createLine()
     {
         for ($i = 0; $i < 6; $i ++) {
@@ -107,18 +116,21 @@ class Captcha
     }
 
     /**
-     	  * 输出验证码
-     * @param string $sKey 验证存储在session的键名
-          */
-    public function build($sKey="cpt")
+     * 输出验证码
+     * 
+     * @param string $sKey
+     *            验证存储在session的键名
+     */
+    public function build($sKey = "cpt")
     {
-         $this->font = __DIR__.DS.$this->font;
-    	 $this->createBg();
-    	 $this->createCode();
-    	 $this->createLine();
-    	 $this->createFont();
-    	 //加入验证码到session中
-    	 $_SESSION[$sKey] = md5(strtolower($this->code));
+        $this->font = __DIR__ . DS . $this->font;
+        $this->createBg();
+        $this->createCode();
+        $this->createLine();
+        $this->createFont();
+        // 加入验证码到session中
+        $_SESSION[$sKey] = md5(strtolower($this->code));
+        ob_clean();
         header('Content-type:image/png');
         imagepng($this->img);
         imagedestroy($this->img);

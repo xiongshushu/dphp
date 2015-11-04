@@ -16,6 +16,7 @@ class Middleware
 	    {
 	        throw new FormException($msg);
 	    }
+	    return $data;
 	}
 
 	public function length($val,$max,$min=0,$msg)
@@ -25,6 +26,7 @@ class Middleware
 	    {
 	        throw new FormException($msg);
 	    }
+	    return $val;
 	}
 
 	public function size($val,$max,$min=0,$msg)
@@ -33,6 +35,7 @@ class Middleware
 	    {
 	        throw new FormException($msg);
 	    }
+	    return $val;
 	}
 
 	public function compare($val1,$val2,$msg)
@@ -41,6 +44,7 @@ class Middleware
 	    {
 	        throw new FormException($msg);
 	    }
+	    return $val1;
 	}
 
 	public function match($subject,$pattern,$msg)
@@ -49,6 +53,7 @@ class Middleware
 	    {
 	        throw new FormException($msg);
 	    }
+	    return $subject;
 	}
 
 	public function replace($val,$replace)

@@ -6,12 +6,10 @@ class SmartParse
 
     public $data;
 
-    public $tplVar = array();
-
-    public function compile($tpldata,$tplPath,$suffix=".html")
+    public function compile($tpldata,$fileDir,$suffix=".html")
     {
         $this->data = $tpldata;
-        $this->parseImport($tplPath,$suffix);
+        $this->parseImport($fileDir,$suffix);
         $this->parseIf();
         $this->parseFetch();
         $this->parseElse();
@@ -31,7 +29,7 @@ class SmartParse
     /**
      * 解析import
      */
-    private function parseImport($tplPath,$suffix)
+    private function parseImport($fileDir,$suffix)
     {
         if (preg_match_all('/{import:([\\a-zA-Z0-9]+?);([,a-zA-Z0-9_]+:.*)*}/', $this->data, $matchImport)) {
         	$tplVar = "<?php ";
@@ -44,7 +42,7 @@ class SmartParse
         	}
         	$tplVar.="?>\n";
         	foreach ($matchImport[1] as $file) {
-                $filePath = trim($tplPath . DS . $file, ":") .$suffix;
+                $filePath = trim($fileDir . DS . $file, ":") .$suffix;
                 if (is_file($filePath)) {
                     $importData = file_get_contents($filePath);
                     $this->data = preg_replace('/{import:.*}/', $tplVar.$importData, $this->data,1);

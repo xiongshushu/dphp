@@ -9,13 +9,13 @@ use Du\Loader;
 require 'Du/Loader.php';
 //设置时间区
 date_default_timezone_set("PRC");
-$loader = new Loader();
 
-$di = $loader->registeService();
+$di = Loader::init();
 
 $di->registe("view", function(){
    $view = new View();
-   $view->registerEngine(new Smart());
+   $smart = new Smart();
+   $view->useEngine($smart);
    return $view;
 }); 
 
@@ -40,5 +40,5 @@ try {
 
 }catch (\Exception $e){
 
-    $di->response->prompt($e->getMessage());
+    $di->response->show($e->getMessage());
 }
