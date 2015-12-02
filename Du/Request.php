@@ -3,13 +3,6 @@ namespace Du;
 
 class Request
 {
-	private  $_di;
-
-	public function __construct(Service $di)
-	{
-		$this->_di = $di;
-	}
-
 	public function isPost()
 	{
 		if($_SERVER["REQUEST_METHOD"]=="POST")

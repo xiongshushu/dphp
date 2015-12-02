@@ -6,53 +6,31 @@ class View
 
     private $engine;
 
-    private $dir;
-
     private $cache;
 
-    private $suffix = ".php";
+    private $tVars = array();
+    
+    private $tPath="";
 
-    private $_vars = array();
-
-    public function __construct()
+    public function setVar($key, $value="")
     {
-        $this->dir = VIEW_PATH;
+        if (is_array($key))
+        {
+            $this->tVars=array_merge($this->tVars, $key);
+        }else{
+            $this->tVars[$key] = $value;
+        }
     }
 
-    public function setVar($key, $value)
-    {
-        $this->_vars[$key] = $value;
-    }
-
-    public function setSuffix($suffix)
-    {
-        $this->suffix = $suffix;
-    }
-
-    public function setVars(array $val)
-    {
-        $this->_vars = array_merge($this->_vars, $val);
-    }
-
-    public function useEngine($engine)
+    public function loadEngine($engine)
     {
         $this->engine = $engine;
     }
 
-    public function disableLayout()
-    {
-        $this->engine->disableLayout();
-    }
-
-    public function setViewsDir($tpldir)
-    {
-        $this->dir = $tpldir;
-    }
-
     public function display($path="")
     {
-        $mvc = $this->parsePath($path);
-        $this->engine->display($this->dir,$mvc,$this->_vars,$this->suffix);
+        $this->parsePath($path);
+        $this->engine->render($this->tPath,$this->tVars);
         exit();
     }
 
@@ -62,15 +40,18 @@ class View
         $count = empty($path)?0:count($pathinfo);
         switch ($count) {
             case 3:
-                return $pathinfo;
+                $this->tPath= $pathinfo;
+                break;
             case 2:
                 $pathinfo = array(array(__MODULE__) ,$pathinfo);
-                return $pathinfo;
+                $this->tPath= $pathinfo;
+                break;
             case 1:
                 $pathinfo = array_merge(array( __MODULE__, __CONTROLLER__) , $pathinfo);
-                return $pathinfo;
+                $this->tPath= $pathinfo;
+                break;
             default:
-                return array(__MODULE__, __CONTROLLER__,__ACTION__);
+                $this->tPath = array(__MODULE__, __CONTROLLER__,__ACTION__);
         }
     }
 }

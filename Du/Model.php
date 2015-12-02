@@ -2,25 +2,18 @@
 namespace Du;
 
 class Model {
-
-	private  $_di ;
 	
 	public $cache = false; //是否使用缓存
 
 	public $expire = 600; //缓存过期时间
 	
 	public $ignore=array("Admin"); //指定忽略缓存的模块
-	
-	public function setDI(Service $di)
-	{
-		$this->_di = $di;
-	}
 
 	public function __call($name,$args)
 	{
 	   if ($this->cache && !in_array(__MODULE__, $this->ignore))
 	    {
-	        $this->_di->cache->connect(array(
+	        DI::$di->cache->connect(array(
 	            "temp"=>session_id(),
 	        ));
 	        $data =  $this->getcache($args);
@@ -39,23 +32,23 @@ class Model {
 	
 	private function call($name,$args)
 	{
-	    if (!isset($this->_di->db)) {
+	    if (!isset(DI::$di->db)) {
 	        throw new DUException("You must registe a db driver first!");
 	    }
-	    if (method_exists($this->_di->db,$name))
+	    if (method_exists(DI::$di->db,$name))
 	    {
-	        return call_user_func_array(array($this->_di->db,$name),$args);
+	        return call_user_func_array(array(DI::$di->db,$name),$args);
 	    }
 	    return FALSE;
 	}
 	
 	private function getcache($name)
 	{
-	    return $this->_di->cache->get(hash("md5",serialize($name)));
+	    return DI::$di->cache->get(hash("md5",serialize($name)));
 	}
 	
 	private function setcache($name,array $value,$expire)
 	{
-	     $this->_di->cache->set(hash("md5",serialize($name)),$value,$expire);
+	     DI::$di->cache->set(hash("md5",serialize($name)),$value,$expire);
 	}
 }

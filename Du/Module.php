@@ -12,14 +12,14 @@ class Module
 
     public $modules = array("Home");
 
-    public function registeModule($module)
+    public function registeModule($_)
     {
-        if (is_array($module)) {
-            $this->modules = array_unique(array_merge($this->modules, $module));
-            return true;
-        }
-        if (!in_array($module, $this->modules)) {
-            $this->modules[] = $module;
+        $args = func_get_args();
+        foreach ($args as $value)
+        {
+            if (!in_array($value, $this->modules)) {
+                $this->modules[] = $value;
+            }
         }
     }
 

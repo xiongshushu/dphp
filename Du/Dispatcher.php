@@ -4,13 +4,6 @@ namespace Du;
 class Dispatcher
 {
 
-    private $_di;
-
-    public function __construct(Service $di)
-    {
-        $this->_di = $di;
-    }
-
     public function exec()
     {
         $this->run();
@@ -28,7 +21,6 @@ class Dispatcher
         } else {
             $ctr = CLI_MOD . "\\" . __MODULE__ . "\\" . __CONTROLLER__;
         }
-        
         $action = __ACTION__ . "Action";
         if (! class_exists($ctr)) {
             throw new DUException("Couldn't find controller: " . __CONTROLLER__);
@@ -37,7 +29,6 @@ class Dispatcher
             throw new DUException("Couldn't find  action : " . $action . " of " . __CONTROLLER__);
         }
         $call = new $ctr();
-        $call->setDI($this->_di);
         if (method_exists($call, "main")) {
             $call->main();
         }

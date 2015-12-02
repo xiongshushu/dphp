@@ -3,7 +3,7 @@ namespace Du;
 
 class Cli
 {
-	public function handle($di,$argv)
+	public function handle($argv)
 	{
 		   if (php_sapi_name()!="cli"){
 		       throw  new DUException("please run in cli mode!\n");
@@ -18,9 +18,9 @@ class Cli
 	       define("__CONTROLLER__", ucfirst($argv[1]),false);
 	       define("__ACTION__",ucfirst($argv[2]),false);
 	       try{
-	             $di->dispatcher->cliExec();
+	             DI::$di->dispatcher->cliExec();
 	       }catch (DUException $e){
-	       	      $di->response->show($e->getMessage());
+	       	      DI::$di->response->show($e->getMessage());
 	       }
 	 }
 }

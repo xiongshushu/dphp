@@ -3,13 +3,6 @@ namespace Du;
 
 class Middleware
 {
-	private  $_di ;
-
-	public function __construct(Service $di)
-	{
-		$this->_di = $di;
-	}
-
 	public function isEmpty($data,$msg)
 	{
 	    if (empty($data))
@@ -90,7 +83,7 @@ class Middleware
 		{
 			throw new DUException("Couldn't find  method : ".__ACTION__ ." of ".$form);
 		}
-		$call = new $form($this->_di);
+		$call = new $form(DI::$di);
 		$method = __ACTION__;
 		$input  =  $this->parseInput($call->$method());
 		return empty($key)?$input:(empty($input[$key])?"":$input[$key]);
@@ -128,6 +121,6 @@ class Middleware
 
 	public function __get($name)
 	{
-        return $this->_di->$name;
+        return DI::$di->$name;
 	}
 }

@@ -25,6 +25,6 @@ class Loader {
                 require_once(APP_PATH.DS.$cPath);
             }
         });
-       return new Service();
+       return new Application();
     }
 }

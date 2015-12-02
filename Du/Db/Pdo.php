@@ -53,7 +53,7 @@ class Pdo
     }
 
     /**
-     * 向数据库更新数据，返回受影响的行数
+     * 向数据库更新数据，返回布尔值
      *
      * @param string $sql
      * @param array $data
@@ -62,7 +62,11 @@ class Pdo
     public function update($sql, $data)
     {
         $result = $this->query($sql, $data);
-        return $result->rowCount();
+        if ($result->errorCode()!== "00000")
+        {
+            return false;
+        }
+        return true;
     }
 
     /**

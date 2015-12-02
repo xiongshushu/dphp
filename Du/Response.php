@@ -3,14 +3,7 @@ namespace Du;
 
 class Response
 {
-    private  $_di ;
-
     private $tpl = "Tpl/show.php";
-    
-    public function __construct(Service $di)
-    {
-        $this->_di = $di;
-    }
 
     /**
      * 文本内容输出到浏览器
