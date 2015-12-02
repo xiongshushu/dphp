@@ -1,9 +1,6 @@
 <?php
-use Du\Application;
 use Du\View;
 use Du\View\Adapter\Smart;
-use Du\Session;
-use Du\Log;
 use Du\Loader;
 
 require 'Du/Loader.php';
