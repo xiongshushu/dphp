@@ -123,7 +123,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 	$di->registe("view", function(){
 		  $view = new View();
-		  $view->useEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
+		  $view->loadEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
 		  return $view;
 	});
 
@@ -159,7 +159,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	{
 	    public function index()
 	    {
-	    	#这里可以调用中间件的,表单验证的方法.
+	    	#这里可以调用中间件的表单验证的方法.
 	        return array(
 	            "name"=>md5($this->get('name')), //直接处理数据为MD5加密后的密文;
 	        );
@@ -214,7 +214,7 @@ Loader负责框架的初始化操作，自动加载，创建服务，定义常�
     $di->module->registeModule("Admin");//注册一个Admin模块，首字母大写.
 支持同时注册多个模块
 
- 	$loader->registeModule(array("Admin","Mobile"));
+ 	$loader->registeModule("Admin","Mobile");
 默认包含了一个“Home”模块。
 ## 读取配置 ##
 配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
