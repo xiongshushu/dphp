@@ -1,33 +1,40 @@
 <?php
 namespace Du;
 
-class DI
+class DI extends Service
 {
 
     /**
-     * DI容器
+     * 默认DI容器
      * 
-     * @var \DU\Application
+     * @var \Du\DI
      */
     static $di;
 
-    /**
-     * 加载DI(注意调用一次即可)
-     * 
-     * @param Service $service            
-     */
-    static function Load(Application $app)
+    public function __construct()
     {
-        self::$di = $app;
+        parent::__construct();
+        if (! self::$di) {
+            self::$di = $this;
+        }
     }
 
     /**
-     * 调用DI中的服务
+     * 获取DI实例
      * 
-     * @param string $name            
+     * @return \Du\DI
      */
-    static function invoke($name)
+    public function GetDI()
     {
-        return self::$di->$name;
+        return $this;
+    }
+
+    public function registe($name, $call)
+    {
+        if (! is_callable($call)) {
+            $$this->$name = new $call();
+        } else {
+            $this->$name = $call();
+        }
     }
 }

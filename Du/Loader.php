@@ -3,7 +3,7 @@ namespace Du;
 
 class Loader {
 
-    public static function init()
+    public static function Init()
     {
         define("DP_VER", "2.0.1 Beta",false);
         define("DS", DIRECTORY_SEPARATOR,false) ;
@@ -25,6 +25,5 @@ class Loader {
                 require_once(APP_PATH.DS.$cPath);
             }
         });
-       return new Application();
     }
 }

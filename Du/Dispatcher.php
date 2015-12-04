@@ -4,21 +4,11 @@ namespace Du;
 class Dispatcher
 {
 
-    public function exec()
+    public function exec($type = "normal")
     {
-        $this->run();
-    }
-
-    public function cliExec()
-    {
-        $this->run(2);
-    }
-
-    private function run($type = 1)
-    {
-        if ($type == 1) {
-            $ctr = __MODULE__ . "\\Controllers\\" . __CONTROLLER__;
-        } else {
+        
+        $ctr = __MODULE__ . "\\Controllers\\" . __CONTROLLER__;
+        if ($type == "console") {
             $ctr = CLI_MOD . "\\" . __MODULE__ . "\\" . __CONTROLLER__;
         }
         $action = __ACTION__ . "Action";

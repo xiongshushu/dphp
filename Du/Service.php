@@ -30,14 +30,4 @@ class Service
 			$this->dispatcher = new Dispatcher($this);
 			$this->module = new Module();
 	}
-
-	public function registe($name,$call)
-	{
-		if(!is_callable ($call))
-		{
-			$this->$name= new $call;
-		}else{
-			$this->$name= $call();
-		}
-	}
 }
