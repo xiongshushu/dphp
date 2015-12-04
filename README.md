@@ -214,7 +214,7 @@ Loader负责框架的初始化操作，自动加载，创建服务，定义常�
     $di->module->registeModule("Admin");//注册一个Admin模块，首字母大写.
 支持同时注册多个模块
 
- 	$loader->registeModule("Admin","Mobile");
+ 	 $di->module->registeModule("Admin","Mobile");
 默认包含了一个“Home”模块。
 ## 读取配置 ##
 配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
