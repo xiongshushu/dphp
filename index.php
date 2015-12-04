@@ -2,14 +2,17 @@
 use Du\View;
 use Du\View\Adapter\Smart;
 use Du\Loader;
+use Du\DI;
+use Du\Application;
 
 require 'Du/Loader.php';
 //设置时间区
 date_default_timezone_set("PRC");
 
-$app = Loader::init();
+Loader::Init();
+$di = new DI();
 
-$app->registe("view", function(){
+$di->registe("view", function(){
    $view = new View();
    $smart = new Smart();
    $view->loadEngine($smart);
@@ -17,10 +20,10 @@ $app->registe("view", function(){
 }); 
 
 try {
-
+    $app = new Application();
     $app->handle($app);
 
 }catch (\Exception $e){
 
-    $app->response->show($e->getMessage());
+    $di->response->show($e->getMessage());
 }
