@@ -3,7 +3,6 @@ namespace Du\View;
 
 abstract class Template
 {
-
     public $suffix = ".php";
     
     public $theme = "";
@@ -21,9 +20,8 @@ abstract class Template
     abstract function getResult();
 
     /**
-     * 建立临时文件
-     *
-     * @param string $cplFile            
+     *  建立临时文件
+     * @param string $tData
      */
     public function buidCacheFile($tData)
     {

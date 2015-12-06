@@ -146,6 +146,22 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	
 {import:nav;title:Hello} = <?php $title="Hello";include "nav.html";?> //导入局部模板,支持对局部模板中的模板变量赋值
 
+设置模板主题
+方法一
+	$di->registe("view", function () {
+	    $view = new View();
+	    $smart = new Smart();
+	    $smart->theme = "Default";
+	    $view->loadEngine($smart);
+	    return $view;
+	});
+方法二（指定特定模块使用某个主题）
+例如在新建一个Base.php的公用控制器，其他控制器继承该类，添加下面的代码即可
+	public function __construct()
+    {
+        $this->view->setTheme("theme");
+    }
+
 ##中间件##
 中间件,放置在模块目录下的Middleware文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的中间件,通常是这样的
 
@@ -208,9 +224,11 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 ```
 
 ##加载器Loader##
-Loader负责框架的初始化操作，自动加载，创建服务，定义常量等。
+Loader负责框架的初始化操作，自动加载，定义常量等。
+每个应用启动前必须初始化加载器
+	Loader::Init()
 ##多模块设置##
-    $di = new Loader();
+    $di = new DI();
     $di->module->registeModule("Admin");//注册一个Admin模块，首字母大写.
 支持同时注册多个模块
 
