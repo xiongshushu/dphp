@@ -9,7 +9,6 @@ class Php extends Template
 
     public function render($tPath, $tVars)
     {
-        $this->theme="Default";
         $path = join(DS, $tPath);
         $tpldir = VIEW_PATH . DS . $this->theme;
         $file = $tpldir . DS . $path . $this->suffix;
