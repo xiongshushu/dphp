@@ -32,7 +32,7 @@ class DI extends Service
     public function registe($name, $call)
     {
         if (! is_callable($call)) {
-            $$this->$name = new $call();
+            $this->$name = new $call();
         } else {
             $this->$name = $call();
         }
