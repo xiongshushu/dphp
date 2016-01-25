@@ -31,7 +31,7 @@ class Request
 	    return $_SERVER['REMOTE_ADDR'];
 	}
 
-	public function redirect($action="",$base=false)
+	public function redirect($action="")
 	{
 	    header("location:".$action);
 	}
