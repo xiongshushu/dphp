@@ -1,8 +1,8 @@
 <?php
 namespace Du\Cache\Adapter;
-use Du\Cache\CacheInterface;
+use Du\Cache\Cache;
 
-class File implements CacheInterface
+class File implements Cache
 {
     public $data=array();
     

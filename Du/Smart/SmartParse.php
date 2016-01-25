@@ -6,9 +6,9 @@ class SmartParse
 
     public $data;
 
-    public function compile($tpldata,$fileDir,$suffix=".html")
+    public function compile($tplData,$fileDir,$suffix=".html")
     {
-        $this->data = $tpldata;
+        $this->data = $tplData;
         $this->parseImport($fileDir,$suffix);
         $this->parseIf();
         $this->parseFetch();
