@@ -7,7 +7,7 @@ class Middleware
 	{
 	    if (empty($data))
 	    {
-	        throw new FormException($msg);
+	        throw new FormError($msg);
 	    }
 	    return $data;
 	}
@@ -17,7 +17,7 @@ class Middleware
 	    $len = mb_strlen($val);
 	    if ($len<$min ||$len>$max)
 	    {
-	        throw new FormException($msg);
+	        throw new FormError($msg);
 	    }
 	    return $val;
 	}
@@ -26,7 +26,7 @@ class Middleware
 	{
 	    if ($val<$min ||$val>$max)
 	    {
-	        throw new FormException($msg);
+	        throw new FormError($msg);
 	    }
 	    return $val;
 	}
@@ -35,7 +35,7 @@ class Middleware
 	{
 	    if ($val1 !=$val2)
 	    {
-	        throw new FormException($msg);
+	        throw new FormError($msg);
 	    }
 	    return $val1;
 	}
@@ -44,7 +44,7 @@ class Middleware
 	{
 	   if (!preg_match($pattern, $subject))
 	    {
-	        throw new FormException($msg);
+	        throw new FormError($msg);
 	    }
 	    return $subject;
 	}
@@ -77,11 +77,11 @@ class Middleware
 	    $form = __MODULE__."\\Middleware\\".__CONTROLLER__;
 		if(!class_exists($form))
 		{
-			throw new DUException("Couldn't find middleware: ".$form);
+			throw new Error("Couldn't find middleware: ".$form);
 		}
 		if(!method_exists($form,__ACTION__))
 		{
-			throw new DUException("Couldn't find  method : ".__ACTION__ ." of ".$form);
+			throw new Error("Couldn't find  method : ".__ACTION__ ." of ".$form);
 		}
 		$call = new $form(DI::$di);
 		$method = __ACTION__;

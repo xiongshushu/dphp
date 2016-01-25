@@ -33,7 +33,7 @@ class Model {
 	private function call($name,$args)
 	{
 	    if (!isset(DI::$di->db)) {
-	        throw new DUException("You must registe a db driver first!");
+	        throw new Error("You must registe a db driver first!");
 	    }
 	    if (method_exists(DI::$di->db,$name))
 	    {

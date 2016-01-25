@@ -12,7 +12,7 @@ class Application
 	       try{
 	             DI::$di->dispatcher->exec();
 	             DI::$di->view->display();
-	       }catch (DUException $e){
+	       }catch (Error $e){
 	       	     DI::$di->response->show($e->getMessage(),"/");
 	       }
 	 }

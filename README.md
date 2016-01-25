@@ -190,7 +190,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 		namespace Home\Middleware;
 
 		use Du\Middleware;
-		use Du\FormException;
+		use Du\FormError;
 		
 		class User extends Middleware
 		{
@@ -216,7 +216,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 		                "Email"=>$this->post("email"),
 		                "LastLogin"=>$_SERVER['REQUEST_TIME'],
 		            );
-		        }catch(FormException $e){
+		        }catch(FormError $e){
 		            $this->response->json(array("info"=>$e->getMessage()));
 		        }
 		    }

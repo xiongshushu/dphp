@@ -13,10 +13,10 @@ class Dispatcher
         }
         $action = __ACTION__ . "Action";
         if (! class_exists($ctr)) {
-            throw new DUException("Couldn't find controller: " . __CONTROLLER__);
+            throw new Error("Couldn't find controller: " . __CONTROLLER__);
         }
         if (! method_exists($ctr, $action)) {
-            throw new DUException("Couldn't find  action : " . $action . " of " . __CONTROLLER__);
+            throw new Error("Couldn't find  action : " . $action . " of " . __CONTROLLER__);
         }
         $call = new $ctr();
         if (method_exists($call, "main")) {
