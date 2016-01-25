@@ -3,27 +3,27 @@ namespace Du;
 
 class Response
 {
-    private $tpl = "Tpl/show.php";
+    private static $template = "Html/Show.php";
 
     /**
      * 文本内容输出到浏览器
      * @param string $msg
      * @param string $url 跳转的地址；补位空的时候有效；
-     * @param number $time 跳转时间.跳转地址不为空时有效
-       */
-	public function show($msg,$url="",$time=5)
+     * @param int $time 跳转时间.跳转地址不为空时有效
+	 */
+	static function show($msg,$url="",$time=5)
 	{
 	    header("Content-type: text/html; charset=utf-8");
-		include($this->tpl);
-	    die();
+		include(self::$template);
+	    exit(0);
 	}
     
-	public function setShowTpl($tpl)
+	public function setTemplate($template)
 	{
-	    $this->tpl = $tpl;
+	    $this->template = $template;
 	}
 	
-	public function json(array $data)
+	static function json(array $data)
 	{
 		header("Content-Type:application/json;charset:utf-8");
 		exit(json_encode($data,true));

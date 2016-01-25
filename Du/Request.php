@@ -12,7 +12,7 @@ class Request
 		return false;
 	}
 
-	public function isGET()
+	public function isGet()
 	{
 		if($_SERVER["REQUEST_METHOD"]=="GET")
 		{
@@ -33,13 +33,6 @@ class Request
 
 	public function redirect($action="",$base=false)
 	{
-	    if ($base)
-	    {
-	        header("location:".$action);
-	        return;
-	    }else{
-	        $action = strtolower(__MODULE__)."/".$action;
-	    }
-	    header("location:http://".$_SERVER['HTTP_HOST'].$_SERVER['CONTEXT_PREFIX']."/".$action);
+	    header("location:".$action);
 	}
 }
