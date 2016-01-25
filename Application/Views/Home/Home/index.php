@@ -7,7 +7,7 @@
 body {font-family: "微软雅黑";}
 </style>
 <body>
-<h1>{:="Hello ".$name;} <SUP>{:=DP_VER;}</SUP></h1>
+<h1>{{"Hello ".$name}} <SUP>{{DP_VER}}</SUP></h1>
 <blockquote>Do It If You Want</blockquote>
 </body>
 </html>

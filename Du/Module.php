@@ -4,15 +4,15 @@ namespace Du;
 class Module
 {
 
-    public $defautModule = "Home";
+    public $defaultModule = "Home";
 
     public $defaultController = "Home";
 
-    public $defaultAcion = "index";
+    public $defaultAction = "index";
 
     public $modules = array("Home");
 
-    public function registeModule($_)
+    public function addModule($_)
     {
         $args = func_get_args();
         foreach ($args as $value)
@@ -23,18 +23,18 @@ class Module
         }
     }
 
-    public function setDefaultModule($module)
+    public function setModule($module)
     {
-        $this->defautModule = $module;
+        $this->defaultModule = $module;
     }
 
-    public function setDefaultController($module)
+    public function setController($module)
     {
-        $this->defaultAcion = $module;
+        $this->defaultController = $module;
     }
 
-    public function setDefaultAction($module)
+    public function setAction($module)
     {
-        $this->defaultAcion = $module;
+        $this->defaultAction = $module;
     }
 }

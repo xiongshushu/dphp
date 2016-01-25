@@ -22,7 +22,7 @@ class SmartParse
      */
     private function parseTag()
     {
-        $this->data = preg_replace('/{{(.+?}}/', "<?php echo \\1 ?>", $this->data);
+        $this->data = preg_replace('/{{(.+?)}}/', "<?php echo \\1 ?>", $this->data);
         $this->data = preg_replace('/{:(.+?)}/', "<?php \\1 ?>", $this->data);
     }
 
