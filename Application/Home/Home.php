@@ -1,10 +1,10 @@
 <?php
-namespace Home\Controllers;
+namespace Home;
 use Du\Controller;
 
 class Home extends Controller
 {
-    function indexAction()
+    public function index()
     {
         $this->view->setVar("name","DuPHP");
     }

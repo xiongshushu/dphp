@@ -6,7 +6,6 @@ class View
 
     /**
      * 模板引擎
-     * 
      * @var \Du\View\Template
      */
     private $engine;

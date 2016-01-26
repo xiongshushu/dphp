@@ -4,24 +4,22 @@ namespace Du;
 class Dispatcher
 {
 
-    public function exec($type = "normal")
+    public function exec()
     {
-        
-        $ctr = __MODULE__ . "\\Controllers\\" . __CONTROLLER__;
-        if ($type == "console") {
-            $ctr = CLI_MOD . "\\" . __MODULE__ . "\\" . __CONTROLLER__;
+        $mc = __MODULE__ . "\\" . __CONTROLLER__;
+        if(IS_CLI){
+            $mc = CLI_APP."\\".$mc;
         }
-        $action = __ACTION__ . "Action";
-        if (! class_exists($ctr)) {
+        if (!class_exists($mc)) {
             throw new Error("Couldn't find controller: " . __CONTROLLER__);
         }
-        if (! method_exists($ctr, $action)) {
-            throw new Error("Couldn't find  action : " . $action . " of " . __CONTROLLER__);
+        if (!method_exists($mc, __ACTION__)) {
+            throw new Error("Couldn't find  action : " . __ACTION__ . " of " . __CONTROLLER__);
         }
-        $call = new $ctr();
+        $call = new $mc();
         if (method_exists($call, "main")) {
             $call->main();
         }
-        $call->$action();
+        $call->{__ACTION__}();
     }
 }

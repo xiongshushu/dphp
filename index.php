@@ -4,6 +4,7 @@ use Du\View\Adapter\Smart;
 use Du\Loader;
 use Du\DI;
 use Du\Application;
+use Du\Response;
 
 require 'Du/Loader.php';
 //设置时间区
@@ -21,7 +22,7 @@ $di->registe("view", function(){
 
 try {
     $app = new Application();
-    $app->handle($app);
+    $app->handle($di);
 
 }catch (\Exception $e){
 

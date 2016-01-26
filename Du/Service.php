@@ -3,13 +3,11 @@ namespace Du;
 
 class Service
 {
-    public $router;
-    
-    public $response;
-    
     public $middleware;
     
     public $request;
+
+	public $response;
     
     public $view;
     
@@ -17,17 +15,13 @@ class Service
     
     public $dispatcher;
     
-    public $module;
-    
 	public function __construct()
 	{
-			$this->router  = new Router();
-			$this->response =new Response();
 			$this->middleware = new Middleware();
 			$this->request = new Request();
+			$this->response = new Response();
 			$this->view = new View();
 			$this->cookie = new Cookie();
 			$this->dispatcher = new Dispatcher();
-			$this->module = new Module();
 	}
 }

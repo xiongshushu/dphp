@@ -14,7 +14,8 @@ class Loader {
         defined("CONF_PATH") OR define("CONF_PATH",APP_PATH.DS."Config");
         defined("CACHE_PATH") OR define("CACHE_PATH",APP_PATH.DS."Cache");
         defined("_PUBLIC_") OR define("_PUBLIC_","/Public");
-        defined("CLI_MOD") or define("CLI_MOD", "Cron");
+        defined("CLI_APP") or define("CLI_APP", "Cron");
+        define('IS_CLI',PHP_SAPI=='cli'? 1   :   0);
         //自动加载
         spl_autoload_register(function($cName){
             $cPath = str_replace("\\",DS,$cName).".php";
@@ -25,5 +26,31 @@ class Loader {
                 require_once(APP_PATH.DS.$cPath);
             }
         });
+    }
+
+    public function addModule($_)
+    {
+        $args = func_get_args();
+        foreach ($args as $value)
+        {
+            if (!in_array($value, $this->modules)) {
+                $this->modules[] = $value;
+            }
+        }
+    }
+
+    public function setModule($module)
+    {
+        $this->defaultModule = $module;
+    }
+
+    public function setController($module)
+    {
+        $this->defaultController = $module;
+    }
+
+    public function setAction($module)
+    {
+        $this->defaultAction = $module;
     }
 }

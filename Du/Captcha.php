@@ -14,7 +14,7 @@ class Captcha
     /**
      * 验证码
      * 
-     * @var unknown
+     * @var string
      */
     private $code;
 
@@ -23,7 +23,7 @@ class Captcha
      * 
      * @var int
      */
-    public $codelen = 4;
+    public $codeLen = 4;
 
     /**
      * 宽度
@@ -73,7 +73,7 @@ class Captcha
     private function createCode()
     {
         $_len = strlen($this->charset) - 1;
-        for ($i = 0; $i < $this->codelen; $i ++) {
+        for ($i = 0; $i < $this->codeLen; $i ++) {
             $this->code .= $this->charset[mt_rand(0, $_len)];
         }
     }
@@ -93,8 +93,8 @@ class Captcha
      */
     private function createFont()
     {
-        $_x = $this->width / $this->codelen;
-        for ($i = 0; $i < $this->codelen; $i ++) {
+        $_x = $this->width / $this->codeLen;
+        for ($i = 0; $i < $this->codeLen; $i ++) {
             $this->fontcolor = imagecolorallocate($this->img, mt_rand(0, 156), mt_rand(0, 156), mt_rand(0, 156));
             imagettftext($this->img, $this->fontsize, mt_rand(- 30, 30), $_x * $i + mt_rand(1, 5), $this->height / 1.4, $this->fontcolor, $this->font, $this->code[$i]);
         }
