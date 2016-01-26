@@ -1,9 +1,9 @@
 <?php
-namespace Home\Middleware;
+namespace Home\Forms;
 
-use Du\Middleware;
+use Du\Form;
 
-class Home extends Middleware
+class Home extends Form
 {
     public function index()
     {
