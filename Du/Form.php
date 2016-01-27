@@ -67,20 +67,20 @@ class Form
 
     public function input($key = "")
     {
-        $form = __MODULE__ . "\\Middleware\\" . __CONTROLLER__;
+        $form = __MODULE__ . "\\Forms\\" . __CONTROLLER__;
         if (!class_exists($form)) {
-            throw new Error("Couldn't find middleware: " . $form);
+            throw new Error("Couldn't find form: " . $form);
         }
         if (!method_exists($form, __ACTION__)) {
             throw new Error("Couldn't find  method : " . __ACTION__ . " of " . $form);
         }
-        $call = new $form(DI::$di);
+        $call = new $form();
         $method = __ACTION__;
         $input = $this->parseInput($call->$method());
         return empty($key) ? $input : (empty($input[$key]) ? "" : $input[$key]);
     }
 
-    public function parseInput($data)
+    private function parseInput($data)
     {
         if (empty($data) && $data != 0) {
             return [];
@@ -110,6 +110,6 @@ class Form
 
     public function __get($name)
     {
-        return DI::$di->$name;
+        return DI::invoke($name);
     }
 }

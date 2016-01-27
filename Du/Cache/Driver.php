@@ -1,7 +1,7 @@
 <?php
 namespace Du\Cache;
 
-interface Cache
+interface Driver
 {
     public function connect($option);
     
@@ -9,7 +9,7 @@ interface Cache
     
     public function get($name);
     
-    public function rm($name);
+    public function remove($name);
     
     public function clear();
 }
