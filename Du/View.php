@@ -10,8 +10,6 @@ class View
      */
     private $engine;
 
-    private $cache;
-
     private $tVars = array();
 
     private $tPath = "";

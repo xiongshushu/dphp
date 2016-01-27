@@ -13,7 +13,7 @@ date_default_timezone_set("PRC");
 Loader::Init();
 $di = new DI();
 
-$di->registe("view", function(){
+$di->register("view", function(){
    $view = new View();
    $smart = new Smart();
    $view->loadEngine($smart);

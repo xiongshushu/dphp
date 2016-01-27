@@ -10,8 +10,8 @@ class Service
 	public $response;
     
     public $view;
-    
-    public $cookie;
+
+	public $models = array();
     
 	public function __construct()
 	{
@@ -19,6 +19,5 @@ class Service
 			$this->request = new Request();
 			$this->response = new Response();
 			$this->view = new View();
-			$this->cookie = new Cookie();
 	}
 }

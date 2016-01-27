@@ -6,7 +6,6 @@ class DI extends Service
 
     /**
      * 默认DI容器
-     * 
      * @var \Du\DI
      */
     static $di;
@@ -21,20 +20,28 @@ class DI extends Service
 
     /**
      * 获取DI实例
-     * 
      * @return \Du\DI
      */
-    public function GetDI()
+    public function getDI()
     {
         return $this;
     }
 
-    public function registe($name, $call)
+    public function register($name, $call)
     {
-        if (! is_callable($call)) {
-            $this->$name = new $call();
-        } else {
-            $this->$name = $call();
+        $this->$name = !is_callable($call)?new $call():$call();
+    }
+
+    static function invoke($name)
+    {
+        if (strrchr($name,"Model")) {
+            $model = __MODULE__."\\Models\\".$name;
+            if (!isset(self::$di->models[$model]))
+            {
+                self::$di->models[$model] = new $model;
+            }
+            return self::$di->models[$model];
         }
+        return self::$di->$name;
     }
 }
