@@ -20,12 +20,13 @@ abstract class Template
     abstract function getResult();
 
     /**
-     *  建立临时文件
-     * @param string $tData
+     * 建立临时文件
+     * @param $tData
+     * @return bool
      */
     public function buidCacheFile($tData)
     {
-        if (($_SERVER['REQUEST_TIME'] - $this->getFiletime($this->cacheFile)) <= $this->expireTime) {
+        if (($_SERVER['REQUEST_TIME'] - $this->getFileTime($this->cacheFile)) <= $this->expireTime) {
             return true;
         }
         $path = str_replace($this->fileName, "", $this->cacheFile);
@@ -40,13 +41,12 @@ abstract class Template
 
     /**
      * 取文件的创建时间
-     *
      * @return number
      */
-    public function getFiletime($filename)
+    public function getFileTime($fileName)
     {
-        if (@is_file($filename)) {
-            return filemtime($filename);
+        if (@is_file($fileName)) {
+            return filemtime($fileName);
         }
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Du;
 
+use Du\Html\Show;
+
 class Response
 {
     private $template = "Html/Show.php";
@@ -14,8 +16,7 @@ class Response
 	public function show($msg,$url="",$time=5)
 	{
 	    header("Content-type: text/html; charset=utf-8");
-		require($this->template);
-	    exit(0);
+		new Show($msg,$url,$time);
 	}
     
 	public function setTemplate($template)

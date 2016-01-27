@@ -19,8 +19,8 @@ class Smart extends Template
         $path = join(DS, $tPath);
         $this->cacheFile = CACHE_PATH . DS . $path . $this->suffix;
         $this->fileName = $tPath[2] . $this->suffix;
-        $tpldir = VIEW_PATH . DS . $this->theme;
-        $smart->compile(file_get_contents($tpldir . DS . $path . $this->suffix), $tpldir . DS . $tPath[0], $this->suffix);
+        $tplDir = VIEW_PATH . DS . $this->theme;
+        $smart->compile(file_get_contents($tplDir . DS . $path . $this->suffix), $tplDir . DS . $tPath[0], $this->suffix);
         $this->buidCacheFile($smart->data);
         if (is_file($this->cacheFile)) {
             extract($tVars);
