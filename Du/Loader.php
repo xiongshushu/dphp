@@ -17,13 +17,15 @@ class Loader {
         defined("CLI_APP") or define("CLI_APP", "Cron");
         define('IS_CLI',PHP_SAPI=='cli'? 1   :   0);
         //自动加载
-        spl_autoload_register(function($cName){
-            $cPath = str_replace("\\",DS,$cName).".php";
-            if (file_exists(ROOT_PATH.DS.$cPath))
+        spl_autoload_register(function($class_name){
+            $classFile = "/".str_replace("\\",DS,$class_name).".php";
+            $rootFile = ROOT_PATH.$classFile;
+            $appFile = APP_PATH.$classFile;
+            if (file_exists($rootFile))
             {
-                require_once(ROOT_PATH.DS.$cPath);
-            }elseif(file_exists(APP_PATH.DS.$cPath)) {
-                require_once(APP_PATH.DS.$cPath);
+                require_once($rootFile);
+            }elseif (file_exists($appFile)){
+                require_once($appFile);
             }
         });
     }
@@ -37,20 +39,5 @@ class Loader {
                 $this->modules[] = $value;
             }
         }
-    }
-
-    public function setModule($module)
-    {
-        $this->defaultModule = $module;
-    }
-
-    public function setController($module)
-    {
-        $this->defaultController = $module;
-    }
-
-    public function setAction($module)
-    {
-        $this->defaultAction = $module;
     }
 }

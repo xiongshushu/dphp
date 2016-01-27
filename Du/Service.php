@@ -3,7 +3,7 @@ namespace Du;
 
 class Service
 {
-    public $middleware;
+    public $form;
     
     public $request;
 
@@ -13,15 +13,12 @@ class Service
     
     public $cookie;
     
-    public $dispatcher;
-    
 	public function __construct()
 	{
-			$this->middleware = new Middleware();
+			$this->form = new Form();
 			$this->request = new Request();
 			$this->response = new Response();
 			$this->view = new View();
 			$this->cookie = new Cookie();
-			$this->dispatcher = new Dispatcher();
 	}
 }
