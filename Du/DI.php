@@ -6,7 +6,6 @@ class DI extends Service
 
     /**
      * 默认DI容器
-     * 
      * @var \Du\DI
      */
     static $di;
@@ -21,10 +20,9 @@ class DI extends Service
 
     /**
      * 获取DI实例
-     * 
      * @return \Du\DI
      */
-    public function GetDI()
+    public function getDI()
     {
         return $this;
     }
