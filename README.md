@@ -163,15 +163,15 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
     }
 
 ##中间件##
-中间件,放置在模块目录下的Middleware文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的中间件,通常是这样的
+中间件,放置在模块目录下的Forms文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的中间件,通常是这样的
 
 ```php
 	<?php
-	namespace Home\Middleware;
+	namespace Home\Forms;
 	
-	use Du\Middleware;
+	use Du\Form;
 	
-	class Home extends Middleware
+	class Home extends Form
 	{
 	    public function index()
 	    {
@@ -187,12 +187,12 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 ```php
 		<?php
-		namespace Home\Middleware;
+		namespace Home\Forms;
 
-		use Du\Middleware;
+		use Du\Form;
 		use Du\FormError;
 		
-		class User extends Middleware
+		class User extends Form
 		{
 			public function reg() //对应UserController的regAction()
 		    {

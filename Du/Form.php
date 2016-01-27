@@ -20,7 +20,7 @@ class Form
         return $val;
     }
 
-    public function size($val, $max, $min = 0, $msg)
+    public function contrast($val, $msg, $max, $min = 0)
     {
         if ($val < $min || $val > $max) {
             throw new FormError($msg);

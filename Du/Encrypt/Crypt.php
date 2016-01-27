@@ -1,5 +1,5 @@
 <?php
-namespace Du;
+namespace Du\Encrypt;
 /**
  * Base64 加密实现类
  */
