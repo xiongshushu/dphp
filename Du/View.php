@@ -34,7 +34,6 @@ class View
     {
         $this->parsePath($path);
         $this->engine->render($this->tPath, $this->tVars);
-        exit();
     }
 
     public function setTheme($theme)

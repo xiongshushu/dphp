@@ -6,6 +6,9 @@ use Du\DI;
 use Du\Application;
 use Du\Response;
 
+$start = microtime();
+$start_m = memory_get_usage();
+
 require 'Du/Loader.php';
 //设置时间区
 date_default_timezone_set("PRC");
@@ -20,11 +23,8 @@ $di->register("view", function(){
    return $view;
 }); 
 
-try {
-    $app = new Application();
-    $app->handle($di);
-
-}catch (\Exception $e){
-
-    $di->response->show($e->getMessage());
-}
+$app = new Application();
+$app->handle($di);
+echo microtime() - $start;
+echo "</br>";
+echo memory_get_usage() - $start_m;
