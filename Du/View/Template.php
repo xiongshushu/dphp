@@ -23,9 +23,9 @@ abstract class Template
      *  建立临时文件
      * @param string $tData
      */
-    public function buidCacheFile($tData)
+    public function buildCacheFile($tData)
     {
-        if (($_SERVER['REQUEST_TIME'] - $this->getFiletime($this->cacheFile)) <= $this->expireTime) {
+        if (($_SERVER['REQUEST_TIME'] - $this->getFileTime($this->cacheFile)) <= $this->expireTime) {
             return true;
         }
         $path = str_replace($this->fileName, "", $this->cacheFile);
@@ -43,7 +43,7 @@ abstract class Template
      *
      * @return number
      */
-    public function getFiletime($filename)
+    public function getFileTime($filename)
     {
         if (@is_file($filename)) {
             return filemtime($filename);
