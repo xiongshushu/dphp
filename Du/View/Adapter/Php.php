@@ -16,7 +16,7 @@ class Php extends Template
             $this->data = file_get_contents($file);
             $this->fileName = $tPath[2] . $this->suffix;
             $this->cacheFile = CACHE_PATH . DS . $path . $this->suffix;
-            $this->buidCacheFile($this->data);
+            $this->buildCacheFile($this->data);
             if (is_file($this->cacheFile)) {
                 extract($tVars);
                 require $this->cacheFile;

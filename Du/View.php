@@ -16,9 +16,11 @@ class View
 
     public function setVar($key, $value = "")
     {
-        if (is_array($key)) {
+        if ( is_array($key) )
+        {
             $this->tVars = array_merge($this->tVars, $key);
-        } else {
+        } else
+        {
             $this->tVars[$key] = $value;
         }
     }
@@ -41,27 +43,28 @@ class View
 
     private function parsePath($path)
     {
-        $pathinfo = explode(".", $path);
-        $count = empty($path) ? 0 : count($pathinfo);
-        switch ($count) {
+        $pathInfo = explode(".", $path);
+        $count = empty( $path ) ? 0 : count($pathInfo);
+        switch ($count)
+        {
             case 3:
-                $this->tPath = $pathinfo;
+                $this->tPath = $pathInfo;
                 break;
             case 2:
-                $pathinfo = array(
+                $pathInfo = array(
                     array(
                         __MODULE__
                     ),
-                    $pathinfo
+                    $pathInfo
                 );
-                $this->tPath = $pathinfo;
+                $this->tPath = $pathInfo;
                 break;
             case 1:
-                $pathinfo = array_merge(array(
+                $pathInfo = array_merge(array(
                     __MODULE__,
                     __CONTROLLER__
-                ), $pathinfo);
-                $this->tPath = $pathinfo;
+                ), $pathInfo);
+                $this->tPath = $pathInfo;
                 break;
             default:
                 $this->tPath = array(

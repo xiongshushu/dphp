@@ -4,7 +4,6 @@ use Du\View\Adapter\Smart;
 use Du\Loader;
 use Du\DI;
 use Du\Application;
-use Du\Response;
 
 $start = microtime();
 $start_m = memory_get_usage();
