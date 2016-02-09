@@ -4,15 +4,14 @@ namespace Du;
 class Session
 {
 
-    public function set($key, $value=null)
+    public function set($key, $value = null)
     {
-        $_SESSION[$key]=$value;
+        $_SESSION[$key] = $value;
     }
 
     public function start()
     {
-        if (session_status()!=2)
-        {
+        if (session_status() != 2) {
             session_start();
         }
     }
@@ -24,7 +23,7 @@ class Session
 
     public function get($key)
     {
-        return isset($_SESSION[$key])?$_SESSION[$key]:null;
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
     }
 
     public function destroy()

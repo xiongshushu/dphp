@@ -6,63 +6,54 @@ class Captcha
 
     /**
      * 随机因子
-     * 
      * @var string
      */
     private $charset = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
 
     /**
      * 验证码
-     * 
      * @var string
      */
     private $code;
 
     /**
      * 验证码长度
-     * 
      * @var int
      */
     public $codeLen = 4;
 
     /**
      * 宽度
-     * 
      * @var int
      */
     public $width = 80;
 
     /**
      * 高度
-     * 
      * @var int
      */
     public $height = 30;
 
     /**
      * 图形资源句柄
-     * 
      * @var Resoure
      */
     private $img;
 
     /**
      * 指定的字体路径
-     * 
      * @var string
      */
     public $font = "Fonts/Elephant.ttf";
 
     /**
      * 指定字体大小
-     * 
      * @var int
      */
     public $fontsize = 15;
 
     /**
      * 指定字体颜色
-     * 
      * @var unknown
      */
     private $fontcolor;
@@ -117,9 +108,8 @@ class Captcha
 
     /**
      * 输出验证码
-     * 
      * @param string $sKey
-     *            验证存储在session的键名
+     * 验证存储在session的键名
      */
     public function build($sKey = "cpt")
     {

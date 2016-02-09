@@ -38,7 +38,7 @@ class Page
 
     /**
      * 默认输出html的分页
-     * #param string $pageLink 需要追加到链接后的get参数
+     * @param string $pageLink 需要追加到链接后的get参数
      * @param bool $html 输出形式true：html代码，false：分页参数数据
      * @return mixed
      */
@@ -68,7 +68,7 @@ class Page
             $this->nextPage = $this->currentPage + 1;
             $page .= "<li><a id=\"next\" href=\"?p=" . $this->nextPage . $pageLink . "\">下一页</a></li> ";
         }
-        return $type?$page:array(
+        return $type ? $page : array(
             "page" => $this->page,
             "epage" => $this->epage,
             "totalPage" => $this->totalPage,
