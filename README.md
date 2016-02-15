@@ -82,17 +82,17 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 		
 		class Home extends Controller //控制器名称必须大写
 		{
-		    function indexAction() //必须是公共方法且Action为后缀,不接受参数,我们不建议在控制器直接进行Action调用
+		    public function index() //必须是公共方法且Action为后缀,不接受参数,我们不建议在控制器直接进行Action调用
 		    {
 		    	 $formData = $this->input(); //获取请求的数据.数据已经经过安全处理,具体查看"表单层"的说明
 		    	 #一些业务逻辑......
 		    	 $this->UserModel->getUserOne();//调用模型的方法,模型不需要手动实例化.具体可查看模型部分.
-		        $this->view->setVar("name","DuPHP"); //使用view服务为模板分配一个变量
+		         $this->view->setVar("name","DuPHP"); //使用view服务为模板分配一个变量
 		    }
 		}
 ```
 
-控制器的Action回自动调用模板文件模块/控制器/动作(Home/Home/index.php),若要指定其他模板文件,使用view的display方法如$this->view->display("home/index");调用视图VIEW_PATH目录下的home目录下的index.php模板
+控制器的Action会自动调用模板文件模块/控制器/动作(Home/Home/index.php),若要指定其他模板文件,使用view的display方法如$this->view->display("home.index");调用视图VIEW目录下的home目录下的index.php模板
 
 ####模型(Model)####
 Du模型就是数据库操作类的中间人.
@@ -112,27 +112,27 @@ Du模型就是数据库操作类的中间人.
 
 ```php
 	$di->register("cache", function(){
-    $cache = new File();
-    return $cache;
+        $cache = new File();
+        return $cache;
 	});
 ```
 
 ####视图(View)####
 Du的视图可以直接使用原生的语法。如果你要是用内置模板，你必须在入口文件中注册一个视图服务
 
-
+```php
 	$di->register("view", function(){
 		  $view = new View();
 		  $view->loadEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
 		  return $view;
 	});
-
+```
 
 内置模板的语法：
 
-{:$name;} = <?php $name ?> //表示在"{:" 和";}"之间可以写入任何php代码.
+{:$name} = <?php $name ?> //表示在"{:" 和"}"之间可以写入任何php代码.
 
-{:=$name;} = <?php echo $name ?> //表示在"{:=" 和";}"输出一个模板变量值,依然支持php语法.
+{{$name}} = <?php echo $name ?> //表示在"{{" 和"}}"输出一个模板变量值,依然支持php语法.
 	
 {if:false==true} = <?php if (false==true){?> //没啥好说了,简洁的一个写法
 
@@ -148,6 +148,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 设置模板主题
 方法一
+```php
 	$di->register("view", function () {
 	    $view = new View();
 	    $smart = new Smart();
@@ -155,13 +156,15 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	    $view->loadEngine($smart);
 	    return $view;
 	});
+```
 方法二（指定特定模块使用某个主题）
 例如在新建一个Base.php的公用控制器，其他控制器继承该类，添加下面的代码即可
+```php
 	public function __construct()
     {
         $this->view->setTheme("theme");
     }
-
+```
 ##表单层##
 表单层,放置在模块目录下的Forms文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的表单层,通常是这样的
 
@@ -301,7 +304,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 
 ## 上传文件##
 一个上传的例子
-
+```php
 	 	if (isset($_FILES) && !empty($_FILES))
 	        {
 	            $upload = new Upload();
@@ -316,5 +319,6 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 	               $this->response->json(["info"=>$upload->errorMsg]); //上传失败json输出错误信息
 	            }
 	       }
+```
 ## 调试 ##
 Du本身不带调试功能，基于PHP本身的debug。Du只会抛出框架本身的错误
