@@ -68,7 +68,7 @@ class Page
             $this->nextPage = $this->currentPage + 1;
             $page .= "<li><a id=\"next\" href=\"?p=" . $this->nextPage . $pageLink . "\">下一页</a></li> ";
         }
-        return $type ? $page : array(
+        return $html ? $page : array(
             "page" => $this->page,
             "epage" => $this->epage,
             "totalPage" => $this->totalPage,

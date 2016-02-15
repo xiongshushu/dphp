@@ -24,7 +24,7 @@ abstract class Template
      * @param $tData
      * @return bool
      */
-    public function buidCacheFile($tData)
+    public function buildCacheFile($tData)
     {
         if (($_SERVER['REQUEST_TIME'] - $this->getFileTime($this->cacheFile)) <= $this->expireTime) {
             return true;

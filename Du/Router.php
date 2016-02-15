@@ -72,4 +72,15 @@ class Router
         }
         return isset( $argv ) ? $argv : array();
     }
+
+    public function addModule($_)
+    {
+        $args = func_get_args();
+        foreach ($args as $value)
+        {
+            if (!in_array($value, $this->modules)) {
+                $this->modules[] = $value;
+            }
+        }
+    }
 }

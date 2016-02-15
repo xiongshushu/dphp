@@ -9,12 +9,12 @@ class Loader {
         define("DS", DIRECTORY_SEPARATOR,false) ;
         defined("DEBUG") OR define("DEBUG",TRUE);
         defined("ROOT_PATH") OR define("ROOT_PATH",dirname(__DIR__));
-        defined("APP_PATH") OR define("APP_PATH",ROOT_PATH.DS."Application");
-        defined("VIEW_PATH") OR define("VIEW_PATH",APP_PATH.DS."Views");
+        defined("APP_NAME") OR define("APP_NAME","Application");
+        defined("APP_PATH") OR define("APP_PATH",ROOT_PATH.DS.APP_NAME);
         defined("CONF_PATH") OR define("CONF_PATH",APP_PATH.DS."Config");
         defined("CACHE_PATH") OR define("CACHE_PATH",APP_PATH.DS."Cache");
-        defined("_PUBLIC_") OR define("_PUBLIC_","/Public");
-        defined("CLI_APP") or define("CLI_APP", "Cron");
+        defined("CLI_APP") or define("CLI_APP", "Cli");
+        defined("VIEW") OR define("VIEW","Views");
         define('IS_CLI',PHP_SAPI=='cli'? 1   :   0);
         //自动加载
         spl_autoload_register(function($class_name){
@@ -28,16 +28,5 @@ class Loader {
                 require_once($appFile);
             }
         });
-    }
-
-    public function addModule($_)
-    {
-        $args = func_get_args();
-        foreach ($args as $value)
-        {
-            if (!in_array($value, $this->modules)) {
-                $this->modules[] = $value;
-            }
-        }
     }
 }

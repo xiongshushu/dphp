@@ -10,11 +10,11 @@ class Php extends Template
     public function render($tPath, $tVars)
     {
         $path = join(DS, $tPath);
-        $tplDir = VIEW_PATH . DS . $this->theme;
+        $tplDir = APP_PATH . DS . __MODULE__ . DS . VIEW . DS . $this->theme;
         $file = $tplDir . DS . $path . $this->suffix;
-        if (is_file($file)) {
+        if (file_exists($file)) {
             $this->data = file_get_contents($file);
-            $this->fileName = $tPath[2] . $this->suffix;
+            $this->fileName = $tPath[1] . $this->suffix;
             $this->cacheFile = CACHE_PATH . DS . $path . $this->suffix;
             $this->buildCacheFile($this->data);
             if (is_file($this->cacheFile)) {

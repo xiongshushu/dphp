@@ -47,28 +47,17 @@ class View
         $count = empty( $path ) ? 0 : count($pathInfo);
         switch ($count)
         {
-            case 3:
-                $this->tPath = $pathInfo;
-                break;
             case 2:
-                $pathInfo = array(
-                    array(
-                        __MODULE__
-                    ),
-                    $pathInfo
-                );
                 $this->tPath = $pathInfo;
                 break;
             case 1:
                 $pathInfo = array_merge(array(
-                    __MODULE__,
                     __CONTROLLER__
                 ), $pathInfo);
                 $this->tPath = $pathInfo;
                 break;
             default:
                 $this->tPath = array(
-                    __MODULE__,
                     __CONTROLLER__,
                     __ACTION__
                 );

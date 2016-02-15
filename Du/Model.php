@@ -31,7 +31,7 @@ class Model
     private function call($name, $args)
     {
         if (!isset(DI::$di->db)) {
-            throw new Error("You must registe a db driver first!");
+            throw new Error("You must register db driver!");
         }
         if (method_exists(DI::$di->db, $name)) {
             return call_user_func_array(array(DI::$di->db, $name), $args);

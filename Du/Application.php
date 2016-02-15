@@ -6,11 +6,10 @@ class Application
     public function handle(DI $di)
     {
         try {
-            $router = new Router();
-            $router->parseUrl();
-            define("__MODULE__", ucfirst($router->module), false);
-            define("__CONTROLLER__", ucfirst($router->controller), false);
-            define("__ACTION__", $router->action, false);
+            $di->router->parseUrl();
+            define("__MODULE__", ucfirst($di->router->module), false);
+            define("__CONTROLLER__", ucfirst($di->router->controller), false);
+            define("__ACTION__", $di->router->action, false);
             (new Dispatcher())->exec();
             $di->view->display();
         } catch (Error $e) {

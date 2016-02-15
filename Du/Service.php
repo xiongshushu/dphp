@@ -3,21 +3,24 @@ namespace Du;
 
 class Service
 {
-	public $form;
+    public $form;
 
-	public $request;
+    public $request;
 
-	public $response;
+    public $response;
 
-	public $view;
+    public $view;
 
-	public $models = array();
+    public $models = array();
 
-	public function __construct()
-	{
-		$this->form = new Form();
-		$this->request = new Request();
-		$this->response = new Response();
-		$this->view = new View();
-	}
+    public $router;
+
+    public function __construct()
+    {
+        $this->form = new Form();
+        $this->router = new Router();
+        $this->request = new Request();
+        $this->response = new Response();
+        $this->view = new View();
+    }
 }
