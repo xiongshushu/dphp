@@ -248,12 +248,13 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 Config::php("config");则是读取目录下的config.php文件Config::php("config"，"menu");读取config.php二维数组的menu项配置。配置加载默认已经防止多次加载配置的情况。
 ##Cookie和Session##
 要使用Session服务，可先在入口文件中注册一个session服务
-
+```php
     $di->register("session", function(){
     	$session =  new Session();
         $session->start();
         return $session;
     });
+```
 这样就可以通过$this->session->set()等方法。
 
     $this->session->start() 启动session，如果注册服务的时候已经启动就不要再次启动。 
@@ -262,12 +263,12 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     $this->session->remove("name") 清除Session中name的值；
     $this->session->destory() 销毁Session；
 要使用cookie服务，可先在入口文件中注册一个cookie服务
-
+```php
     $di->register("cookie", function(){
     	$cookie =  new cookie();
-    return $cookie;
+        return $cookie;
     })；
-
+```
 ---
 调用方法
 
@@ -282,7 +283,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
     DEBUG //配置是否是调试模式，默认true；
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
-    VIEW_PATH //视图目录,默认在模块的下Views目录
+    VIEW //视图目录名称,默认在模块的下Views目录
     CACHE_PATH //缓存目录,默认在APP_PATH下Cache目录
     __MOUDLE__ //当前访问的模块
     __CONTROLLER__//当前访问的控制器
@@ -290,18 +291,20 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 有默认值得的常量均可自由定义。
 ## 验证码生成 ##
 验证码默认使用核心目录下Fonts/Elephant.ttf字体文件
-
+```php
     $captcha = new \Du\Captcha();
-    $captcha->build(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，
-	只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
-
+    $captcha->build(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
+```
 ## 分页 ##
+```php
 	$page = new \Du\Page();
 	$page->calc("总条数"，"第几页(默认是第一页)");
 	$rst = $page->build();//生成分页信息，默认返回html分页代码。
+```
 	或：
+```php
 	$rst = $page->build("",2);//生成分页信息，返回分页的相关数据的数组
-
+```
 ## 上传文件##
 一个上传的例子
 ```php
