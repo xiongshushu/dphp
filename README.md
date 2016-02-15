@@ -70,7 +70,7 @@ Du目前只能使用伪静态
 	</IfModule>
 
 ## MVC，模型（Model），视图（View），控制器（Controller）##
-DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为调度模型和视图两者的控制层，包含业务逻辑。除了MVC结构以外还引入了“中间件”，其实就是表单验证层， 不单单是表单验证，还可以在控制器执行之前，执行一些必要的逻辑，安全过滤等等，但是中间件不是每个控制器都是必须的，除非控制器中含有$this->input()的时候，你必须要需要中间件的支持，我们建议在含有数据传递的时候，能够使用“中间件”，避免一些不必要要安全问题。
+DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为调度模型和视图两者的控制层，包含业务逻辑。除了MVC结构以外还引入了“表单层”，其实就是表单验证层， 不单单是表单验证，还可以在控制器执行之前，执行一些必要的逻辑，安全过滤等等，但是表单层不是每个控制器都是必须的，除非控制器中含有$this->input()的时候，你必须要需要表单层的支持，我们建议在含有数据传递的时候，能够使用“表单层”，避免一些不必要要安全问题。
 ####控制器(Controller)####
 控制器负责调度模型，视图会在控制器中自动渲染，只有当存在视图文件时，才进行渲染。设置模板变量，请使用$this->view->setVar()方法。
 常规控制器
@@ -84,7 +84,7 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 		{
 		    function indexAction() //必须是公共方法且Action为后缀,不接受参数,我们不建议在控制器直接进行Action调用
 		    {
-		    	 $formData = $this->input(); //获取请求的数据.数据已经经过安全处理,具体查看"中间件"的说明
+		    	 $formData = $this->input(); //获取请求的数据.数据已经经过安全处理,具体查看"表单层"的说明
 		    	 #一些业务逻辑......
 		    	 $this->UserModel->getUserOne();//调用模型的方法,模型不需要手动实例化.具体可查看模型部分.
 		        $this->view->setVar("name","DuPHP"); //使用view服务为模板分配一个变量
@@ -98,7 +98,7 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 Du模型就是数据库操作类的中间人.
 在使用模型之前入口文件中先要注册一个db服务,以下使用内置的pdo数据库操作类,也可以一使用其他注册为其他数据库操作类库.
 
-	$di->registe("db", function(){
+	$di->register("db", function(){
 	    return new Pdo([
 	        'dsn' => "mysql:dbname=test;host=127.0.0.1;charset=utf8",
 	        'db_user' => 'root',
@@ -111,7 +111,7 @@ Du模型就是数据库操作类的中间人.
 默认是基于文件缓存,有一定的缺陷.要使用缓存,需要在入口文件中指定那类缓存驱动.
 
 ```php
-	$di->registe("cache", function(){
+	$di->register("cache", function(){
     $cache = new File();
     return $cache;
 	});
@@ -121,7 +121,7 @@ Du模型就是数据库操作类的中间人.
 Du的视图可以直接使用原生的语法。如果你要是用内置模板，你必须在入口文件中注册一个视图服务
 
 
-	$di->registe("view", function(){
+	$di->register("view", function(){
 		  $view = new View();
 		  $view->loadEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
 		  return $view;
@@ -148,7 +148,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 设置模板主题
 方法一
-	$di->registe("view", function () {
+	$di->register("view", function () {
 	    $view = new View();
 	    $smart = new Smart();
 	    $smart->theme = "Default";
@@ -162,8 +162,8 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
         $this->view->setTheme("theme");
     }
 
-##中间件##
-中间件,放置在模块目录下的Forms文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的中间件,通常是这样的
+##表单层##
+表单层,放置在模块目录下的Forms文件夹中.在控制器中调用$this->input()获取请求数据的时候,则控制器对应的应该有对应的数据处理的表单层,通常是这样的
 
 ```php
 	<?php
@@ -175,7 +175,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	{
 	    public function index()
 	    {
-	    	#这里可以调用中间件的表单验证的方法.
+	    	#这里可以调用表单层的表单验证的方法.
 	        return array(
 	            "name"=>md5($this->get('name')), //直接处理数据为MD5加密后的密文;
 	        );
@@ -228,11 +228,17 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 每个应用启动前必须初始化加载器
 	Loader::Init()
 ##多模块设置##
-    $di = new DI();
-    $di->module->registeModule("Admin");//注册一个Admin模块，首字母大写.
+```php
+   $di->register("router",function(){
+       $router = new \Du\Router();
+       $router->addModule("Admin"); //注册一个Admin模块，首字母大写.
+       return $router;
+   });
+```
 支持同时注册多个模块
-
- 	 $di->module->registeModule("Admin","Mobile");
+```php
+ 	 $router->addModule("Admin","Mobile");
+```
 默认包含了一个“Home”模块。
 ## 读取配置 ##
 配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
@@ -240,7 +246,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
 ##Cookie和Session##
 要使用Session服务，可先在入口文件中注册一个session服务
 
-    $di->registe("session", function(){
+    $di->register("session", function(){
     	$session =  new Session();
         $session->start();
         return $session;
@@ -254,7 +260,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     $this->session->destory() 销毁Session；
 要使用cookie服务，可先在入口文件中注册一个cookie服务
 
-    $di->registe("cookie", function(){
+    $di->register("cookie", function(){
     	$cookie =  new cookie();
     return $cookie;
     })；
@@ -273,7 +279,7 @@ Config::php("config");则是读取目录下的config.php文件Config::php("confi
     CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
     DEBUG //配置是否是调试模式，默认true；
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
-    VIEW_PATH //视图目录,默认在APP_PATH下Views目录
+    VIEW_PATH //视图目录,默认在模块的下Views目录
     CACHE_PATH //缓存目录,默认在APP_PATH下Cache目录
     __MOUDLE__ //当前访问的模块
     __CONTROLLER__//当前访问的控制器
