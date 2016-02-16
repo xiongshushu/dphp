@@ -14,7 +14,7 @@ class Loader {
         defined("CONF_PATH") OR define("CONF_PATH",APP_PATH.DS."Config");
         defined("CACHE_PATH") OR define("CACHE_PATH",APP_PATH.DS."Cache");
         defined("CLI_APP") or define("CLI_APP", "Cli");
-        defined("VIEW") OR define("VIEW","Views");
+        defined("VIEW_NAME") OR define("VIEW","Views");
         define('IS_CLI',PHP_SAPI=='cli'? 1   :   0);
         //自动加载
         spl_autoload_register(function($class_name){
