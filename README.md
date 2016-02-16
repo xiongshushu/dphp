@@ -244,8 +244,11 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 ```
 默认包含了一个“Home”模块。
 ## 读取配置 ##
-配置默认在APP_PATH下的Config文件夹，常量CONF_PATH的值，可以自已的配置目录。配置读取
-Config::php("config");则是读取目录下的config.php文件Config::php("config"，"menu");读取config.php二维数组的menu项配置。配置加载默认已经防止多次加载配置的情况。
+配置读取:
+```php
+$config = new \Du\Config\Php("config");
+```
+则是取当前目录下的config.php文件\Du\Config\Php("config","menu");读取config.php二维数组的menu项配置。
 ##Cookie和Session##
 要使用Session服务，可先在入口文件中注册一个session服务
 ```php

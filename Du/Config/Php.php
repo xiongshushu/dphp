@@ -9,7 +9,7 @@ class Php
     {
         if ( !isset( self::$config[$name] ) )
         {
-            self::$config[$name] = require( CONF_PATH . DS . $name . ".php" );
+            self::$config[$name] = require( $name . ".php" );
         }
         return empty( $item ) ? self::$config[$name] : self::$config[$name][$item];
     }
