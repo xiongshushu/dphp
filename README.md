@@ -259,12 +259,13 @@ $config = new \Du\Config\Php("config");
     });
 ```
 这样就可以通过$this->session->set()等方法。
-
-    $this->session->start() 启动session，如果注册服务的时候已经启动就不要再次启动。 
-    $this->session->set("name","DuPHP") 设置name的值为DuPHP；
-    $this->session->get("name") 获取Session中"name"值；
-    $this->session->remove("name") 清除Session中name的值；
-    $this->session->destory() 销毁Session；
+```php
+    $this->session->start(); //启动session，如果注册服务的时候已经启动就不要再次启动。 
+    $this->session->set("name","DuPHP"); //设置name的值为DuPHP；
+    $this->session->get("name"); //获取Session中"name"值；
+    $this->session->remove("name"); //清除Session中name的值；
+    $this->session->destory(); //销毁Session；
+```
 要使用cookie服务，可先在入口文件中注册一个cookie服务
 ```php
     $di->register("cookie", function(){
@@ -274,11 +275,12 @@ $config = new \Du\Config\Php("config");
 ```
 ---
 调用方法
-
-    $this->cookie->set() 设置cookie,通setookies()；
-    $this->cookie->get("name") 获取cookie中name的值；
-    $this->cookie->remove("name") 清除Cookie中name的值；
-    $this->cookie->destory() 销毁cookie;
+```php
+    $this->cookie->set(); //设置cookie,通setookies()；
+    $this->cookie->get("name"); //获取cookie中name的值；
+    $this->cookie->remove("name"); //清除Cookie中name的值；
+    $this->cookie->destory(); //销毁cookie;
+```
 ##内置常量##
     DP_VER //Du框架的版本号
     ROOT_PATH //站点根目录 默认在Du核心目录的上一层目录
@@ -286,7 +288,7 @@ $config = new \Du\Config\Php("config");
     CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
     DEBUG //配置是否是调试模式，默认true；
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
-    VIEW //视图目录名称,默认在模块的下Views目录
+    VIEW_NAME //视图目录名称,默认在模块的下Views目录
     CACHE_PATH //缓存目录,默认在APP_PATH下Cache目录
     __MOUDLE__ //当前访问的模块
     __CONTROLLER__//当前访问的控制器
@@ -306,7 +308,7 @@ $config = new \Du\Config\Php("config");
 ```
 	或：
 ```php
-	$rst = $page->build("",2);//生成分页信息，返回分页的相关数据的数组
+	$rst = $page->build("",false);//生成分页信息，返回分页的相关数据的数组
 ```
 ## 上传文件##
 一个上传的例子
