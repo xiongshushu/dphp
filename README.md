@@ -77,7 +77,7 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 
 ```php
 	<?php
-		namespace Home\Controllers; //命名空间不能搞错;
+		namespace Home; //命名空间不能搞错;
 		use Du\Controller; 
 		
 		class Home extends Controller //控制器名称必须大写
