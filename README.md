@@ -172,15 +172,15 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 	<?php
 	namespace Home\Forms;
 	
-	use Du\Form;
+	use Du\Form\Validator;
 	
-	class Home extends Form
+	class Home extends Validator
 	{
 	    public function index()
 	    {
 	    	#这里可以调用表单层的表单验证的方法.
 	        return array(
-	            "name"=>md5($this->get('name')), //直接处理数据为MD5加密后的密文;
+	            "name"=>md5($this->formData['name']), //直接处理数据为MD5加密后的密文;
 	        );
 	    }
 	}
@@ -192,31 +192,31 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 		<?php
 		namespace Home\Forms;
 
-		use Du\Form;
-		use Du\FormError;
+		use Du\Form\Validator;
+	    use Du\Form\FormError;
 		
-		class User extends Form
+		class User extends Validator
 		{
-			public function reg() //对应UserController的regAction()
+			public function reg() //对应User Controller的reg()
 		    {
 		        try {
-		            $this->isEmpty($this->post("id"), "请输入用户名！");
-		            $this->isEmpty($this->post("email"), "请输入邮箱！");
-		            $this->match($this->post("email"), "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ", "请输入正确的邮箱!");
-		            $this->isEmpty($this->post("pwd"), "请输入密码！");
-		            $this->length($this->post("pwd"),16,6, "密码强度在6~16位之间！");
-		            $this->isEmpty($this->post("pwd2"), "请输入第二次密码！");
-		            $this->compare($this->post("pwd2"),$this->post("pwd"), "两次输入的密码不一致！");
-		            $this->isEmpty($this->post("code"), "请输入验证码！");
-		            $this->compare($this->post("agree"), 1, "请同意注册协议");
-		            $this->compare(md5(strtolower($this->post("code"))),$this->session->get("cpt"), "验证码错误！");
+		            $this->isEmpty("id", "请输入用户名！");
+		            $this->isEmpty("email", "请输入邮箱！");
+		            $this->match("email", "/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ", "请输入正确的邮箱!");
+		            $this->isEmpty("pwd", "请输入密码！");
+		            $this->length("pwd",16,6, "密码强度在6~16位之间！");
+		            $this->isEmpty("pwd2", "请输入第二次密码！");
+		            $this->compare("pwd2",$this->post("pwd"), "两次输入的密码不一致！");
+		            $this->isEmpty("code", "请输入验证码！");
+		            $this->compare("agree", 1, "请同意注册协议");
+		            $this->compare(md5(strtolower($this->formData["code"]),$this->session->get("cpt"), "验证码错误！");
 		             //返回的数据还会进行一次html转义.
 		            return array(
-		                "UserName"=>$this->post("id"),
-		                "Password"=>md5($this->post("pwd")),
+		                "UserName"=>$this->formData["id"],
+		                "Password"=>md5($this->formData["pwd"]),
 		                "RegTime"=>$_SERVER['REQUEST_TIME'],
 		                "RegIp"=>$_SERVER['REMOTE_ADDR'],
-		                "Email"=>$this->post("email"),
+		                "Email"=>$this->formData["email"],
 		                "LastLogin"=>$_SERVER['REQUEST_TIME'],
 		            );
 		        }catch(FormError $e){
@@ -246,9 +246,16 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 ## 读取配置 ##
 配置读取:
 ```php
-$config = new \Du\Config\Php("config");
+$config = (new \Du\Config)->php("config");
 ```
-则是取当前目录下的config.php文件\Du\Config\Php("config","menu");读取config.php二维数组的menu项配置。
+或者在控制器中
+```php
+$config = $this->config->php("config");
+```
+则是取当前目录下的config.php文件,指定配置目录:
+```php
+$this->config->setPath("./config");
+```
 ##Cookie和Session##
 要使用Session服务，可先在入口文件中注册一个session服务
 ```php
@@ -266,15 +273,7 @@ $config = new \Du\Config\Php("config");
     $this->session->remove("name"); //清除Session中name的值；
     $this->session->destory(); //销毁Session；
 ```
-要使用cookie服务，可先在入口文件中注册一个cookie服务
-```php
-    $di->register("cookie", function(){
-    	$cookie =  new cookie();
-        return $cookie;
-    })；
-```
----
-调用方法
+要使用cookie服务,调用方法
 ```php
     $this->cookie->set(); //设置cookie,通setookies()；
     $this->cookie->get("name"); //获取cookie中name的值；
@@ -286,7 +285,6 @@ $config = new \Du\Config\Php("config");
     ROOT_PATH //站点根目录 默认在Du核心目录的上一层目录
     APP_PATH //应用目录 默认在ROOT_PATH下的Aplication,可自定义
     CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
-    DEBUG //配置是否是调试模式，默认true；
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
     VIEW_NAME //视图目录名称,默认在模块的下Views目录
     CACHE_PATH //缓存目录,默认在APP_PATH下Cache目录
@@ -295,14 +293,13 @@ $config = new \Du\Config\Php("config");
     __ACTION__ //当前执行的Action
 有默认值得的常量均可自由定义。
 ## 验证码生成 ##
-验证码默认使用核心目录下Fonts/Elephant.ttf字体文件
+验证码默认使用核心目录下Verify/Fonts/Elephant.ttf字体文件
 ```php
-    $captcha = new \Du\Captcha();
-    $captcha->build(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
+    $this->captcha->code(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
 ```
 ## 分页 ##
 ```php
-	$page = new \Du\Page();
+	$page = new \Du\Model\Page();
 	$page->calc("总条数"，"第几页(默认是第一页)");
 	$rst = $page->build();//生成分页信息，默认返回html分页代码。
 ```

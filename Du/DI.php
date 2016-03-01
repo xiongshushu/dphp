@@ -1,7 +1,9 @@
 <?php
 namespace Du;
 
-class DI extends Service
+use Du\DI\Injectable;
+
+class DI extends Injectable
 {
 
     /**
@@ -10,38 +12,50 @@ class DI extends Service
      */
     static $di;
 
+    public $services = array();
+
+    public $alias = array(
+        "form" => "\\Du\\Form\\Form",
+        "request" => "\\Du\\Http\\Request",
+        "response" => "\\Du\\Http\\Response",
+        "router" => "\\Du\\Http\\Router",
+        "session" => "\\Du\\Storage\\Session",
+        "cookie" => "\\Du\\Storage\\Cookie",
+        "log" => "\\Du\\Storage\\Log",
+        "upload" => "\\Du\\Storage\\Upload",
+        "captcha" => "\\Du\\Verify\\Captcha",
+        "dispatcher" => "\\Du\\Http\\Dispatcher",
+        "page" => "\\Du\\Model\\Page",
+        "config" => "\\Du\\Config",
+        "view" => "\\Du\\View",
+    );
+
     public function __construct()
     {
-        parent::__construct();
-        if (! self::$di) {
+        if ( !self::$di )
+        {
             self::$di = $this;
         }
     }
 
-    /**
-     * 获取DI实例
-     * @return \Du\DI
-     */
-    public function getDI()
-    {
-        return $this;
-    }
-
     public function register($name, $call)
     {
-        $this->$name = !is_callable($call)?new $call():$call();
+        $this->services[$name] = !is_callable($call) ? new $call() : $call();
     }
 
     static function invoke($name)
     {
-        if (strrchr($name,"Model")) {
-            $model = __MODULE__."\\Models\\".$name;
-            if (!isset(self::$di->models[$model]))
+        if ( !isset( self::$di->services[$name] ) )
+        {
+            if ( strrchr($name, "Model") )
             {
-                self::$di->models[$model] = new $model;
+                $service = MODEL_SPACE . "\\" . $name;
+            } else
+            {
+                $service = self::$di->alias[$name];
             }
-            return self::$di->models[$model];
+            self::$di->services[$name] = new $service;
         }
-        return self::$di->$name;
+        return self::$di->services[$name];
     }
 }

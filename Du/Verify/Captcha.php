@@ -1,5 +1,5 @@
 <?php
-namespace Du;
+namespace Du\Verify;
 
 class Captcha
 {
@@ -111,7 +111,7 @@ class Captcha
      * @param string $sKey
      * 验证存储在session的键名
      */
-    public function build($sKey = "cpt")
+    public function code($sKey = "cpt")
     {
         $this->font = __DIR__ . DS . $this->font;
         $this->createBg();

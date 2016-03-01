@@ -1,7 +1,7 @@
 <?php
 namespace Du\Smart;
 
-class SmartParse
+class SmartParser
 {
 
     public $data;
@@ -56,7 +56,7 @@ class SmartParse
      */
     private function parseIf()
     {
-        $this->data = preg_replace('/{if:([\\a-zA-Z0-9\$_.]+)}/', "<?php if( \\1){?>", $this->data);
+        $this->data = preg_replace('/{if:([\\a-zA-Z0-9\$_.|&]+)}/', "<?php if( \\1){?>", $this->data);
         $this->data = preg_replace('/{elseif:([\\a-zA-Z0-9\$_.]+)}/', "<?php }elseif(\\1){?>", $this->data);
     }
 

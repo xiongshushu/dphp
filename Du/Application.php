@@ -1,6 +1,8 @@
 <?php
 namespace Du;
 
+use Du\Http\Dispatcher;
+
 class Application
 {
     public function handle(DI $di)
@@ -13,7 +15,7 @@ class Application
             (new Dispatcher())->exec();
             $di->view->display();
         } catch (Error $e) {
-            $di->response->show($e->getMessage(), "/");
+            $di->response->error($e->getMessage(), "/");
         }
     }
 }

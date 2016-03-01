@@ -8,18 +8,18 @@ class Smart extends Template
 
     /**
      * 解析引擎
-     * @var \Du\Smart\SmartParse
+     * @var \Du\Smart\SmartParser
      */
     public $smart;
 
     public function render($tPath, $tVars)
     {
-        $smart = new \Du\Smart\SmartParse();
+        $smart = new \Du\Smart\SmartParser();
         $path = join(DS, $tPath);
         $this->cacheFile = CACHE_PATH . DS . __MODULE__ . DS . $path . $this->suffix;
         $this->fileName = $tPath[1] . $this->suffix;
-        $tplDir = APP_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme;
-        $file = $tplDir . DS . $path . $this->suffix;
+        $tplDir = APP_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme . DS . __CONTROLLER__;
+        $file = $tplDir . DS . $this->fileName;
         if (file_exists($file)) {
             $smart->compile(file_get_contents($file), $tplDir . DS . $tPath[0], $this->suffix);
             $this->buildCacheFile($smart->data);

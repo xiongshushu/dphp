@@ -1,25 +1,24 @@
 <?php
 namespace Du;
 
-class Controller
+use Du\Di\Injectable;
+
+/**
+ * Class Controller
+ * @package Du
+ */
+abstract class Controller extends Injectable
 {
-    public function input($key="")
+    public function __construct()
     {
-        return $this->form->input($key);
-    }
 
-    public function api($api,$module = __MODULE__)
-    {
-        $apiLib = $module."\\Apies\\".$api;
-        if(class_exists($apiLib))
-        {
-            return new $apiLib;
+        if (method_exists($this, "main")) {
+            $this->main();
         }
-        $this->response->show("Couldn`t find API library : $apiLib !");
     }
 
-    public function __get($name)
+    public function input($key = "")
     {
-        return DI::invoke($name);
+       return $this->form->input($key);
     }
 }

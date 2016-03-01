@@ -1,5 +1,5 @@
 <?php
-namespace Du;
+namespace Du\Form;
 
 class FormError extends \Exception
 {

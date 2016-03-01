@@ -1,6 +1,8 @@
 <?php
 namespace Du;
 
+use Du\View\Adapter\Php;
+
 class View
 {
 
@@ -13,6 +15,11 @@ class View
     private $tVars = array();
 
     private $tPath = "";
+
+    public function __construct()
+    {
+        $this->engine = new Php();
+    }
 
     public function setVar($key, $value = "")
     {

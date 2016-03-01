@@ -1,5 +1,5 @@
 <?php
-namespace Du;
+namespace Du\Http;
 
 class Request
 {

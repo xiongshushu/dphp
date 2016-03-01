@@ -1,5 +1,5 @@
 <?php
-namespace Du;
+namespace Du\Model;
 
 class Page
 {
@@ -24,15 +24,15 @@ class Page
 
     /**
      * 总页数，总条数,最后一页
-     * @param int $num
-     * 总条数
+     * @param ini $num 总条数
+     * @param int $page 默认在第一页
      */
-    public function calc($num, $p = 1)
+    public function calculate($num, $page = 1)
     {
         $this->totalPage = ceil($num / $this->epage);
         $this->total = $num;
-        $this->page = $p;
-        $this->currentPage = $p;
+        $this->page = $page;
+        $this->currentPage = $page;
         $this->lastPage = $this->totalPage;
     }
 
