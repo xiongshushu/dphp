@@ -44,7 +44,7 @@ class captcha
      * 指定的字体路径
      * @var string
      */
-    public $font = "fonts/Elephant.ttf";
+    public $font = "fonts/elephant.ttf";
 
     /**
      * 指定字体大小

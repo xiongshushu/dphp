@@ -77,10 +77,10 @@ DuPHP遵循MVC结构,Du的模型主要负责数据库的操作，控制器作为
 
 ```php
 	<?php
-		namespace Home; //命名空间不能搞错;
-		use Du\Controller; 
+		namespace home; //命名空间不能搞错;
+		use du\controller; 
 		
-		class Home extends Controller //控制器名称必须大写
+		class home extends controller //控制器名称必须大写
 		{
 		    public function index() //必须是公共方法且Action为后缀,不接受参数,我们不建议在控制器直接进行Action调用
 		    {
@@ -99,7 +99,7 @@ Du模型就是数据库操作类的中间人.
 在使用模型之前入口文件中先要注册一个db服务,以下使用内置的pdo数据库操作类,也可以一使用其他注册为其他数据库操作类库.
 
 	$di->register("db", function(){
-	    return new Pdo([
+	    return new pdo([
 	        'dsn' => "mysql:dbname=test;host=127.0.0.1;charset=utf8",
 	        'db_user' => 'root',
 	        'db_pwd' => '',
@@ -122,8 +122,8 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 ```php
 	$di->register("view", function(){
-		  $view = new View();
-		  $view->loadEngine(new Smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
+		  $view = new view();
+		  $view->loadEngine(new smart()); //声明使用内置模板引擎驱动，类似可以使用smarty模板
 		  return $view;
 	});
 ```
@@ -150,9 +150,9 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 方法一
 ```php
 	$di->register("view", function () {
-	    $view = new View();
-	    $smart = new Smart();
-	    $smart->theme = "Default";
+	    $view = new view();
+	    $smart = new smart();
+	    $smart->theme = "default";
 	    $view->loadEngine($smart);
 	    return $view;
 	});
@@ -170,11 +170,11 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 ```php
 	<?php
-	namespace Home\Forms;
+	namespace home\forms;
 	
-	use Du\Form\Validator;
+	use du\form\validator;
 	
-	class Home extends Validator
+	class home extends validator
 	{
 	    public function index()
 	    {
@@ -190,12 +190,12 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 
 ```php
 		<?php
-		namespace Home\Forms;
+		namespace home\forms;
 
-		use Du\Form\Validator;
-	    use Du\Form\FormError;
+		use du\form\validator;
+	    use du\form\formError;
 		
-		class User extends Validator
+		class user extends validator
 		{
 			public function reg() //对应User Controller的reg()
 		    {
@@ -219,7 +219,7 @@ Du的视图可以直接使用原生的语法。如果你要是用内置模板，
 		                "Email"=>$this->formData["email"],
 		                "LastLogin"=>$_SERVER['REQUEST_TIME'],
 		            );
-		        }catch(FormError $e){
+		        }catch(formError $e){
 		            $this->response->json(array("info"=>$e->getMessage()));
 		        }
 		    }
@@ -233,7 +233,7 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 ##多模块设置##
 ```php
    $di->register("router",function(){
-       $router = new \Du\Router();
+       $router = new \du\router();
        $router->addModule("Admin"); //注册一个Admin模块，首字母大写.
        return $router;
    });
@@ -246,7 +246,7 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 ## 读取配置 ##
 配置读取:
 ```php
-$config = (new \Du\Config)->php("config");
+$config = (new \du\config)->php("config");
 ```
 或者在控制器中
 ```php
@@ -260,7 +260,7 @@ $this->config->setPath("./config");
 要使用Session服务，可先在入口文件中注册一个session服务
 ```php
     $di->register("session", function(){
-    	$session =  new Session();
+    	$session =  new session();
         $session->start();
         return $session;
     });
@@ -283,23 +283,21 @@ $this->config->setPath("./config");
 ##内置常量##
     DP_VER //Du框架的版本号
     ROOT_PATH //站点根目录 默认在Du核心目录的上一层目录
-    APP_PATH //应用目录 默认在ROOT_PATH下的Aplication,可自定义
-    CONF_PATH //配置文件存放目录，默认在APP_PATH下Config目录
     DS //PHP内置常量DIRECTORY_SEPARATOR的缩写
-    VIEW_NAME //视图目录名称,默认在模块的下Views目录
-    CACHE_PATH //缓存目录,默认在APP_PATH下Cache目录
+    VIEW_NAME //视图目录名称,默认在模块的下views目录
+    CACHE_PATH //缓存目录,默认在APP_PATH下cache目录
     __MOUDLE__ //当前访问的模块
     __CONTROLLER__//当前访问的控制器
     __ACTION__ //当前执行的Action
 有默认值得的常量均可自由定义。
 ## 验证码生成 ##
-验证码默认使用核心目录下Verify/Fonts/Elephant.ttf字体文件
+验证码默认使用核心目录下verify/fonts/elephant.ttf字体文件
 ```php
     $this->captcha->code(); //即可生成验证，验证码不区分大小写，默认存入session中MD5的形式存在“cpt”键值中，只要判断用户输入的验证码MD5值与$this->session->get("cpt")是否一致即可。验证码大小等可以自由定义。
 ```
 ## 分页 ##
 ```php
-	$page = new \Du\Model\Page();
+	$page = new \du\pagination\page();
 	$page->calc("总条数"，"第几页(默认是第一页)");
 	$rst = $page->build();//生成分页信息，默认返回html分页代码。
 ```
@@ -312,14 +310,14 @@ $this->config->setPath("./config");
 ```php
 	 	if (isset($_FILES) && !empty($_FILES))
 	        {
-	            $upload = new Upload();
+	            $upload = new upload();
 	            $upload->input_name = "file";
 	            $upload->file_Ext = "jpg,png"; //允许上传的文件
 	            $upload->auto_name=false;//是否使用自动重命名，false采用原文件名
-	            $upload->file_save_dir = ROOT_PATH.DS."/Upload"; //上传目录
+	            $upload->file_save_dir = ROOT_PATH.DS."/upload"; //上传目录
 	            $file = $upload->save(); //保存
 	            if ($file['status']){ //是否上传成功
-	                return "/Upload".$file['file'];
+	                return "/upload".$file['file'];
 	            }else {
 	               $this->response->json(["info"=>$upload->errorMsg]); //上传失败json输出错误信息
 	            }
