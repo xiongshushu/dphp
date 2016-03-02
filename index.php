@@ -1,22 +1,25 @@
 <?php
-use Du\View;
-use Du\View\Adapter\Smart;
-use Du\Loader;
-use Du\DI;
-use Du\Application;
+use du\View;
+use du\view\adapter\Smart;
+use du\Loader;
+use du\DI;
+use du\Application;
 
-require 'Du/Loader.php';
+require 'du/Loader.php';
 //设置时间区
 date_default_timezone_set("PRC");
 
 Loader::Init();
 $di = new DI();
 
-$di->register("view", function(){
-   $view = new View();
-   $smart = new Smart();
-   $view->loadEngine($smart);
-   return $view;
+$di->router->addModule("Admin");
+$di->session->start();
+
+$di->register("view", function () {
+    $view = new View();
+    $smart = new Smart();
+    $view->loadEngine($smart);
+    return $view;
 });
 
 $app = new Application();
