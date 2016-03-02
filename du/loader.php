@@ -4,7 +4,7 @@ namespace du;
 class loader
 {
 
-    public static function Init()
+    public static function init()
     {
         define("DP_VER", "2.0.1 Beta", false);
         define("DS", DIRECTORY_SEPARATOR, false);
