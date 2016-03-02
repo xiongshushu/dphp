@@ -1,7 +1,7 @@
 <?php
 namespace du\http;
 
-class Router
+class router
 {
 
     public $module = "home";

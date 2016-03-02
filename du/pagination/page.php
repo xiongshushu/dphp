@@ -1,7 +1,7 @@
 <?php
 namespace du\pagination;
 
-class Page
+class page
 {
 
     public $page = 1;
@@ -45,26 +45,32 @@ class Page
     public function build($pageLink = '', $html = true)
     {
         $page = "";
-        $pageLink = empty($pageLink) ? '' : "&" . $pageLink;
+        $pageLink = empty( $pageLink ) ? '' : "&" . $pageLink;
         // 上一页
-        if ($this->currentPage > 1) {
+        if ( $this->currentPage > 1 )
+        {
             $this->upPage = $this->currentPage - 1;
             $page .= "<li><a id=\"pre\" href=\"?p=" . $this->upPage . $pageLink . "\">上一页</a></li> ";
         }
         // 中间页码
-        if ($this->totalPage > 1) {
+        if ( $this->totalPage > 1 )
+        {
             $begin = $this->page >= 10 ? $this->page - 4 : 1;
             $end = $this->totalPage >= 10 ? $begin + 9 : $this->totalPage;
-            for ($i = $begin; $i <= $end; $i++) {
-                if ($i == $this->currentPage) {
+            for ($i = $begin ; $i <= $end ; $i++)
+            {
+                if ( $i == $this->currentPage )
+                {
                     $page .= "<li class=\"active\"><a href=\"?p=" . $this->currentPage . "\">$i</a></li> ";
-                } else {
+                } else
+                {
                     $page .= "<li><a href=\"?p=" . $i . $pageLink . "\">$i</a></li> ";
                 }
             }
         }
         // 下一页
-        if ($this->currentPage < $this->totalPage) {
+        if ( $this->currentPage < $this->totalPage )
+        {
             $this->nextPage = $this->currentPage + 1;
             $page .= "<li><a id=\"next\" href=\"?p=" . $this->nextPage . $pageLink . "\">下一页</a></li> ";
         }

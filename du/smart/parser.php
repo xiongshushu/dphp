@@ -1,7 +1,7 @@
 <?php
 namespace du\smart;
 
-class SmartParser
+class parser
 {
 
     public $data;

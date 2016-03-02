@@ -1,9 +1,9 @@
 <?php
 namespace home;
 
-use du\Controller;
+use du\controller;
 
-class Home extends Controller
+class home extends controller
 {
     public function index()
     {

@@ -1,7 +1,7 @@
 <?php
 namespace du\storage;
 
-class Upload
+class upload
 {
 
     /**

@@ -1,12 +1,12 @@
 <?php
 namespace du;
 
-class View
+class view
 {
 
     /**
      * 模板引擎
-     * @var \du\view\Template
+     * @var \du\view\template
      */
     private $engine;
 

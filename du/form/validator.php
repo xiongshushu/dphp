@@ -1,9 +1,9 @@
 <?php
 namespace du\form;
 
-use du\di\Injectable;
+use du\di\injectable;
 
-class Validator extends Injectable {
+class validator extends injectable {
 
     public $formData = array();
 

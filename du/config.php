@@ -1,7 +1,7 @@
 <?php
 namespace du;
 
-class Config
+class config
 {
     private $path;
 

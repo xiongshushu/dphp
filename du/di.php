@@ -1,9 +1,9 @@
 <?php
 namespace du;
 
-use du\di\Injectable;
+use du\di\injectable;
 
-class DI extends Injectable
+class di extends injectable
 {
 
     /**
@@ -15,18 +15,18 @@ class DI extends Injectable
     public $services = array();
 
     public $alias = array(
-        "form" => "\\du\\form\\Form",
-        "request" => "\\du\\http\\Request",
-        "response" => "\\du\\http\\Response",
-        "router" => "\\du\\http\\Router",
-        "session" => "\\du\\http\\Session",
-        "cookie" => "\\du\\http\\Cookie",
-        "log" => "\\du\\storage\\Log",
-        "upload" => "\\du\\storage\\Upload",
-        "captcha" => "\\du\\verify\\Captcha",
-        "dispatcher" => "\\du\\http\\Dispatcher",
-        "page" => "\\du\\pagination\\Page",
+        "form" => "\\du\\form\\form",
+        "request" => "\\du\\http\\request",
+        "response" => "\\du\\http\\response",
+        "router" => "\\du\\http\\router",
+        "session" => "\\du\\http\\session",
+        "cookie" => "\\du\\http\\cookie",
+        "log" => "\\du\\storage\\log",
+        "upload" => "\\du\\storage\\upload",
+        "captcha" => "\\du\\verify\\captcha",
+        "page" => "\\du\\pagination\\page",
         "config" => "\\du\\config",
+        "view" => "\\du\\view",
     );
 
     public function __construct()

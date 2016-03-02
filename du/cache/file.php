@@ -1,7 +1,7 @@
 <?php
 namespace du\cache;
 
-class File
+class file
 {
     public $data = array();
 
@@ -11,11 +11,13 @@ class File
     {
         $cacheDir = CACHE_PATH . DS . "File";
         $this->cacheFile = $cacheDir . DS . $option["temp"] . ".php";
-        if (!is_dir($cacheDir)) {
+        if ( !is_dir($cacheDir) )
+        {
             mkdir($cacheDir, 0777, true);
             return;
         }
-        if (file_exists($this->cacheFile)) {
+        if ( file_exists($this->cacheFile) )
+        {
             $this->data = file_get_contents($this->cacheFile);
         }
     }
@@ -30,12 +32,13 @@ class File
 
     public function get($name)
     {
-        if (isset($this->data["expire"]) && $this->data["expire"] < $_SERVER["REQUEST_TIME"]) {
-            unset($this->data[$name]);
+        if ( isset( $this->data["expire"] ) && $this->data["expire"] < $_SERVER["REQUEST_TIME"] )
+        {
+            unset( $this->data[$name] );
             $this->save();
             return false;
         }
-        return isset($this->data[$name]) ? $this->data[$name] : false;
+        return isset( $this->data[$name] ) ? $this->data[$name] : false;
     }
 
     public function remove($name)
@@ -51,7 +54,9 @@ class File
 
     private function save()
     {
-        file_put_contents($this->cacheFile, "<?php return " . str_replace(array(" ", "\n"), "", var_export($this->data, true)) . ";?>");
+        file_put_contents($this->cacheFile, "<?php return " . str_replace(array(
+                " ", "\n"
+            ), "", var_export($this->data, true)) . ";?>");
     }
 
 }

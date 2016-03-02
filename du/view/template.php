@@ -1,7 +1,7 @@
 <?php
 namespace du\view;
 
-abstract class Template
+abstract class template
 {
     public $suffix = ".php";
     

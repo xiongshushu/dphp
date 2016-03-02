@@ -1,7 +1,7 @@
 <?php
 namespace du\verify;
 
-class Captcha
+class captcha
 {
 
     /**

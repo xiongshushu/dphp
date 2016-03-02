@@ -1,7 +1,7 @@
 <?php
 namespace du\http;
 
-class Cookie
+class cookie
 {
 
     public function set($key, $value=null, $expire=null, $path=null, $domain=null, $secure=null, $httponly=null)

@@ -1,18 +1,18 @@
 <?php
 namespace du\form;
 
-use du\Error;
+use du\error;
 
-class Form
+class form
 {
     public function input($key = "")
     {
         $form = __MODULE__ . "\\Forms\\" . __CONTROLLER__;
         if (!class_exists($form)) {
-            throw new Error("Couldn't find form : " . $form);
+            throw new error("Couldn't find form : " . $form);
         }
         if (!method_exists($form, __ACTION__)) {
-            throw new Error("Couldn't find  method : " . __ACTION__ . " of " . $form);
+            throw new error("Couldn't find  method : " . __ACTION__ . " of " . $form);
         }
         $data = (new $form())->{__ACTION__}();
         $data = $this->removeXSS($data);

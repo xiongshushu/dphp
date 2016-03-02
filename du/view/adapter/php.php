@@ -1,9 +1,9 @@
 <?php
 namespace du\view\adapter;
 
-use du\view\Template;
+use du\view\template;
 
-class Php extends Template
+class php extends template
 {
     public $data;
 

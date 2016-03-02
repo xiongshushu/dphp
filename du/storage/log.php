@@ -1,7 +1,7 @@
 <?php
 namespace du\storage;
 
-class Log
+class log
 {
     public $logPath;
 

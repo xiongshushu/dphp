@@ -1,10 +1,10 @@
 <?php
 namespace du\view\adapter;
 
-use du\smart\SmartParser;
-use du\view\Template;
+use du\smart\parser;
+use du\view\template;
 
-class Smart extends Template
+class smart extends template
 {
 
     /**
@@ -15,7 +15,7 @@ class Smart extends Template
 
     public function render($tPath, $tVars)
     {
-        $smart = new SmartParser();
+        $smart = new parser();
         $path = join(DS, $tPath);
         $this->cacheFile = CACHE_PATH . DS . __MODULE__ . DS . $path . $this->suffix;
         $this->fileName = $tPath[1] . $this->suffix;

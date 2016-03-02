@@ -1,7 +1,7 @@
 <?php
 namespace du\http;
 
-class Request
+class request
 {
     public function isPost()
     {

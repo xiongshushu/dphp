@@ -4,7 +4,7 @@ namespace du\db;
 /**
  * PDO数据库驱动
  */
-class Pdo
+class pdo
 {
 
     protected $PDOStatement = null;

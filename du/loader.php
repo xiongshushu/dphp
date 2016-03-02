@@ -1,7 +1,7 @@
 <?php
 namespace du;
 
-class Loader
+class loader
 {
 
     public static function Init()

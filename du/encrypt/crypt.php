@@ -3,7 +3,7 @@ namespace du\encrypt;
 /**
  * Base64 加密实现类
  */
-class Crypt {
+class crypt {
 
     /**
      * 加密字符串

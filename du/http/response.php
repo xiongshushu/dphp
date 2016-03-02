@@ -1,7 +1,7 @@
 <?php
 namespace du\http;
 
-class Response
+class response
 {
     private $template = "Html/Show.php";
 

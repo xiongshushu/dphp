@@ -1,7 +1,7 @@
 <?php
 namespace du\http;
 
-class Session
+class session
 {
 
     public function set($key, $value = null)

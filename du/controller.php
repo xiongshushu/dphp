@@ -1,13 +1,13 @@
 <?php
 namespace du;
 
-use du\di\Injectable;
+use du\di\injectable;
 
 /**
  * Class Controller
  * @package Du
  */
-abstract class Controller extends Injectable
+abstract class controller extends injectable
 {
     public function __construct()
     {

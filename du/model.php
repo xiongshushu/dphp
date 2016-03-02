@@ -1,9 +1,9 @@
 <?php
 namespace du;
 
-use du\di\Injectable;
+use du\di\injectable;
 
-class Model extends Injectable
+class model extends injectable
 {
     public function __call($name, $args)
     {
