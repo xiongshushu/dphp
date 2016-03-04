@@ -6,9 +6,6 @@ namespace du\db;
  */
 class pdo
 {
-
-    protected $PDOStatement = null;
-
     private $db;
 
     static $_instance;
@@ -41,7 +38,6 @@ class pdo
 
     /**
      * 向数据库插入数据，返回受影响的行数
-     *
      * @param string $sql
      * @param array $data
      * @return mixed
@@ -54,7 +50,6 @@ class pdo
 
     /**
      * 向数据库更新数据，返回布尔值
-     *
      * @param string $sql
      * @param array $data
      * @return mixed
@@ -71,7 +66,6 @@ class pdo
 
     /**
      * 向数据库查询数据，返回结果集
-     *
      * @param string $sql
      * @param array $data
      * @return mixed
@@ -84,7 +78,6 @@ class pdo
 
     /**
      * 向数据库查询数据，返回结果集
-     *
      * @param string $sql
      * @param array $data
      * @return mixed
@@ -97,7 +90,6 @@ class pdo
 
     /**
      * 删除数据，返回布尔值
-     *
      * @param string $sql
      * @param array $data
      * @return boolean
