@@ -9,7 +9,7 @@ class file
 
     public function connect($option)
     {
-        $cacheDir = CACHE_PATH . DS . "File";
+        $cacheDir = CACHE_PATH . DS . "file";
         $this->cacheFile = $cacheDir . DS . $option["temp"] . ".php";
         if ( !is_dir($cacheDir) )
         {
