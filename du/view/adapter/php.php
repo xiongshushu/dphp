@@ -16,7 +16,7 @@ class php extends template
             $this->data = file_get_contents($file);
             $this->fileName = $tPath[1] . $this->suffix;
             $this->cacheFile = CACHE_PATH . DS . $path . $this->suffix;
-            $this->buildCacheFile($this->data);
+            $this->generateCache($this->data);
             if (is_file($this->cacheFile)) {
                 extract($tVars);
                 require $this->cacheFile;
@@ -24,7 +24,7 @@ class php extends template
         }
     }
 
-    public function getResult()
+    public function result()
     {
         return $this->data;
     }

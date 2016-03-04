@@ -21,17 +21,19 @@ class smart extends template
         $this->fileName = $tPath[1] . $this->suffix;
         $tplDir = ROOT_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme . DS . __CONTROLLER__;
         $file = $tplDir . DS . $this->fileName;
-        if (file_exists($file)) {
+        if ( file_exists($file) )
+        {
             $smart->compile(file_get_contents($file), $tplDir . DS . $tPath[0], $this->suffix);
-            $this->buildCacheFile($smart->data);
-            if (is_file($this->cacheFile)) {
+            $this->generateCache($smart->data);
+            if ( is_file($this->cacheFile) )
+            {
                 extract($tVars);
                 require $this->cacheFile;
             }
         }
     }
 
-    public function getResult()
+    public function result()
     {
         return $this->smart->data;
     }
