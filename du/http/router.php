@@ -12,7 +12,7 @@ class router
 
     public $modules = array("home");
 
-    public $rule = array();
+    private $rule = array();
 
     public function parseUrl()
     {

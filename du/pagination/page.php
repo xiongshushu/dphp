@@ -10,7 +10,7 @@ class page
 
     public $totalPage;
 
-    public $epage = 10;
+    public $perPage = 10;
 
     public $currentPage = 1;
 
@@ -24,12 +24,12 @@ class page
 
     /**
      * 总页数，总条数,最后一页
-     * @param ini $num 总条数
+     * @param int $num 总条数
      * @param int $page 默认在第一页
      */
     public function calculate($num, $page = 1)
     {
-        $this->totalPage = ceil($num / $this->epage);
+        $this->totalPage = ceil($num / $this->perPage);
         $this->total = $num;
         $this->page = $page;
         $this->currentPage = $page;
@@ -76,7 +76,7 @@ class page
         }
         return $html ? $page : array(
             "page" => $this->page,
-            "epage" => $this->epage,
+            "perPage" => $this->perPage,
             "totalPage" => $this->totalPage,
             "total" => $this->total,
             "currentPage" => $this->currentPage,

@@ -16,7 +16,7 @@ class validator extends injectable {
     public function isEmpty($key, $msg)
     {
         if (empty($this->formData[$key])) {
-            throw new FormError($msg);
+            throw new formError($msg);
         }
     }
 
@@ -24,28 +24,28 @@ class validator extends injectable {
     {
         $len = mb_strlen($this->formData[$key]);
         if ($len < $min || $len > $max) {
-            throw new F($msg);
+            throw new formError($msg);
         }
     }
 
     public function contrast($key, $msg, $max, $min = 0)
     {
         if ($this->formData[$key] < $min || $this->formData[$key] > $max) {
-            throw new FormError($msg);
+            throw new formError($msg);
         }
     }
 
     public function compare($key1, $key2, $msg)
     {
         if ($this->formData[$key1] != $this->formData[$key2]) {
-            throw new FormError($msg);
+            throw new formError($msg);
         }
     }
 
     public function match($key, $pattern, $msg)
     {
         if (!preg_match($pattern, $this->formData[$key])) {
-            throw new FormError($msg);
+            throw new formError($msg);
         }
     }
 
