@@ -1,5 +1,5 @@
-﻿## DuPHP (目前是测试版本，不断更新)##
-DuPHP是一款轻量级的开源PHP框架，不到50k的压缩大小，MVC结构，轻量级内置模板引擎Smart，验证码；上传；加密；静态路由，正则路由；多模块统统都有，运行在PHP≥5.4的系统中，精简封装PDO MySql操作，操作数据库目前只通过PDO操作，完全可以使用第三方数据库操作类。DuPHP低耦合框架，可以在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
+﻿## DuPHP ##
+DuPHP是一款轻量级的开源PHP框架，MVC结构，轻量级内置模板引擎Smart，验证码；上传；加密；静态路由，正则路由；多模块,分页统统都有，运行在PHP≥5.4的系统中，精简封装PDO MySql操作，操作数据库目前只通过PDO操作，完全可以使用第三方数据库操作类。DuPHP低耦合框架，可以在框架的基础上二次开发，打造完全属于自己的框架，完全的自由化。
 ##DuPHP与ThinkPHP的性能测试##
 以下测试均在相同环境下（单纯的输出“hello world” 的测试），您若自行测试，因硬件配置不同会有所差异
 ###AB测试###
@@ -106,7 +106,7 @@ Du模型就是数据库操作类的中间人.
 	        'db_encode'=>'utf8']);
 	});
 
-控制器中调用模型只需$this->*Model 调用即可，例如$this->UserModel,调用了User模型，必须包含Model关键词，框架自动识别
+控制器中调用模型只需$this->*Model 调用即可，例如$this->userModel,调用了User模型，必须包含Model关键词，框架自动识别
 在模型中，可以直接调用数据库操作类的方法.可以开启数据库缓存,默认使用基于文件的缓存,目的是对重复查询的结果缓存,减少数据库多次查询。
 默认是基于文件缓存,有一定的缺陷.要使用缓存,需要在入口文件中指定那类缓存驱动.
 
@@ -234,15 +234,15 @@ Loader负责框架的初始化操作，自动加载，定义常量等。
 ```php
    $di->register("router",function(){
        $router = new \du\router();
-       $router->addModule("Admin"); //注册一个Admin模块，首字母大写.
+       $router->registerModule("Admin"); //注册一个Admin模块，首字母大写.
        return $router;
    });
 ```
 支持同时注册多个模块
 ```php
- 	 $router->addModule("Admin","Mobile");
+ 	 $router->registerModule("Admin","Mobile");
 ```
-默认包含了一个“Home”模块。
+默认包含了一个“home”模块。
 ## 读取配置 ##
 配置读取:
 ```php
