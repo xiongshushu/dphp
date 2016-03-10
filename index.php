@@ -12,7 +12,7 @@ date_default_timezone_set("PRC");
 Loader::Init();
 $di = new di();
 
-$di->router->addModule("Admin");
+$di->router->registerModule("Admin");
 $di->session->start();
 
 $di->register("view", function () {

@@ -4,8 +4,8 @@ namespace du;
 use du\di\injectable;
 
 /**
- * Class Controller
- * @package Du
+ * Class controller
+ * @package du
  */
 abstract class controller extends injectable
 {

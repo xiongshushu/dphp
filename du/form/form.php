@@ -7,12 +7,12 @@ class form
 {
     public function input($key = "")
     {
-        $form = __MODULE__ . "\\Forms\\" . __CONTROLLER__;
+        $form = __MODULE__ . "\\forms\\" . __CONTROLLER__;
         if (!class_exists($form)) {
-            throw new error("Couldn't find form : " . $form);
+            throw new error("couldn't find form : " . $form);
         }
         if (!method_exists($form, __ACTION__)) {
-            throw new error("Couldn't find  method : " . __ACTION__ . " of " . $form);
+            throw new error("couldn't find  method : " . __ACTION__ . " of " . $form);
         }
         $data = (new $form())->{__ACTION__}();
         $data = $this->removeXSS($data);

@@ -103,7 +103,7 @@ class pdo
         return false;
     }
 
-    private function query($sql, $data)
+    public function query($sql, $data)
     {
         try {
             $rst = $this->db->prepare($sql);
