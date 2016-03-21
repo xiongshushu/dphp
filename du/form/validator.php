@@ -9,7 +9,7 @@ class validator extends injectable {
 
     public function __construct()
     {
-        $this->formData = $_REQUEST;
+        $this->formData = array_merge($_GET,$_POST);
         unset($this->formData["_s"]);
     }
 
@@ -35,9 +35,16 @@ class validator extends injectable {
         }
     }
 
-    public function compare($key1, $key2, $msg)
+    public function compareKey($key1, $key2, $msg)
     {
         if ($this->formData[$key1] != $this->formData[$key2]) {
+            throw new formError($msg);
+        }
+    }
+
+    public function compareValue($value1, $value2, $msg)
+    {
+        if ($value1 != $value2) {
             throw new formError($msg);
         }
     }

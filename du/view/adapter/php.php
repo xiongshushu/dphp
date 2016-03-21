@@ -10,7 +10,7 @@ class php extends template
     public function render($tPath, $tVars)
     {
         $path = join(DS, $tPath);
-        $tplDir = ROOT_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme . DS . __CONTROLLER__;
+        $tplDir = ROOT_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme . DS . $tPath[0];
         $file = $tplDir . DS . $path . $this->suffix;
         if (file_exists($file)) {
             $this->data = file_get_contents($file);

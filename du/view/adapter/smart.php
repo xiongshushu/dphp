@@ -19,7 +19,7 @@ class smart extends template
         $path = join(DS, $tPath);
         $this->cacheFile = CACHE_PATH . DS . __MODULE__ . DS . $path . $this->suffix;
         $this->fileName = $tPath[1] . $this->suffix;
-        $tplDir = ROOT_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme . DS . __CONTROLLER__;
+        $tplDir = ROOT_PATH . DS . __MODULE__ . DS . VIEW_NAME . DS . $this->theme . DS . $tPath[0];
         $file = $tplDir . DS . $this->fileName;
         if ( file_exists($file) )
         {

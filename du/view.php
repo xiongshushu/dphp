@@ -43,7 +43,7 @@ class view
 
     private function parsePath($path)
     {
-        $pathInfo = explode(".", $path);
+        $pathInfo = explode("/", $path);
         $count = empty( $path ) ? 0 : count($pathInfo);
         switch ($count)
         {

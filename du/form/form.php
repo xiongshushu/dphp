@@ -31,4 +31,20 @@ class form
         }
         return $data;
     }
+
+    static function post($key = "")
+    {
+        if (empty($key)) {
+            return (new self)->removeXSS($_POST);
+        }
+        return empty($_POST[$key]) ? "" : (new self)->removeXSS($_POST[$key]);
+    }
+
+    static function get($key = "")
+    {
+        if (empty($key)) {
+            return (new self)->removeXSS($_GET);
+        }
+        return empty($_GET[$key]) ? "" : (new self)->removeXSS($_GET[$key]);
+    }
 }
