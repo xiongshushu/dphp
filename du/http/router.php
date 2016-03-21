@@ -51,10 +51,6 @@ class router
     {
         if (isset($_GET["_s"])) {
             $uri = str_replace(".html", "", trim($_GET["_s"], "/"));
-            // 静态路由
-            if (in_array($uri, array_keys($this->rule))) {
-                $uri = $this->rule[$uri];
-            }
             foreach ($this->rule as $pattern => $url) {
                 $uri = preg_replace($pattern, $url, $uri);
             }
