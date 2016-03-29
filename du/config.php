@@ -1,26 +1,18 @@
 <?php
-namespace du;
 
 class config
 {
-    private $path;
-
-    public function php($name, $item = "")
+    /**
+     * 加载返回格式为数组的php配置文件
+     * @param $file
+     * @return mixed
+     */
+    static function php($file)
     {
         static $config = array();
-        if (!isset($config[$name])) {
-            $config[$name] = $this->readFile($name . ".php");
+        if (!isset($config[$file])) {
+            $config[$file] = include $file;
         }
-        return empty($item) ? $config[$name] : $config[$name][$item];
-    }
-
-    public function setPath($path)
-    {
-        $this->path = $path;
-    }
-
-    private function readFile($file)
-    {
-        return require $this->path . $file;
+        return $config[$file];
     }
 }

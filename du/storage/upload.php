@@ -1,5 +1,5 @@
 <?php
-namespace du\storage;
+namespace storage;
 
 class upload
 {

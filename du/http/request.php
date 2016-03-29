@@ -1,9 +1,9 @@
 <?php
-namespace du\http;
+namespace http;
 
-class request
+trait request
 {
-    public function isPost()
+    static function isPost()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             return true;
@@ -11,7 +11,7 @@ class request
         return false;
     }
 
-    public function isGet()
+    static function isGet()
     {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             return true;
@@ -19,17 +19,7 @@ class request
         return false;
     }
 
-    public function url()
-    {
-        return $_SERVER["HTTP_HOST"];
-    }
-
-    public function ip()
-    {
-        return $_SERVER['REMOTE_ADDR'];
-    }
-
-    public function redirect($action = "")
+    static function redirect($action = "")
     {
         header("location:" . $action);
     }

@@ -1,25 +1,26 @@
 <?php
-namespace du\http;
+namespace http;
 
 class cookie
 {
 
-    public function set($key, $value=null, $expire=null, $path=null, $domain=null, $secure=null, $httponly=null)
+    static function set($key, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
         setcookie($key, $value, $expire, $path, $domain, $secure, $httponly);
     }
 
-    public function get($key)
+    static function get($key)
     {
-        return isset($_COOKIE[$key])?$_COOKIE[$key]:null;
+        return isset( $_COOKIE[$key] ) ? $_COOKIE[$key] : null;
     }
-    
-    public function remove($key)
+
+    static function remove($key)
     {
-        unset($_COOKIE[$key]);
+        unset( $_COOKIE[$key] );
     }
-    public function destroy()
+
+    static function destroy()
     {
-    	unset($_COOKIE);
+        unset( $_COOKIE );
     }
 }

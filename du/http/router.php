@@ -1,57 +1,50 @@
 <?php
-namespace du\http;
+namespace http;
 
 class router
 {
+    private static $rule = array();
 
-    public $module = "home";
+    private static $layers = array("admin");
 
-    public $controller = "home";
-
-    public $action = "index";
-
-    public $modules = array("home");
-
-    private $rule = array();
-
-    public function parseUrl()
+    static function parseUrl()
     {
-        $uri = $this->getUri();
+        $uri = self::getUri();
         if (!empty($uri)) {
-            if (in_array($uri[0], $this->modules)) {
-                $this->module = $uri[0];
-                array_shift($uri);
-            }
-            if (count($uri) >= 2) {
-                $param = array_splice($uri, 2);
-                // 传递额外的参数给_GET;
+            define("MODULE", $uri[0]);
+            array_shift($uri);
+            if (count($uri) >= 3) {
+                $param = array_splice($uri, 3);
+                // 额外的参数给_GET;
                 foreach ($param as $k => $v) {
                     if (isset($param[$k + 1]) && !is_numeric($v)) {
                         $_GET[$v] = $param[$k + 1];
                         unset($param[$k + 1]);
-                    } else {
+                    } else
                         $_GET["param"] = $v;
-                    }
                 }
-                $this->controller = $uri[0];
-                $this->action = $uri[1];
             }
-            if (count($uri) == 1) {
-                $this->controller = $uri[0];
+            if (!empty($uri) && in_array($uri[0], self::$layers)) {
+                define("LAYER", $uri[0]);
+                array_shift($uri);
             }
         }
+        defined("MODULE") OR define("MODULE", "home");
+        defined("LAYER") OR define("LAYER", "");
+        defined("CONTROLLER") OR define("CONTROLLER", empty($uri[0]) ? "index" : $uri[0]);
+        defined("ACTION") OR define("ACTION", empty($uri[1]) ? "index" : $uri[1]);
     }
 
-    public function set(array $rule)
+    static function set(array $rule)
     {
-        $this->rule = $rule;
+        self::$rule = $rule;
     }
 
-    public function getUri()
+    static function getUri()
     {
         if (isset($_GET["_s"])) {
             $uri = str_replace(".html", "", trim($_GET["_s"], "/"));
-            foreach ($this->rule as $pattern => $url) {
+            foreach (self::$rule as $pattern => $url) {
                 $uri = preg_replace($pattern, $url, $uri);
             }
             return explode("/", $uri);
@@ -59,12 +52,12 @@ class router
         return isset($argv) ? $argv : array();
     }
 
-    public function registerModule($_)
+    static function registerLayer($_)
     {
         $args = func_get_args();
         foreach ($args as $value) {
-            if (!in_array($value, $this->modules)) {
-                $this->modules[] = $value;
+            if (!in_array($value, self::$layers)) {
+                self::$layers[] = $value;
             }
         }
     }

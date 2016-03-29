@@ -1,32 +1,32 @@
 <?php
-namespace du\http;
+namespace http;
 
 class session
 {
 
-    public function set($key, $value = null)
+    static function set($key, $value = null)
     {
         $_SESSION[$key] = $value;
     }
 
-    public function start()
+    static function start()
     {
         if (session_status() != 2) {
             session_start();
         }
     }
 
-    public function remove($key)
+    static function remove($key)
     {
         unset($_SESSION[$key]);
     }
 
-    public function get($key)
+    static function get($key)
     {
         return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
     }
 
-    public function destroy()
+    static function destroy()
     {
         session_destroy();
     }

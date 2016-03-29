@@ -1,5 +1,5 @@
 <?php
-namespace du\db;
+namespace db;
 
 /**
  * PDO数据库驱动

@@ -1,5 +1,5 @@
 <?php
-namespace du\pagination;
+namespace pagination;
 
 class page
 {
