@@ -13,6 +13,10 @@ class app
     {
         try {
             router::parseUrl();
+            define("LAYER",router::$layer);
+            define("MODULE",router::$module);
+            define("ACTION",router::$action);
+            define("CONTROLLER",router::$controller);
             $class = MODULE . "\\" . (LAYER == "" ? "" : LAYER . "\\") . CONTROLLER;
             if (class_exists($class))
                 return (new $class())->{ACTION}();

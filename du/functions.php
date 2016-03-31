@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 实例化模型
  * @param $table
@@ -37,3 +36,4 @@ function autoload($className)
         require_once($appfile);
     }
 }
+

@@ -7,14 +7,26 @@ class router
 
     private static $layers = array("admin");
 
+    static $layer = "";
+
+    static $module = "home";
+
+    static $controller = "index";
+
+    static $action = "index";
+
     static function parseUrl()
     {
         $uri = self::getUri();
         if (!empty($uri)) {
-            define("MODULE", $uri[0]);
+            self::$module = $uri[0];
             array_shift($uri);
-            if (count($uri) >= 3) {
-                $param = array_splice($uri, 3);
+            if (in_array($uri[0], self::$layers)) {
+                self::$layer = $uri[0];
+                array_shift($uri);
+            }
+            if (count($uri) >= 2) {
+                $param = array_splice($uri, 2);
                 // 额外的参数给_GET;
                 foreach ($param as $k => $v) {
                     if (isset($param[$k + 1]) && !is_numeric($v)) {
@@ -23,16 +35,13 @@ class router
                     } else
                         $_GET["param"] = $v;
                 }
+                self::$controller =  $uri[0];
+                self::$action = $uri[1];
             }
-            if (!empty($uri) && in_array($uri[0], self::$layers)) {
-                define("LAYER", $uri[0]);
-                array_shift($uri);
+            if(count($uri) == 1){
+                self::$controller =  $uri[0];
             }
         }
-        defined("MODULE") OR define("MODULE", "home");
-        defined("LAYER") OR define("LAYER", "");
-        defined("CONTROLLER") OR define("CONTROLLER", empty($uri[0]) ? "index" : $uri[0]);
-        defined("ACTION") OR define("ACTION", empty($uri[1]) ? "index" : $uri[1]);
     }
 
     static function set(array $rule)
@@ -49,7 +58,7 @@ class router
             }
             return explode("/", $uri);
         }
-        return isset($argv) ? $argv : array();
+        return isset($_SERVER["argv"]) ? $_SERVER["argv"] : array();
     }
 
     static function registerLayer($_)
