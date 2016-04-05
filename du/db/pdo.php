@@ -12,8 +12,9 @@ class pdo
 
     /**
      * 架构函数 数据库连接
-     *
      * @access public
+     * @param string $config
+     * @throws \Exception
      */
     public function __construct($config = '')
     {
@@ -103,6 +104,13 @@ class pdo
         return false;
     }
 
+    /**
+     * 执行SQL
+     * @param $sql
+     * @param $data
+     * @return \PDOStatement
+     * @throws \Exception
+     */
     public function query($sql, $data)
     {
         try {

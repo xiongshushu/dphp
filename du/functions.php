@@ -28,12 +28,13 @@ function L($lib, $module = MODULE)
 function autoload($className)
 {
     $class = "/" . str_replace("\\", "/", $className) . ".php";
-    $corefile = CORE_PATH . $class;
-    $appfile = APP_PATH . $class;
-    if (file_exists($corefile)) {
-        require_once $corefile;
-    } elseif (file_exists($appfile)) {
-        require_once($appfile);
-    }
+    $load = function ($classfile) {
+        if (file_exists($classfile)) {
+            require_once $classfile;
+        }
+    };
+    $load(ROOT_PATH . $class);
+    $load(CORE_PATH . $class);
+    $load(APP_PATH . $class);
 }
 

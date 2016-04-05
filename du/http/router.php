@@ -21,7 +21,7 @@ class router
         if (!empty($uri)) {
             self::$module = $uri[0];
             array_shift($uri);
-            if (in_array($uri[0], self::$layers)) {
+            if (isset($uri[0]) && in_array($uri[0], self::$layers)) {
                 self::$layer = $uri[0];
                 array_shift($uri);
             }
@@ -35,11 +35,11 @@ class router
                     } else
                         $_GET["param"] = $v;
                 }
-                self::$controller =  $uri[0];
+                self::$controller = $uri[0];
                 self::$action = $uri[1];
             }
-            if(count($uri) == 1){
-                self::$controller =  $uri[0];
+            if (count($uri) == 1) {
+                self::$controller = $uri[0];
             }
         }
     }

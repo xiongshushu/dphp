@@ -3,6 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly"content="true">
     <title>出错啦</title>
     <style type="text/css">* {
         padding: 0;
@@ -40,8 +43,9 @@
     <p class="detail"></p>
     <p class="jump">
         页面自动
-        <a href="javascript" onclick="history.go(-1)">跳转</a>
-        等待时间：<lable id="wait"><?php echo $time ?></lable>
+        <a href="#" onclick="history.go(-1)">跳转</a>
+        等待时间：
+        <lable id="wait"><?php echo $time ?></lable>
     </p>
 </div>
 <script type="text/javascript">(function () {

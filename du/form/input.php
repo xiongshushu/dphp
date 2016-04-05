@@ -46,7 +46,7 @@ class input
                     }
                     break;
                 case "len":
-                    if (empty($formData[$key])) {
+                    if (!($formData[$key]<=$args["max"] && $formData[$key]>=$args["min"])) {
                         throw new formError($args["msg"]);
                     }
                     break;
