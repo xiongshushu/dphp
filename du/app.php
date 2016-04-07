@@ -20,8 +20,8 @@ class app
             $class = MODULE . "\\" . (LAYER == "" ? "" : LAYER . "\\") . CONTROLLER;
             if (class_exists($class))
                 return (new $class())->{ACTION}();
-            throw new error("Cannot load the file:$class.php");
-        } catch (error $e) {
+            e::panic("Cannot load the file:$class.php");
+        } catch (e $e) {
             response::error($e->getMessage());
         }
     }

@@ -10,4 +10,14 @@ defined("ROOT_PATH") OR define("ROOT_PATH", dirname(APP_PATH));
 defined("CORE_PATH") OR define("CORE_PATH", __DIR__);
 
 //自动加载
-spl_autoload_register("autoload");
+spl_autoload_register(function($className){
+    $class = "/" . str_replace("\\", "/", $className) . ".php";
+    $load = function ($classfile) {
+        if (file_exists($classfile)) {
+            require_once $classfile;
+        }
+    };
+    $load(ROOT_PATH . $class);
+    $load(CORE_PATH . $class);
+    $load(APP_PATH . $class);
+});
