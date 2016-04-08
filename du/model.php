@@ -6,7 +6,7 @@ class model
 
     public function __construct()
     {
-        self::$driver = d::in("db");
+        self::$driver = di::invoke("db");
     }
 
     public function __call($name, $args)
