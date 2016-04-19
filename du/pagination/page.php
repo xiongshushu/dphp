@@ -4,86 +4,50 @@ namespace pagination;
 class page
 {
 
-    public $page = 1;
+    public $options = array(
+        "page" => 1,
+        "total" => "",
+        "totalPage" => "",
+        "perPage" => 10,
+        "currentPage" => 1,
+        "firstPage" => 1,
+        "lastPage" => 1,
+        "nextPage" => 1,
+        "upPage" => 1,
+    );
 
-    public $total;
+    public $html;
 
-    public $totalPage;
-
-    public $perPage = 10;
-
-    public $currentPage = 1;
-
-    public $firstPage = 1;
-
-    public $lastPage = 1;
-
-    public $nextPage = 1;
-
-    public $upPage = 1;
-
-    /**
-     * 总页数，总条数,最后一页
-     * @param int $num 总条数
-     * @param int $page 默认在第一页
-     */
-    public function calculate($num, $page = 1)
+    public function __construct($total, $perPage = 10, $page = 1, $pageLink = "")
     {
-        $this->totalPage = ceil($num / $this->perPage);
-        $this->total = $num;
-        $this->page = $page;
-        $this->currentPage = $page;
-        $this->lastPage = $this->totalPage;
-    }
-
-    /**
-     * 默认输出html的分页
-     * @param string $pageLink 需要追加到链接后的get参数
-     * @param bool $html 输出形式true：html代码，false：分页参数数据
-     * @return mixed
-     */
-    public function build($pageLink = '', $html = true)
-    {
-        $page = "";
-        $pageLink = empty( $pageLink ) ? '' : "&" . $pageLink;
+        $this->options["total"] = $total;
+        $this->options["page"] = $page;
+        $this->options["currentPage"] = $page;
+        $this->options["totalPage"] = ceil($total / $perPage);
+        $this->options["perPage"] = $perPage;
+        $this->html = "";
+        $pageLink = empty($pageLink) ? '' : "&" . $pageLink;
         // 上一页
-        if ( $this->currentPage > 1 )
-        {
-            $this->upPage = $this->currentPage - 1;
-            $page .= "<li><a id=\"pre\" href=\"?p=" . $this->upPage . $pageLink . "\">上一页</a></li> ";
+        if ($this->options["currentPage"] > 1) {
+            $this->options["upPage"] = $this->options["currentPage"] - 1;
+            $this->html .= "<li><a id=\"pre\" href=\"?p=" . $this->options["upPage"] . $pageLink . "\">上一页</a></li> ";
         }
         // 中间页码
-        if ( $this->totalPage > 1 )
-        {
-            $begin = $this->page >= 10 ? $this->page - 4 : 1;
-            $end = $this->totalPage >= 10 ? $begin + 9 : $this->totalPage;
-            for ($i = $begin ; $i <= $end ; $i++)
-            {
-                if ( $i == $this->currentPage )
-                {
-                    $page .= "<li class=\"active\"><a href=\"?p=" . $this->currentPage . "\">$i</a></li> ";
-                } else
-                {
-                    $page .= "<li><a href=\"?p=" . $i . $pageLink . "\">$i</a></li> ";
+        if ($this->options["totalPage"] > 1) {
+            $begin = $this->options["page"] >= 10 ? $this->options["page"] - 4 : 1;
+            $end = $this->options["totalPage"] >= 10 ? $begin + 9 : $this->options["totalPage"];
+            for ($i = $begin; $i <= $end; $i++) {
+                if ($i == $this->options["currentPage"]) {
+                    $this->html .= "<li class=\"active\"><a href=\"?p=" . $this->options["currentPage"] . "\">$i</a></li> ";
+                } else {
+                    $this->html .= "<li><a href=\"?p=" . $i . $pageLink . "\">$i</a></li> ";
                 }
             }
         }
         // 下一页
-        if ( $this->currentPage < $this->totalPage )
-        {
-            $this->nextPage = $this->currentPage + 1;
-            $page .= "<li><a id=\"next\" href=\"?p=" . $this->nextPage . $pageLink . "\">下一页</a></li> ";
+        if ($this->options["currentPage"] < $this->options["totalPage"]) {
+            $this->options["nextPage"] = $this->options["currentPage"] + 1;
+            $this->html .= "<li><a id=\"next\" href=\"?p=" . $this->options["nextPage"] . $pageLink . "\">下一页</a></li> ";
         }
-        return $html ? $page : array(
-            "page" => $this->page,
-            "perPage" => $this->perPage,
-            "totalPage" => $this->totalPage,
-            "total" => $this->total,
-            "currentPage" => $this->currentPage,
-            "nextPage" => $this->nextPage,
-            "upPage" => $this->upPage,
-        );
     }
 }
-
-?>

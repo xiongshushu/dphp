@@ -2,8 +2,6 @@
 
 class smart
 {
-    private static $func;
-
     static function compile($data)
     {
         $tags = array(

@@ -18,7 +18,7 @@ class router
     static function parseUrl()
     {
         $uri = self::getUri();
-        if (!empty($uri)) {
+        if (!empty($uri[0])) {
             self::$module = $uri[0];
             array_shift($uri);
             if (isset($uri[0]) && in_array($uri[0], self::$layers)) {
@@ -58,7 +58,7 @@ class router
             }
             return explode("/", $uri);
         }
-        return isset($_SERVER["argv"]) ? $_SERVER["argv"] : array();
+        return isset($_SERVER["argv"]) ? array_splice($_SERVER["argv"],1) : array();
     }
 
     static function registerLayer($_)

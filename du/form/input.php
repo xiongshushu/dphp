@@ -39,39 +39,29 @@ class input
         unset($_GET["_s"]);
         $formData = array_merge($_GET, $_POST);
         if (isset($formData[$key])) {
+            $result = true;
             switch ($method) {
                 case "empty":
-                    if (empty($formData[$key])) {
-                        throw new formError($args["msg"]);
-                    }
+                    $result = !empty($formData[$key]);
                     break;
                 case "len":
-                    if (!($formData[$key]<=$args["max"] && $formData[$key]>=$args["min"])) {
-                        throw new formError($args["msg"]);
-                    }
+                    $result = $formData[$key] <= $args["max"] && $formData[$key] >= $args["min"];
                     break;
                 case "size":
-                    if ($formData[$key] < $args["min"] || $formData[$key] > $args["max"]) {
-                        throw new formError($args["msg"]);
-                    }
+                    $result = $formData[$key] < $args["min"] || $formData[$key] > $args["max"];
                     break;
                 case "compare":
-                    if ($args["value1"] != $args["value2"]) {
-                        throw new formError($args["msg"]);
-                    }
+                    $result = $args["value1"] == $args["value2"];
                     break;
                 case "match":
-                    if (!preg_match($args["pattern"], $formData[$key])) {
-                        throw new formError($args["msg"]);
-                    }
-                    break;
-                case "replace":
-                    if (empty($formData[$key])) {
-                        $formData[$key] = $args["replacer"];
-                    }
+                    $result = preg_match($args["pattern"], $formData[$key]);
                     break;
                 default:
+                    $result = empty($formData[$key]);
                     break;
+            }
+            if ($result == false) {
+                throw new formError($args["msg"]);
             }
             return empty($formData[$key]) ? $this->removeXSS($formData) : $this->removeXSS($formData[$key]);
         }

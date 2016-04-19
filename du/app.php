@@ -21,7 +21,7 @@ class app
             if (class_exists($class))
                 return (new $class())->{ACTION}();
             e::panic("Cannot load the file:$class.php");
-        } catch (error $e) {
+        } catch (e $e) {
             response::error($e->getMessage());
         }
     }

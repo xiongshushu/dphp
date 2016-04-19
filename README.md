@@ -19,4 +19,8 @@
 		RewriteCond %{REQUEST_FILENAME} !-f
 		RewriteRule ^(.*)$ index.php/?_s=$1 [QSA,L]
 	</IfModule>
-OK，开始开发之旅吧
+## 三步学会使用##
+一，目录结构
+二，内置函数，常量
+三，封装
+              |
