@@ -17,9 +17,9 @@ class loader {
          * @param $module
          * @return \model
          */
-        function M($table, $module = MODULE)
+        function M($table)
         {
-            return P("models\\" . $table, $module);
+            return P("models\\" . $table, $table);
         }
 
         /**
