@@ -6,7 +6,7 @@ class model
 
     public function __construct()
     {
-        self::$driver = pool::in("db");
+        self::$driver = dm::in("db");
     }
 
     public function __call($name, $args)
