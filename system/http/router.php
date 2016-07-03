@@ -5,9 +5,9 @@ class router
 {
     private static $rule = array();
 
-    private static $layers = array("admin");
+    private static $modules = array("admin");
 
-    static $layer = "";
+    static $child = "";
 
     static $module = "home";
 
@@ -21,8 +21,8 @@ class router
         if (!empty($uri[0])) {
             self::$module = $uri[0];
             array_shift($uri);
-            if (isset($uri[0]) && in_array($uri[0], self::$layers)) {
-                self::$layer = $uri[0];
+            if (isset($uri[0]) && in_array($uri[0], self::$modules)) {
+                self::$child = $uri[0];
                 array_shift($uri);
             }
             if (count($uri) >= 2) {
@@ -58,15 +58,15 @@ class router
             }
             return explode("/", $uri);
         }
-        return isset($_SERVER["argv"]) ? array_splice($_SERVER["argv"],1) : array();
+        return isset($_SERVER["argv"]) ? array_splice($_SERVER["argv"], 1) : array();
     }
 
-    static function registerLayer($_)
+    static function registerModule($_)
     {
         $args = func_get_args();
         foreach ($args as $value) {
-            if (!in_array($value, self::$layers)) {
-                self::$layers[] = $value;
+            if (!in_array($value, self::$modules)) {
+                self::$modules[] = $value;
             }
         }
     }

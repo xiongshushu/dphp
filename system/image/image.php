@@ -5,10 +5,10 @@ class image {
     // point:点;line:线;arc:弧;fill:填充;border:边
     // ellipse:椭圆;rectangle:矩形;polygon:多边形
     //创建
-    static function create($width, $height, $bgcolor = false, $type = false){
+    static function create($width, $height, $bgColor = false, $type = false){
         $create = $type ? 'imagecreatetruecolor' : 'imagecreate';
         $image = $create($width, $height);
-        $bgcolor && self::color($image, $bgcolor);
+        $bgColor && self::color($image, $bgColor);
         return $image;
     }
     //打开
@@ -20,10 +20,10 @@ class image {
         }
     }
     //设置颜色
-    static function color(&$imgage, $color = 'ffffff', $delete = false){
+    static function color(&$image, $color = 'ffffff', $delete = false){
         $cd = str_split($color, ((strlen($color) > 4) ? 2 : 1));
-        $color = imagecolorallocate($imgage, hexdec($cd[0]), hexdec($cd[1]), hexdec($cd[2]));
-        $delete && imagecolordeallocate($imgage, $color);
+        $color = imagecolorallocate($image, hexdec($cd[0]), hexdec($cd[1]), hexdec($cd[2]));
+        $delete && imagecolordeallocate($image, $color);
         return $color;
     }
     //绘制图形

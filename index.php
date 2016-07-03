@@ -1,5 +1,5 @@
 <?php
-require 'du/loader.php';
+require 'system/lm.php';
 date_default_timezone_set("PRC");
-loader::init();
-app::run();
+lm::init();
+lm::run();

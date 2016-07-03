@@ -38,8 +38,8 @@ class input
     {
         unset($_GET["_s"]);
         $formData = array_merge($_GET, $_POST);
+        $result = false;
         if (isset($formData[$key])) {
-            $result = true;
             switch ($method) {
                 case "empty":
                     $result = !empty($formData[$key]);
@@ -60,11 +60,11 @@ class input
                     $result = empty($formData[$key]);
                     break;
             }
-            if ($result == false) {
-                throw new formError($args["msg"]);
-            }
-            return empty($formData[$key]) ? $this->removeXSS($formData) : $this->removeXSS($formData[$key]);
         }
-        return "";
+        if ($result == false) {
+            throw new formError($args["msg"]);
+        }
+        return empty($formData[$key]) ? $this->removeXSS($formData) : $this->removeXSS($formData[$key]);
+
     }
 }
