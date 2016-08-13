@@ -18,4 +18,4 @@
 		RewriteCond %{REQUEST_FILENAME} !-d
 		RewriteCond %{REQUEST_FILENAME} !-f
 		RewriteRule ^(.*)$ index.php/?_s=$1 [QSA,L]
-	</IfModule>      |
+	</IfModule>

@@ -1,6 +1,8 @@
 <?php
 namespace form;
 
+use http\response;
+
 class input
 {
     private function removeXSS($data)
@@ -62,9 +64,8 @@ class input
             }
         }
         if ($result == false) {
-            throw new formError($args["msg"]);
+            throw new formError($args["msg"],false);
         }
         return empty($formData[$key]) ? $this->removeXSS($formData) : $this->removeXSS($formData[$key]);
-
     }
 }

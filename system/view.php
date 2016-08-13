@@ -15,40 +15,83 @@ class view
     }
 
     private static $tags = array(
-        '/{{(.+?)}}/' => "<?php echo \\1 ?>",
-        '/{:(.+?)}/' => "<?php \\1 ?>",
-        '/{if:([\\a-zA-Z0-9\$_.|&]+)}/' => "<?php if( \\1){?>",
-        '/{elseif:([\\a-zA-Z0-9\$_.]+)}/' => "<?php }elseif(\\1){?>",
-        '/{end}/' => '<?php }?>',
-        '/{else}/' => '<?php }else{?>',
-        '/{fetch:([\\a-zA-Z0-9\$_.]+)}/' => "<?php foreach(\\1){?>",
+        '/{{(.+?)}}/' => "view::VEcho",
+        '/{:(.+?)}/' => "view::VPhp",
+        '/{if:([\\a-zA-Z0-9\$_.|&]+)}/' => "view::Vif",
+        '/{elseif:([\\a-zA-Z0-9\$_.]+)}/' => "view::VElf",
+        '/{end}/' => 'view::VEnd',
+        '/{else}/' => 'view::VElse',
+        '/{fetch:([\\a-zA-Z0-9\$_.]+)}/' => "view::VFetch",
+        '/{import:([a-zA-Z0-9\$_]+)\/([a-zA-Z0-9\$_]+)}/' => "view::VImport",
     );
 
     static function compile($data)
     {
-        foreach (self::$tags as $pattern => $tag) {
-            $data = preg_replace($pattern, $tag, $data);
+        foreach (self::$tags as $pattern => $func) {
+            $data = preg_replace_callback($pattern, $func, $data);
         }
         return $data;
     }
 
-    static function tag($tag, $pattern)
+    static function tag($tag, $callback)
     {
-        self::$tags[$tag] = $pattern;
+        self::$tags[$tag] = $callback;
     }
 
-    static function display($tpl = _ACTION_, $vars = array())
+    static function assign($tpl = _ACTION_, $vars = array())
     {
         $target = ROOT_PATH . "/cache/" . _SUBMOD_ . "/" . _MODULE_ . "/" . $tpl . ".php";
-        $tplDir = APP_PATH . "/" . _MODULE_ . "/" . _SUBMOD_ . "/template/";
-        $file = $tplDir . $tpl . ".php";
+        $file = MOD_PATH . "/" . _SUBMOD_ . "/template/" . $tpl . ".php";
         if (file_exists($file)) {
-            $data = self::compile(file_get_contents($file), $tplDir, ".php");
+            $data = self::compile(file_get_contents($file));
             self::create($target, $data, -1);
             if (is_file($target)) {
                 extract($vars);
-                require $target;
+                require_once $target;
             }
+        }
+    }
+
+    static function VEcho($matches)
+    {
+        return "<?php echo $matches[1]; ?>";
+    }
+
+    static function VPhp($matches)
+    {
+        return "<?php $matches[1]; ?>";
+    }
+
+    static function Vif($matches)
+    {
+        return "<?php if($matches[1]){ ?>";
+    }
+
+    static function VElf($matches)
+    {
+        return "<?php }elseif($matches[1]){ ?>";
+    }
+
+    static function VElse()
+    {
+        return "<?php }else{ ?>";
+    }
+
+    static function VEnd()
+    {
+        return "<?php } ?>";
+    }
+
+    static function VFetch($matches)
+    {
+        return "<?php foreach($matches[1]){ ?>";
+    }
+
+    static function VImport($matches)
+    {
+        $file = APP_PATH . "/" . $matches[1] . "/template/" . $matches[2] . ".php";
+        if (file_exists($file)) {
+            return self::compile(file_get_contents($file));
         }
     }
 }

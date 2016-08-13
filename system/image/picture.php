@@ -5,7 +5,7 @@ class picture
 {
 
     //返回验证码图片
-    static function code($text, $len = "4", $width = 70, $height = 30)
+    static function code($text, $len = "4", $height = 30, $width = 70)
     {
         //设置head信息，输出图片
         header("Content-Type:image/gif");

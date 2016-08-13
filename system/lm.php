@@ -138,6 +138,7 @@ class lm
             define("_MODULE_", router::$module);
             define("_ACTION_", router::$action);
             define("_CONTROLLER_", router::$controller);
+            define("MOD_PATH", APP_PATH . "/" . _MODULE_);
             $class = _MODULE_ . "\\" . (_SUBMOD_ == "" ? "" : _SUBMOD_ . "\\") . _CONTROLLER_;
             if (class_exists($class))
                 return (new $class())->{_ACTION_}();
