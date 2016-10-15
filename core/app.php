@@ -3,7 +3,7 @@
 use http\response;
 use http\router;
 
-class lm
+class app
 {
     private static $container = array();
 
@@ -18,33 +18,6 @@ class lm
             self::$container[$name] = new $service;
         }
         return self::$container[$name];
-    }
-
-    static function error($message = "", $code = 0, Exception $previous = null)
-    {
-        throw new \Exception($message, $code, $previous);
-    }
-
-    /**
-     * 记录日志
-     * @param string $log
-     * @param string $destination
-     */
-    static function log($log, $destination = '')
-    {
-        if (empty($destination)) {
-            $destination = LOG_PATH . date('Y_m_d') . '.log';
-        }
-        // 自动创建日志目录
-        $log_dir = dirname($destination);
-        if (!is_dir($log_dir)) {
-            mkdir($log_dir, 0755, true);
-        }
-        //检测日志文件大小，超过配置大小则备份日志文件重新生成
-        if (is_file($destination) && 2048000 <= filesize($destination)) {
-            rename($destination, dirname($destination) . '/' . time() . '-' . basename($destination));
-        }
-        error_log("[" . date("Y-m-d H:i:s") . "] " . $_SERVER["REQUEST_URI"] . "\r\n {$log}\r\n", 3, $destination);
     }
 
     static function mysql($config)
@@ -86,7 +59,7 @@ class lm
          */
         function L($module = _MODULE_)
         {
-            return lm::in($module . ".logic", $module . "\\libs\\logic");
+            return app::in($module . "_logic", $module . "\\libs\\logic");
         }
 
         /**
@@ -97,7 +70,7 @@ class lm
          */
         function P($lib, $module = _MODULE_)
         {
-            return lm::in($module . "." . $lib, $module . "\\libs\\" . $lib);
+            return app::in($module . "_" . $lib, $module . "\\libs\\" . $lib);
         }
 
         /**
@@ -116,7 +89,7 @@ class lm
             return empty($item) ? $_config[$config] : $_config[$config][$item];
         }
 
-        //自动加载
+        //autoload
         spl_autoload_register(function ($className) {
             $class = "/" . str_replace("\\", "/", $className) . ".php";
             $load = function ($class, array $loadDir) {
@@ -134,15 +107,15 @@ class lm
     {
         try {
             router::parseUrl();
-            define("_SUBMOD_", router::$child);
+            define("_SUB_", router::$child);
             define("_MODULE_", router::$module);
             define("_ACTION_", router::$action);
             define("_CONTROLLER_", router::$controller);
             define("MOD_PATH", APP_PATH . "/" . _MODULE_);
-            $class = _MODULE_ . "\\" . (_SUBMOD_ == "" ? "" : _SUBMOD_ . "\\") . _CONTROLLER_;
+            $class = _MODULE_ . "\\" . (_SUB_ == "" ? "" : _SUB_ . "\\") . _CONTROLLER_;
             if (class_exists($class))
                 return (new $class())->{_ACTION_}();
-            self::error("Cannot load the file:$class.php");
+            error::panic("Cannot load the file:$class.php");
         } catch (\Exception $e) {
             response::error($e->getMessage());
         }

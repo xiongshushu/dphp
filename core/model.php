@@ -9,13 +9,13 @@ class model
 
     public function __construct()
     {
-        $this->driver = lm::in("db");
+        $this->driver = app::in("db");
     }
 
     public function __call($name, $args)
     {
         if (empty($this->driver)) {
-            lm::error("driver missed!");
+            error::panic("driver missed!");
         }
         if (method_exists($this->driver, $name)) {
             return call_user_func_array(array($this->driver, $name), $args);

@@ -25,7 +25,7 @@ class view
         '/{import:([a-zA-Z0-9\$_]+)\/([a-zA-Z0-9\$_]+)}/' => "view::VImport",
     );
 
-    static function compile($data)
+    static function make($data)
     {
         foreach (self::$tags as $pattern => $func) {
             $data = preg_replace_callback($pattern, $func, $data);
@@ -40,10 +40,10 @@ class view
 
     static function assign($tpl = _ACTION_, $vars = array())
     {
-        $target = ROOT_PATH . "/cache/" . _SUBMOD_ . "/" . _MODULE_ . "/" . $tpl . ".php";
-        $file = MOD_PATH . "/" . _SUBMOD_ . "/template/" . $tpl . ".php";
+        $target = ROOT_PATH . "/cache/" . _SUB_ . "/" . _MODULE_ . "/" . $tpl . ".php";
+        $file = MOD_PATH . "/" . _SUB_ . "/template/" . $tpl . ".php";
         if (file_exists($file)) {
-            $data = self::compile(file_get_contents($file));
+            $data = self::make(file_get_contents($file));
             self::create($target, $data, -1);
             if (is_file($target)) {
                 extract($vars);
@@ -91,7 +91,7 @@ class view
     {
         $file = APP_PATH . "/" . $matches[1] . "/template/" . $matches[2] . ".php";
         if (file_exists($file)) {
-            return self::compile(file_get_contents($file));
+            return self::make(file_get_contents($file));
         }
     }
 }

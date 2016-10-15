@@ -1,7 +1,4 @@
 <?php
-namespace form;
-
-use http\response;
 
 class input
 {
@@ -64,7 +61,7 @@ class input
             }
         }
         if ($result == false) {
-            throw new formError($args["msg"],false);
+            throw new \Exception($args["msg"]);
         }
         return empty($formData[$key]) ? $this->removeXSS($formData) : $this->removeXSS($formData[$key]);
     }

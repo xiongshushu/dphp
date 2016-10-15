@@ -1,5 +1,5 @@
 <?php
-namespace encrypt;
+
 /**
  * Base64 加密实现类
  */
