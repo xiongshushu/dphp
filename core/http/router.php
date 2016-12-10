@@ -27,7 +27,6 @@ class router
             }
             if (count($uri) >= 2) {
                 $param = array_splice($uri, 2);
-                // 额外的参数给_GET;
                 foreach ($param as $k => $v) {
                     if (isset($param[$k + 1]) && !is_numeric($v)) {
                         $_GET[$v] = $param[$k + 1];
@@ -54,7 +53,8 @@ class router
         if (isset($_GET["_s"])) {
             $uri = str_replace(".html", "", trim($_GET["_s"], "/"));
             foreach (self::$rule as $pattern => $url) {
-                $uri = preg_replace($pattern, $url, $uri);
+                $pattern = str_replace('(num)', '(\d*)', $pattern);
+                $uri = preg_replace('@' . $pattern . "@", $url, $uri);
             }
             return explode("/", $uri);
         }

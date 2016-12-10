@@ -18,7 +18,7 @@ class view
         '/{{(.+?)}}/' => "view::VEcho",
         '/{:(.+?)}/' => "view::VPhp",
         '/{if:([\\a-zA-Z0-9\$_.|&]+)}/' => "view::Vif",
-        '/{elseif:([\\a-zA-Z0-9\$_.]+)}/' => "view::VElf",
+        '/{elseif:([\\a-zA-Z0-9\|\$_.]+)}/' => "view::VElf",
         '/{end}/' => 'view::VEnd',
         '/{else}/' => 'view::VElse',
         '/{fetch:([\\a-zA-Z0-9\$_.]+)}/' => "view::VFetch",
@@ -40,8 +40,8 @@ class view
 
     static function assign($tpl = _ACTION_, $vars = array())
     {
-        $target = ROOT_PATH . "/cache/" . _SUB_ . "/" . _MODULE_ . "/" . $tpl . ".php";
-        $file = MOD_PATH . "/" . _SUB_ . "/template/" . $tpl . ".php";
+        $target = ROOT_PATH . "/cache/" . _LAYER_ . "/" . _MODULE_ . "/" . $tpl . ".php";
+        $file = MOD_PATH . "/" . _LAYER_ . "/template/" . $tpl . ".php";
         if (file_exists($file)) {
             $data = self::make(file_get_contents($file));
             self::create($target, $data, -1);

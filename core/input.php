@@ -5,7 +5,11 @@ class input
     private function removeXSS($data)
     {
         if (!is_array($data)) {
-            return htmlspecialchars(trim($data));
+            if(mb_detect_encoding($data,"UTF-8"))
+            {
+                return htmlspecialchars(trim($data));
+            }
+            return htmlspecialchars(trim($data),ENT_QUOTES,'GB2312');
         }
         foreach ($data as $k => $v) {
             if (is_array($v)) {

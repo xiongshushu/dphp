@@ -1,7 +1,7 @@
 <?php
 namespace image;
 
-class image {
+class palette {
     // point:点;line:线;arc:弧;fill:填充;border:边
     // ellipse:椭圆;rectangle:矩形;polygon:多边形
     //创建

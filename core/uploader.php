@@ -4,9 +4,7 @@ class uploader
 {
     public $name = "upload";
 
-    public $rename = true;
-
-    public $prefix = "";
+    public $rename = false;
 
     public $saveDir = "/upload";
 
@@ -24,12 +22,12 @@ class uploader
     {
         if ($this->checkExt() || $this->checkSize()) {
             $save_dir = $this->saveDir;
-            $storageDir = date("/Ymd/", $_SERVER['REQUEST_TIME']);
+            $storageDir =  empty($this->saveDir)? date("/Ymd/", $_SERVER['REQUEST_TIME']) :"";
             if (!is_dir($save_dir . $storageDir)) {
                 mkdir($save_dir . $storageDir, 0777, true);
             }
             if ($this->rename) {
-                $upFile = $this->prefix . uniqid() . "." . $this->getExt();
+                $upFile = uniqid() . "." . $this->getExt();
             } else {
                 $upFile = $_FILES[$this->name]['name'];
             }
