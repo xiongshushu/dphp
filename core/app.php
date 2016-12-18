@@ -87,7 +87,7 @@ class app
                 return (new $class())->{_ACTION_}();
             http::error(404, "Can't load the file:$class.php");
         } catch (\Exception $e) {
-            error::panic($e->getMessage());
+            errors::panic($e->getMessage());
         }
     }
 }

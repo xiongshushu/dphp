@@ -1,15 +1,13 @@
 <?php
 
-class error
+class errors
 {
-
-    static $code;
-    static $msg;
+    private static $err = array();
 
     static function file($message, $dest = '')
     {
         if (empty($dest)) {
-            $dest = LOG_PATH .'/'. date('Y_m_d') . '.log';
+            $dest = LOG_PATH . '/' . date('Y_m_d') . '.log';
         }
         $log_dir = dirname($dest);
         if (!is_dir($log_dir)) {
@@ -41,12 +39,28 @@ class error
 
     static function set($message, $code = 100)
     {
-        self::$code = $code;
-        self::$msg = $message;
+        self::$err[] = $code;
+        self::$err[] = $message;
         return false;
     }
 
-    static function make(callable $func, $type = "error::json")
+    static function getMessage()
+    {
+        if (empty(self::$err[1])) {
+            return "";
+        }
+        return self::$err[1];
+    }
+
+    static function getCode()
+    {
+        if (empty(self::$err[0])) {
+            return "";
+        }
+        return self::$err[0];
+    }
+
+    static function handle(callable $func, $type = "errors::json")
     {
         try {
             return $func();
