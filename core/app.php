@@ -7,6 +7,8 @@ class app
 {
     private static $container = array();
 
+    public static $config = array();
+
     static function join($name, $call)
     {
         self::$container[$name] = !is_callable($call) ? new $call() : $call();
@@ -41,14 +43,12 @@ class app
 
         function C($key, $item = "")
         {
-            static $_c = array();
-            $_c = include ROOT_PATH . "/config/app.php";
-            if (!isset($_c[$key])) {
+            if (!isset(app::$config[$key])) {
                 $split = explode(".", $key);
                 $dest = count($split) > 1 ? $split[0] . "/config/" . $split[1] : "config/" . $split[0];
-                $_c[$key] = include APP_PATH . "/$dest.php";
+                app::$config[$key] = include APP_PATH . "/$dest.php";
             }
-            return empty($item) ? $_c[$key] : $_c[$key][$item];
+            return empty($item) ? app::$config[$key] : app::$config[$key][$item];
         }
 
         //autoload
@@ -56,10 +56,12 @@ class app
             $class = "/" . str_replace("\\", "/", $className) . ".php";
             self::autoLoad($class, array(CORE_PATH, APP_PATH, ROOT_PATH));
         });
+
         plugin::init();
         session::start();
-        db::connect(C("db"));
-        router::set(C("rule"));
+        self::$config = include ROOT_PATH . "/config/app.php";
+        empty(self::$config['db']) || db::connect(self::$config['db']);
+        empty(self::$config['rule']) || router::set(self::$config['rule']);
     }
 
     static function autoLoad($class, array $loadDir)
