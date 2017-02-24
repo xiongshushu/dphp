@@ -8,4 +8,4 @@ php:
 
 script:
 
--  gen
+-  php index.php home index
