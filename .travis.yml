@@ -1,6 +1,9 @@
 language: php
 
-sudo: false
+sudo: true
+
+install:
+  - apt-get install php5 php7
 
 php:
   -'5.4'
