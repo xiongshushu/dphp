@@ -149,7 +149,7 @@ class db
         $rst->execute();
         $errorInfo = $rst->errorInfo();
         if ($errorInfo[2]) {
-            throw new \Exception($errorInfo[2]);
+            throw new \Exception($errorInfo[2],$errorInfo[1]);
         }
         return $rst;
     }

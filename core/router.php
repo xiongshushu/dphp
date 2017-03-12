@@ -1,5 +1,4 @@
 <?php
-namespace http;
 
 class router
 {
@@ -29,10 +28,10 @@ class router
                 $param = array_splice($uri, 2);
                 foreach ($param as $k => $v) {
                     if (isset($param[$k + 1]) && !is_numeric($v)) {
-                        $_GET[$v] = $param[$k + 1];
+                        $_REQUEST[$v] = $_GET[$v] = $param[$k + 1];
                         unset($param[$k + 1]);
                     } else
-                        $_GET["param"] = $v;
+                        $_REQUEST["param"] = $_GET["param"] = $v;
                 }
                 self::$controller = $uri[0];
                 self::$action = $uri[1];

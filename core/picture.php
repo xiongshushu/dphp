@@ -1,5 +1,4 @@
 <?php
-namespace image;
 
 class picture
 {
@@ -21,7 +20,7 @@ class picture
         //绘制文本
         for ($i = 0 ; $i < $len ; $i++)
         {
-            imagettftext($img, rand(15, 32), rand(-30, 30), 15 * $i + 3, rand(18, $height - 18) + 10, $color[rand(0, 2)], __DIR__ . '/fonts/lcd.ttf', $text[$i]);
+            imagettftext($img, rand(15, 32), rand(-30, 30), 15 * $i + 3, rand(18, $height - 18) + 10, $color[rand(0, 2)], __DIR__ . '/font.ttf', $text[$i]);
         }
 
         //设置调色板
@@ -55,7 +54,6 @@ class picture
         );
         palette::draw($img, $color[rand(0, 2)], $p1, 'arc');
         palette::draw($img, $color[rand(0, 2)], $p2, 'arc');
-
         //输出图片、清掉画布
         imagegif($img);
         imagedestroy($img);
@@ -74,8 +72,7 @@ class picture
         $border_color = palette::color($image, 'efefef');
         palette::draw($image, $border_color, array(0, 0, $img_width - 1, $img_height - 1), 'rectangle');
         palette::fill($image, $alpha, array(1, $img_height - 35, $img_width - 2, $img_height - 2), 'rectangle');
-        imagettftext($image, 9, 0, $img_width - 145, $img_height - 14, $text_color, __DIR__ . '/fonts/lcd.ttf', $mark[0]);
-        imagettftext($image, 9, 0, $img_width - 210, $img_height - 15, $text_color, __DIR__ . '/fonts/msyh.ttf', $mark[1]);
+        imagettftext($image, 9, 0, $img_width - 145, $img_height - 14, $text_color, __DIR__ . '/font.ttf', $mark[0]);
         return palette::save($image, $file_name[0], $file_name[1]);
     }
 
