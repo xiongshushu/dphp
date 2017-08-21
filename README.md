@@ -1,4 +1,7 @@
-﻿##DPHP## [![Build Status](https://travis-ci.org/diiyw/dphp.svg?branch=master)](https://travis-ci.org/diiyw/dphp)
+## DPHP ##
+
+ [![Build Status](https://travis-ci.org/diiyw/dphp.svg?branch=master)](https://travis-ci.org/diiyw/dphp)
+ 
 轻量，自由，极速，可高度自定义
 
 ##伪静态##
