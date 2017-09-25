@@ -12,7 +12,7 @@ class validator
 
     public function __construct()
     {
-        $data = array_merge($_GET,$_POST);
+        $data = array_merge($_GET, $_POST);
         unset($data['_s']);
         $this->data = $this->removeXSS($data);
     }
@@ -68,7 +68,7 @@ class validator
                                 mb_strlen($data[$key]) >= $func[1] && $this->error($key . ".max");
                                 break;
                             case "match":
-                                !preg_match('/' . $func[1] . '/', $data[$key]) && $this->error($key . ".match");
+                                !preg_match('/' . $func[1] . '/', empty($data[$key]) ? "" : $data[$key]) && $this->error($key . ".match");
                                 break;
                             case "compare":
                                 $isset = isset($data[$func[1]]);
@@ -86,17 +86,17 @@ class validator
                                 $data[$key] = empty($data[$key]) ? $func[1] : $data[$key];
                                 break;
                             case "copy":
-                                $data[$func[1]] = $data[$key];
+                                $data[$func[1]] = empty($data[$key]) ? "" : $data[$key];
                                 break;
                             case "rename":
-                                $data[$func[1]] = $data[$key];
+                                $data[$func[1]] = empty($data[$key]) ? "" : $data[$key];
                                 unset($data[$key]);
                                 break;
                             case "combine":
-                                $data[$key] = $data[$key] . $data[$func[1]];
+                                $data[$key] = (empty($data[$key]) ? "" : $data[$key]) . $data[$func[1]];
                                 break;
                             default:
-                                $data[$key] = $func[0]($data[$key]);
+                                $data[$key] = $func[0](empty($data[$key]) ? "" : $data[$key]);
                                 if ($data[$key] == false) {
                                     $this->error($key . "." . $func[0]);
                                 }
