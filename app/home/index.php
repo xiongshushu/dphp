@@ -1,10 +1,15 @@
 <?php
+
 namespace home;
+
+use view;
 
 class index
 {
     public function index()
     {
-        echo "hello world!";
+        view::assign("index", array(
+            "hello" => "hello world!"
+        ));
     }
 }
